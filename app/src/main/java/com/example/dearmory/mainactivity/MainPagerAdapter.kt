@@ -15,7 +15,7 @@ public class MainPagerAdapter(var fm: FragmentManager): FragmentStatePagerAdapte
             0 -> CalendarFragment.newInstance()
             1 -> HomeFragment.newInstance()
             2 -> ProfileFragment.newInstance()
-            else -> HomeFragment.newInstance()
+            else -> CalendarFragment.newInstance()
         }
     }
 
