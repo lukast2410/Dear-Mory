@@ -1,5 +1,6 @@
 package com.example.dearmory.mainactivity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.viewpager.widget.ViewPager
@@ -11,13 +12,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(R.style.GalaxyTheme)
+        setTheme(R.style.LightTheme)
         setContentView(R.layout.activity_main)
+        iv_main_background.setImageResource(R.drawable.light)
         initFragments()
         setViewPagerAdapter()
         setBottomNav()
         setViewPagerListener()
-        iv_main_background.setImageResource(R.drawable.galaxy)
+
+        var intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 
     private fun initFragments() {
