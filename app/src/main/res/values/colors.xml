@@ -3,4 +3,34 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <!--    Dark Theme-->
+    <color name="colorPrimaryDarkTheme">#ffffff</color>
+    <color name="colorPrimaryDarkDarkTheme">#156179</color>
+    <color name="colorAccentDarkTheme">#787878</color>
+    <color name="colorIconIfBgWhiteDarkTheme">#072B41</color>
+    <color name="navBackgroundColorDarkTheme">#072B41</color>
+    <color name="componentBgDarkTheme">#ffffff</color>
+    <color name="colorIconWithoutBgDarkTheme">#072B41</color>
+    <color name="textColorDarkTheme">#ffffff</color>
+
+    <!--    Light Theme-->
+    <color name="colorPrimaryLightTheme">#000000</color>
+    <color name="colorPrimaryDarkLightTheme">#85C4D4</color>
+    <color name="colorAccentLightTheme">#787878</color>
+    <color name="colorIconIfBgWhiteLightTheme">#1F3F4C</color>
+    <color name="navBackgroundColorLightTheme">#1F3F4C</color>
+    <color name="componentBgLightTheme">#000000</color>
+    <color name="colorIconWithoutBgLightTheme">#1F3F4C</color>
+    <color name="textColorLightTheme">#000000</color>
+
+    <!--    Galaxy Theme-->
+    <color name="colorPrimaryGalaxyTheme">#ffffff</color>
+    <color name="colorPrimaryDarkGalaxyTheme">#10054A</color>
+    <color name="colorAccentGalaxyTheme">#787878</color>
+    <color name="colorIconIfBgWhiteGalaxyTheme">#A33789</color>
+    <color name="navBackgroundColorGalaxyTheme">#A33789</color>
+    <color name="componentBgGalaxyTheme">#000000</color>
+    <color name="colorIconWithoutBgGalaxyTheme">#A33789</color>
+    <color name="textColorGalaxyTheme">#ffffff</color>
 </resources>

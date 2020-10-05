@@ -1,11 +1,53 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="DarkTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorPrimaryDarkTheme</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkDarkTheme</item>
+        <item name="colorAccent">@color/colorAccentDarkTheme</item>
+        <item name="editTextColor">@color/textColorDarkTheme</item>
+        <item name="android:textColorPrimary">@color/textColorDarkTheme</item>
+        <item name="android:textColorSecondary">@color/textColorDarkTheme</item>
+        <item name="android:textColorTertiary">@color/textColorDarkTheme</item>
+        <item name="android:textColorPrimaryInverse">@color/textColorDarkTheme</item>
+        <item name="android:textColorSecondaryInverse">@color/textColorDarkTheme</item>
+        <item name="android:textColorTertiaryInverse">@color/textColorDarkTheme</item>
+        <item name="colorIconIfBgWhite">@color/colorIconIfBgWhiteDarkTheme</item>
+    </style>
+
+    <style name="LightTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorPrimaryLightTheme</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkLightTheme</item>
+        <item name="colorAccent">@color/colorAccentLightTheme</item>
+        <item name="editTextColor">@color/textColorLightTheme</item>
+        <item name="android:textColorPrimary">@color/textColorLightTheme</item>
+        <item name="android:textColorSecondary">@color/textColorLightTheme</item>
+        <item name="android:textColorTertiary">@color/textColorLightTheme</item>
+        <item name="android:textColorPrimaryInverse">@color/textColorLightTheme</item>
+        <item name="android:textColorSecondaryInverse">@color/textColorLightTheme</item>
+        <item name="android:textColorTertiaryInverse">@color/textColorLightTheme</item>
+        <item name="colorIconIfBgWhite">@color/colorIconIfBgWhiteLightTheme</item>
+    </style>
+
+    <style name="GalaxyTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorPrimaryGalaxyTheme</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkGalaxyTheme</item>
+        <item name="colorAccent">@color/colorAccentGalaxyTheme</item>
+        <item name="editTextColor">@color/textColorGalaxyTheme</item>
+        <item name="android:textColorPrimary">@color/textColorGalaxyTheme</item>
+        <item name="android:textColorSecondary">@color/textColorGalaxyTheme</item>
+        <item name="android:textColorTertiary">@color/textColorGalaxyTheme</item>
+        <item name="android:textColorPrimaryInverse">@color/textColorGalaxyTheme</item>
+        <item name="android:textColorSecondaryInverse">@color/textColorGalaxyTheme</item>
+        <item name="android:textColorTertiaryInverse">@color/textColorGalaxyTheme</item>
+        <item name="colorIconIfBgWhite">@color/colorIconIfBgWhiteGalaxyTheme</item>
     </style>
 
 </resources>

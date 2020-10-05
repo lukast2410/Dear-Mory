@@ -6,25 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".mainactivity.MainActivity">
 
+    <ImageView
+        android:id="@+id/iv_main_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"/>
+
     <com.etebarian.meowbottomnavigation.MeowBottomNavigation
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:mbn_backgroundBottomColor="#000000"
+        app:mbn_backgroundBottomColor="?attr/colorIconIfBgWhite"
         app:mbn_circleColor="#ffffff"
         app:mbn_defaultIconColor="#ffffff"
-        app:mbn_selectedIconColor="#000000"
-        app:mbn_shadowColor="@color/colorPrimary" />
+        app:mbn_selectedIconColor="?attr/colorIconIfBgWhite"
+        app:mbn_shadowColor="#ffffff"/>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/bottom_nav"
-        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="55dp">
 
     </androidx.viewpager.widget.ViewPager>
 
@@ -32,5 +39,6 @@
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content"-->
 <!--        android:layout_alignParentBottom="true"/>-->
+
 
 </RelativeLayout>

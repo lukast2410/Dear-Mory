@@ -11,11 +11,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.GalaxyTheme)
         setContentView(R.layout.activity_main)
         initFragments()
         setViewPagerAdapter()
         setBottomNav()
         setViewPagerListener()
+        iv_main_background.setImageResource(R.drawable.galaxy)
     }
 
     private fun initFragments() {
