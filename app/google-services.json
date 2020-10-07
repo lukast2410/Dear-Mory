@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "222506221712",
+    "firebase_url": "https://dear-mory.firebaseio.com",
+    "project_id": "dear-mory",
+    "storage_bucket": "dear-mory.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:222506221712:android:e41061daa6d4f4192bd815",
+        "android_client_info": {
+          "package_name": "com.example.dearmory"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "222506221712-qbgjqakguhvd0cgd3tgm32d4as1c53nn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXfnYCxIu91m9LI2A1TBw0sO_tLNx62lo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "222506221712-qbgjqakguhvd0cgd3tgm32d4as1c53nn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
