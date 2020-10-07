@@ -3,16 +3,22 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="label_bg">#C33C3F41</color>
 
     <!--    Dark Theme-->
     <color name="colorPrimaryDarkTheme">#ffffff</color>
     <color name="colorPrimaryDarkDarkTheme">#156179</color>
     <color name="colorAccentDarkTheme">#787878</color>
-    <color name="colorIconIfBgWhiteDarkTheme">#072B41</color>
-    <color name="navBackgroundColorDarkTheme">#072B41</color>
-    <color name="componentBgDarkTheme">#ffffff</color>
-    <color name="colorIconWithoutBgDarkTheme">#072B41</color>
+    <color name="colorIconIfBgWhiteDarkTheme">#051F2F</color>
+    <color name="navBackgroundColorDarkTheme">#051F2F</color>
     <color name="textColorDarkTheme">#ffffff</color>
+    <color name="componentBgDarkTheme">#ffffff</color>
+    <color name="colorIconWithoutBgDarkTheme">#D8D8D8</color>
+
+    <color name="colorIconWithBackgroundDarkTheme">#051F2F</color>
+    <color name="backgroundForIconDarkTheme">#175A61</color>
+    <color name="colorIconForNavDarkTheme">#175A61</color>
+    <color name="buttonPressedColorDarkTheme">#C1175A61</color>
 
     <!--    Light Theme-->
     <color name="colorPrimaryLightTheme">#000000</color>
@@ -21,8 +27,13 @@
     <color name="colorIconIfBgWhiteLightTheme">#1F3F4C</color>
     <color name="navBackgroundColorLightTheme">#1F3F4C</color>
     <color name="componentBgLightTheme">#000000</color>
-    <color name="colorIconWithoutBgLightTheme">#1F3F4C</color>
+    <color name="colorIconWithoutBgLightTheme">#ffffff</color>
     <color name="textColorLightTheme">#000000</color>
+
+    <color name="colorIconWithBackgroundLightTheme">#1F3F4C</color>
+    <color name="backgroundForIconLightTheme">#6FBEDE</color>
+    <color name="colorIconForNavLightTheme">#6FBEDE</color>
+    <color name="buttonPressedColorLightTheme">#C16FBEDE</color>
 
     <!--    Galaxy Theme-->
     <color name="colorPrimaryGalaxyTheme">#ffffff</color>
@@ -31,6 +42,16 @@
     <color name="colorIconIfBgWhiteGalaxyTheme">#A33789</color>
     <color name="navBackgroundColorGalaxyTheme">#A33789</color>
     <color name="componentBgGalaxyTheme">#000000</color>
-    <color name="colorIconWithoutBgGalaxyTheme">#A33789</color>
+    <color name="colorIconWithoutBgGalaxyTheme">#D8D8D8</color>
     <color name="textColorGalaxyTheme">#ffffff</color>
+
+    <color name="colorIconWithBackgroundGalaxyTheme">#A33789</color>
+    <color name="backgroundForIconGalaxyTheme">#10052D</color>
+    <color name="colorIconForNavGalaxyTheme">#10052D</color>
+    <color name="buttonPressedColorGalaxyTheme">#C110052D</color>
+
+<!--    Others-->
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+
 </resources>

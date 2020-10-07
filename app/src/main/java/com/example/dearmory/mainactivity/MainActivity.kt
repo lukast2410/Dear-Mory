@@ -3,25 +3,29 @@ package com.example.dearmory.mainactivity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.viewpager.widget.ViewPager
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.example.dearmory.R
+import com.example.dearmory.ThemeManager
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(R.style.LightTheme)
+        setTheme(ThemeManager.setUpTheme())
         setContentView(R.layout.activity_main)
-        iv_main_background.setImageResource(R.drawable.light)
+        iv_main_background.setImageResource(ThemeManager.setUpBackground())
         initFragments()
         setViewPagerAdapter()
         setBottomNav()
         setViewPagerListener()
+    }
 
-        var intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
+    override fun onResume() {
+        super.onResume()
+        Toast.makeText(applicationContext, "Back Main", Toast.LENGTH_LONG).show()
     }
 
     private fun initFragments() {

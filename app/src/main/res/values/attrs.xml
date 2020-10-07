@@ -4,5 +4,8 @@
     <attr name="navBotBackgroundColor" format="color"/>
     <attr name="componentBackgroundColor" format="color"/>
     <attr name="colorIconWithoutBackground" format="color"/>
-    <attr name="textColorTheme" format="color"/>
+    <attr name="colorIconWithBackground" format="color"/>
+    <attr name="backgroundForIcon" format="color"/>
+    <attr name="colorIconForNav" format="color"/>
+    <attr name="buttonPressedColor" format="color"/>
 </resources>

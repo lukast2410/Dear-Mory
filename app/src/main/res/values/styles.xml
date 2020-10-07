@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+<!--    Themes-->
     <style name="DarkTheme" parent="AppTheme">
         <item name="colorPrimary">@color/colorPrimaryDarkTheme</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkDarkTheme</item>
@@ -20,6 +21,14 @@
         <item name="android:textColorSecondaryInverse">@color/textColorDarkTheme</item>
         <item name="android:textColorTertiaryInverse">@color/textColorDarkTheme</item>
         <item name="colorIconIfBgWhite">@color/colorIconIfBgWhiteDarkTheme</item>
+
+        <item name="navBotBackgroundColor">@color/navBackgroundColorDarkTheme</item>
+        <item name="componentBackgroundColor">@color/componentBgDarkTheme</item>
+        <item name="colorIconWithoutBackground">@color/colorIconWithoutBgDarkTheme</item>
+        <item name="colorIconWithBackground">@color/colorIconWithBackgroundDarkTheme</item>
+        <item name="backgroundForIcon">@color/backgroundForIconDarkTheme</item>
+        <item name="colorIconForNav">@color/colorIconForNavDarkTheme</item>
+        <item name="buttonPressedColor">@color/buttonPressedColorDarkTheme</item>
     </style>
 
     <style name="LightTheme" parent="AppTheme">
@@ -34,6 +43,13 @@
         <item name="android:textColorSecondaryInverse">@color/textColorLightTheme</item>
         <item name="android:textColorTertiaryInverse">@color/textColorLightTheme</item>
         <item name="colorIconIfBgWhite">@color/colorIconIfBgWhiteLightTheme</item>
+        <item name="navBotBackgroundColor">@color/navBackgroundColorLightTheme</item>
+        <item name="componentBackgroundColor">@color/componentBgLightTheme</item>
+        <item name="colorIconWithoutBackground">@color/colorIconWithoutBgLightTheme</item>
+        <item name="colorIconWithBackground">@color/colorIconWithBackgroundLightTheme</item>
+        <item name="backgroundForIcon">@color/backgroundForIconLightTheme</item>
+        <item name="colorIconForNav">@color/colorIconForNavLightTheme</item>
+        <item name="buttonPressedColor">@color/buttonPressedColorLightTheme</item>
     </style>
 
     <style name="GalaxyTheme" parent="AppTheme">
@@ -48,6 +64,21 @@
         <item name="android:textColorSecondaryInverse">@color/textColorGalaxyTheme</item>
         <item name="android:textColorTertiaryInverse">@color/textColorGalaxyTheme</item>
         <item name="colorIconIfBgWhite">@color/colorIconIfBgWhiteGalaxyTheme</item>
+
+        <item name="navBotBackgroundColor">@color/navBackgroundColorGalaxyTheme</item>
+        <item name="componentBackgroundColor">@color/componentBgGalaxyTheme</item>
+        <item name="colorIconWithoutBackground">@color/colorIconWithoutBgGalaxyTheme</item>
+        <item name="colorIconWithBackground">@color/colorIconWithBackgroundGalaxyTheme</item>
+        <item name="backgroundForIcon">@color/backgroundForIconGalaxyTheme</item>
+        <item name="colorIconForNav">@color/colorIconForNavGalaxyTheme</item>
+        <item name="buttonPressedColor">@color/buttonPressedColorGalaxyTheme</item>
     </style>
 
+<!--    Custom FAB-->
+    <style name="CustomFab">
+        <item name="android:background">@drawable/additional_menu_labels</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    
+    
 </resources>

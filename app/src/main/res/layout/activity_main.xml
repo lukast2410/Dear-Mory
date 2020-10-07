@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,10 +18,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:mbn_backgroundBottomColor="?attr/colorIconIfBgWhite"
-        app:mbn_circleColor="#ffffff"
-        app:mbn_defaultIconColor="#ffffff"
-        app:mbn_selectedIconColor="?attr/colorIconIfBgWhite"
+        app:mbn_backgroundBottomColor="?attr/navBotBackgroundColor"
+        app:mbn_circleColor="?attr/backgroundForIcon"
+        app:mbn_defaultIconColor="?attr/colorIconForNav"
+        app:mbn_selectedIconColor="?attr/colorIconWithBackground"
         app:mbn_shadowColor="#ffffff"/>
 
     <androidx.viewpager.widget.ViewPager

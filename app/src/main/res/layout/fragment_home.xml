@@ -26,10 +26,10 @@
         android:layout_margin="16dp"
         android:layout_gravity="end|bottom"
         app:fabSize="normal"
-        app:backgroundTint="#ffffff"
+        app:backgroundTint="?attr/backgroundForIcon"
         app:elevation="6dp"
         android:src="@drawable/write"
-        app:tint="?attr/colorIconIfBgWhite"/>
+        app:tint="?attr/colorIconWithBackground"/>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
