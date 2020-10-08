@@ -1,9 +1,10 @@
-package com.example.dearmory.diaryactivity
+package com.example.dearmory.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.dearmory.R
 import com.example.dearmory.ThemeManager
+import kotlinx.android.synthetic.main.activity_app.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class DiaryActivity : AppCompatActivity() {

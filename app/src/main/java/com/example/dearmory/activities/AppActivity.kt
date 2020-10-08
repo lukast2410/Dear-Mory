@@ -1,6 +1,5 @@
-package com.example.dearmory.mainactivity
+package com.example.dearmory.activities
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -8,21 +7,21 @@ import androidx.viewpager.widget.ViewPager
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.example.dearmory.R
 import com.example.dearmory.ThemeManager
-import kotlinx.android.synthetic.main.activity_main.*
+import com.example.dearmory.adapters.MainPagerAdapter
+import kotlinx.android.synthetic.main.activity_app.*
 
-class MainActivity : AppCompatActivity() {
+class AppActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_app)
         setTheme(ThemeManager.setUpTheme())
-        setContentView(R.layout.activity_main)
         iv_main_background.setImageResource(ThemeManager.setUpBackground())
         initFragments()
         setViewPagerAdapter()
         setBottomNav()
         setViewPagerListener()
     }
-
     override fun onResume() {
         super.onResume()
         Toast.makeText(applicationContext, "Back Main", Toast.LENGTH_LONG).show()
@@ -31,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     private fun initFragments() {
         val bottomNav: MeowBottomNavigation = bottom_nav
         bottomNav.add(MeowBottomNavigation.Model(1,
-            R.drawable.calendar
+            R.drawable.reminder_calendar
         ))
         bottomNav.add(MeowBottomNavigation.Model(2,
             R.drawable.home
@@ -74,6 +73,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setViewPagerAdapter() {
-        vp_main.adapter = MainPagerAdapter(supportFragmentManager)
+        vp_main.adapter = MainPagerAdapter(
+            supportFragmentManager
+        )
     }
 }

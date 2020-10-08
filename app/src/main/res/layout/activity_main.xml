@@ -1,45 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mainactivity.MainActivity">
+    android:background="@drawable/main_background"
+    tools:context=".activities.MainActivity">
 
     <ImageView
-        android:id="@+id/iv_main_background"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="centerCrop"/>
-
-    <com.etebarian.meowbottomnavigation.MeowBottomNavigation
-        android:id="@+id/bottom_nav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:mbn_backgroundBottomColor="?attr/navBotBackgroundColor"
-        app:mbn_circleColor="?attr/backgroundForIcon"
-        app:mbn_defaultIconColor="?attr/colorIconForNav"
-        app:mbn_selectedIconColor="?attr/colorIconWithBackground"
-        app:mbn_shadowColor="#ffffff"/>
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/vp_main"
+        android:id="@+id/slide_background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="55dp">
+        app:srcCompat="@drawable/main_background"
+        android:scaleType="centerCrop"
+        />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/sliderView"
+        android:layout_width="match_parent"
+        android:layout_height="627dp"
+        >
 
     </androidx.viewpager.widget.ViewPager>
 
-    <!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_alignParentBottom="true"/>-->
+    <LinearLayout
+        android:id="@+id/dotsLayout"
+        android:layout_width="92dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="143dp"
+        android:layout_marginTop="650dp"
+        android:orientation="horizontal"
+        android:padding="20dp" />
 
+    <Button
+        android:id="@+id/finish_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="280dp"
+        android:layout_marginTop="640dp"
+        android:background="#00FFFFFF"
+        android:text="FINISH"
+        android:textColor="@color/colorWhite"
+        android:visibility="invisible"
+        />
 
 </RelativeLayout>

@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="label_bg">#C33C3F41</color>
+    <color name="colorTransparent">#7A888888</color>
+    <color name="colorWhite">#FFFFFF</color>
 
     <!--    Dark Theme-->
     <color name="colorPrimaryDarkTheme">#ffffff</color>

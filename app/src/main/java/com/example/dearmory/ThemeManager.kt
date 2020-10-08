@@ -5,7 +5,7 @@ class ThemeManager {
         const val DARK_THEME_INDEX = 1
         const val LIGHT_THEME_INDEX = 2
         const val GALAXY_THEME_INDEX = 3
-        var THEME_INDEX = LIGHT_THEME_INDEX
+        var THEME_INDEX = DARK_THEME_INDEX
 
         fun setDarkTheme(){ THEME_INDEX = DARK_THEME_INDEX }
         fun setLightTheme(){ THEME_INDEX = LIGHT_THEME_INDEX }
