@@ -66,9 +66,6 @@ class ProfileFragment : Fragment() {
             profile_name.visibility = View.INVISIBLE
         }
 
-        Log.d("EW", "EWEWEWEW")
-        Log.d("EW", "WAWAWAW")
-
         username_field.setOnClickListener{
             username_field.visibility = View.INVISIBLE
             profile_name.visibility = View.VISIBLE
