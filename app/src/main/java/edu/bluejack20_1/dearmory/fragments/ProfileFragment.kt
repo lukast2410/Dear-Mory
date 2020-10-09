@@ -14,6 +14,7 @@ import edu.bluejack20_1.dearmory.activities.SignInActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import edu.bluejack20_1.dearmory.models.User
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : Fragment() {

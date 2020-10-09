@@ -37,9 +37,9 @@
             android:padding="10dp"
             android:minLines="15"
             android:layout_margin="10dp"
-            android:gravity="top|left"
+            android:gravity="top|start"
             android:textColor="?attr/editTextColor"
-            android:textColorHint="?attr/editTextColor"/>
+            android:textColorHint="?attr/colorAccent"/>
 
     </LinearLayout>
 

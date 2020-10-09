@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/setting_menu"
-        android:icon="@drawable/setting"
+        android:id="@+id/save_diary_button"
+        android:icon="@drawable/ico_done"
         app:showAsAction="always"
-        android:title="Settings"/>
+        android:title="@string/save_diary_button"/>
 
 </menu>
