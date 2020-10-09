@@ -1,11 +1,11 @@
-package com.example.dearmory.activities
+package edu.bluejack20_1.dearmory.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.widget.Toast
-import com.example.dearmory.R
+import edu.bluejack20_1.dearmory.R
 import com.google.firebase.auth.FirebaseAuth
 
 class LogInActivity : AppCompatActivity() {

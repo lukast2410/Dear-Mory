@@ -1,4 +1,4 @@
-package com.example.dearmory
+package edu.bluejack20_1.dearmory
 
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package com.example.dearmory.fragments
+package edu.bluejack20_1.dearmory.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,8 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 
-import com.example.dearmory.R
-import com.example.dearmory.activities.SignInActivity
+import edu.bluejack20_1.dearmory.R
+import edu.bluejack20_1.dearmory.activities.SignInActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*

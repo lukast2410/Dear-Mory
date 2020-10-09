@@ -1,10 +1,10 @@
-package com.example.dearmory.activities
+package edu.bluejack20_1.dearmory.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import com.example.dearmory.R
+import edu.bluejack20_1.dearmory.R
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +21,7 @@ class SplashActivity : AppCompatActivity() {
                 }catch (e: InterruptedException){
                     e.printStackTrace()
                 }finally {
-                    startActivity(Intent(this, MainActivity::class.java))
+                    startActivity(Intent(this, AppActivity::class.java))
                     finish()
                 }
             }

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.DiaryActivity">
+    tools:context="edu.bluejack20_1.dearmory.activities.DiaryActivity">
 
     <ImageView
         android:id="@+id/iv_main_background"
@@ -13,7 +13,38 @@
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"/>
+
+        <EditText
+            android:id="@+id/et_edit_diary_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_diary_container"
+            android:drawablePadding="5dp"
+            android:singleLine="false"
+            android:inputType="textCapSentences|textMultiLine"
+            android:hint="@string/edit_diary_hint"
+            android:maxLength ="2000"
+            android:padding="10dp"
+            android:minLines="15"
+            android:layout_margin="10dp"
+            android:gravity="top|left"
+            android:textColor="?attr/editTextColor"
+            android:textColorHint="?attr/editTextColor"/>
+
+    </LinearLayout>
+
     <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/fab_expand_menu_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -25,6 +56,7 @@
         app:fab_labelStyle="@style/CustomFab">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_edit_mood"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_colorNormal="?attr/backgroundForIcon"
@@ -34,6 +66,7 @@
             app:fab_title="@string/edit_mood"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_add_images"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_colorNormal="?attr/backgroundForIcon"
@@ -43,6 +76,7 @@
             app:fab_title="@string/add_images"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_add_expense_income"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_colorNormal="?attr/backgroundForIcon"

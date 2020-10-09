@@ -1,4 +1,6 @@
-package com.example.dearmory
+package edu.bluejack20_1.dearmory
+
+import edu.bluejack20_1.dearmory.R
 
 class ThemeManager {
     companion object{

@@ -1,21 +1,21 @@
-package com.example.dearmory.activities
+package edu.bluejack20_1.dearmory.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.viewpager.widget.ViewPager
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
-import com.example.dearmory.R
-import com.example.dearmory.ThemeManager
-import com.example.dearmory.adapters.MainPagerAdapter
+import edu.bluejack20_1.dearmory.R
+import edu.bluejack20_1.dearmory.ThemeManager
+import edu.bluejack20_1.dearmory.adapters.MainPagerAdapter
 import kotlinx.android.synthetic.main.activity_app.*
 
 class AppActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_app)
         setTheme(ThemeManager.setUpTheme())
+        setContentView(R.layout.activity_app)
         iv_main_background.setImageResource(ThemeManager.setUpBackground())
         initFragments()
         setViewPagerAdapter()

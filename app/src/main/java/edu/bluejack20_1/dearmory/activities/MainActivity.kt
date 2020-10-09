@@ -1,4 +1,4 @@
-package com.example.dearmory.activities
+package edu.bluejack20_1.dearmory.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,8 +9,8 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.viewpager.widget.ViewPager
-import com.example.dearmory.R
-import com.example.dearmory.adapters.SliderAdapter
+import edu.bluejack20_1.dearmory.R
+import edu.bluejack20_1.dearmory.adapters.SliderAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

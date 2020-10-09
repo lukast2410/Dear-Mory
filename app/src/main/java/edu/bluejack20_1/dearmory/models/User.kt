@@ -1,4 +1,4 @@
-package com.example.dearmory.models
+package edu.bluejack20_1.dearmory.models
 
 import android.net.Uri
 

@@ -1,11 +1,11 @@
-package com.example.dearmory.adapters
+package edu.bluejack20_1.dearmory.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.example.dearmory.fragments.CalendarFragment
-import com.example.dearmory.fragments.HomeFragment
-import com.example.dearmory.fragments.ProfileFragment
+import edu.bluejack20_1.dearmory.fragments.CalendarFragment
+import edu.bluejack20_1.dearmory.fragments.HomeFragment
+import edu.bluejack20_1.dearmory.fragments.ProfileFragment
 
 public class MainPagerAdapter(var fm: FragmentManager): FragmentStatePagerAdapter(fm){
 

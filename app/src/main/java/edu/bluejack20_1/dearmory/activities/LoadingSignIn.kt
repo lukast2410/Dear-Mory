@@ -1,8 +1,8 @@
-package com.example.dearmory.activities
+package edu.bluejack20_1.dearmory.activities
 
 import android.app.Activity
 import android.app.AlertDialog
-import com.example.dearmory.R
+import edu.bluejack20_1.dearmory.R
 
 class LoadingSignIn {
 

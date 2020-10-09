@@ -1,4 +1,4 @@
-package com.example.dearmory.activities
+package edu.bluejack20_1.dearmory.activities
 
 import android.content.Intent
 import android.net.Uri
@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.dearmory.R
-import com.example.dearmory.models.User
+import edu.bluejack20_1.dearmory.R
+import edu.bluejack20_1.dearmory.models.User
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
