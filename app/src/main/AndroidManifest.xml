@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.dearmory">
+    package="edu.bluejack20_1.dearmory">
 
     <application
         android:allowBackup="true"
@@ -9,18 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/LightTheme">
-        <activity android:name=".activities.LogInActivity"></activity>
-        <activity android:name=".activities.SplashActivity">
+        <activity android:name="edu.bluejack20_1.dearmory.activities.LogInActivity"></activity>
+        <activity android:name="edu.bluejack20_1.dearmory.activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.AppActivity"></activity>
-        <activity android:name=".activities.DiaryActivity"></activity>
-        <activity android:name=".activities.MainActivity"></activity>
-        <activity android:name=".activities.SignInActivity"></activity>
+        <activity android:name="edu.bluejack20_1.dearmory.activities.AppActivity"></activity>
+        <activity android:name="edu.bluejack20_1.dearmory.activities.DiaryActivity"></activity>
+        <activity android:name="edu.bluejack20_1.dearmory.activities.MainActivity"></activity>
+        <activity android:name="edu.bluejack20_1.dearmory.activities.SignInActivity"></activity>
     </application>
 
 </manifest>

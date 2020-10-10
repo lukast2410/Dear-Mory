@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "552796006164-m2nelbvpl3i1rvrtm1viih8pllnbfhq0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dearmory",
+            "certificate_hash": "4e73fe947184bc45c560cbe465a5956fc3724776"
+          }
+        },
+        {
           "client_id": "552796006164-nucm1a2b4l96h769cu55b7dgnvp3q3r5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

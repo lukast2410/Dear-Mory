@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:552796006164:android:6dc4ebb6dc1b85557a0401",
         "android_client_info": {
-          "package_name": "com.example.dearmory"
+          "package_name": "edu.bluejack20_1.dearmory"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "552796006164-nucm1a2b4l96h769cu55b7dgnvp3q3r5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.dearmory",
+            "package_name": "edu.bluejack20_1.dearmory",
             "certificate_hash": "acf018d42b9324fcc3599e2facc58979330b7310"
           }
         },

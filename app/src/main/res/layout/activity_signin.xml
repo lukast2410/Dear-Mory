@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.SignInActivity">
+    tools:context="edu.bluejack20_1.dearmory.activities.SignInActivity">
 
     <Button
         android:id="@+id/google_sign_in_button"
@@ -14,18 +14,18 @@
         android:layout_centerInParent="true"
         />
 
-    <Button
-        android:id="@+id/save_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="161dp"
-        android:layout_marginEnd="162dp"
-        android:layout_marginBottom="247dp"
-        android:text="Save"
-        android:visibility="invisible" />
+<!--    <Button-->
+<!--        android:id="@+id/save_button"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_marginStart="161dp"-->
+<!--        android:layout_marginEnd="162dp"-->
+<!--        android:layout_marginBottom="247dp"-->
+<!--        android:text="Save"-->
+<!--        android:visibility="invisible" />-->
 
 <!--    <Button-->
 <!--        android:id="@+id/sign_out_button"-->
