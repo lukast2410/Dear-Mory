@@ -6,4 +6,11 @@
     <string name="edit_diary_hint">How was your day?</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="save_diary_button">Save Diary</string>
+    <string name="notes">Notes</string>
+    <string name="amount">Amount</string>
+    <string name="type">Type</string>
+    <string name="expense_income">Expense or Income</string>
+    <string name="time">Time</string>
+    <string name="input_amount_error">Must be more than one</string>
+    <string name="save">Save</string>
 </resources>

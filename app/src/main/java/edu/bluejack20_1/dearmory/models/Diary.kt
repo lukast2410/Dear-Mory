@@ -8,6 +8,13 @@ class Diary() {
     private lateinit var diaryMood: String
     private lateinit var diaryDate: String
 
+    companion object{
+        val ANGRY_MOOD = "Angry"
+        val HAPPY_MOOD = "Happy"
+        val SAD_MOOD = "Sad"
+        val DIARY_ID = "diaryId"
+    }
+
     fun setId(id: String): Diary{
         diaryId = id
         return this

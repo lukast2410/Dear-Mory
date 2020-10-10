@@ -12,10 +12,6 @@ class User {
 
     }
 
-    companion object{
-        var userId = ""
-    }
-
     fun getName(): String {
         return name
     }

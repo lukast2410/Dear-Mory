@@ -2,6 +2,7 @@ package edu.bluejack20_1.dearmory.activities
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
@@ -37,8 +38,6 @@ class DiaryActivity : AppCompatActivity() {
     private lateinit var dialog: Dialog
     private lateinit var reffDB: DatabaseReference
     private lateinit var diary: Diary
-    private lateinit var googleSignInClient: GoogleSignInClient
-    private var autosave: Boolean = false
     private lateinit var userId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,20 +59,17 @@ class DiaryActivity : AppCompatActivity() {
     private fun checkDiaryToday() {
         val dateNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
         var checkToday: Boolean = false
-        reffDB.addValueEventListener(object :
+        reffDB.addListenerForSingleValueEvent(object :
             ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if (autosave == false){
-                    for (data: DataSnapshot in snapshot.getChildren()) {
-                        if (data.child("date").getValue().toString().equals(dateNow)) {
-                            checkToday = true
-                            autosave = true
-                            getDiary(data)
-                            break
-                        }
+                for (data: DataSnapshot in snapshot.getChildren()) {
+                    if (data.child("date").getValue().toString().equals(dateNow)) {
+                        checkToday = true
+                        getDiary(data)
+                        break
                     }
-                    if(!checkToday){ createDiary() }
                 }
+                if(!checkToday){ createDiary() }
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -88,18 +84,10 @@ class DiaryActivity : AppCompatActivity() {
             .setText(data.child("text").getValue().toString())
             .setMood(data.child("mood").getValue().toString())
             .setDate(data.child("date").getValue().toString())
-        et_edit_diary_text.setText(diary.getText())
-        et_edit_diary_text.setSelection(et_edit_diary_text.length())
-        et_edit_diary_text.addTextChangedListener(object : TextWatcher{
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                diary.setText(et_edit_diary_text.text.toString().trim())
-                saveDiary()
-            }
-
-            override fun afterTextChanged(s: Editable?) {}
-        })
+        val parseDate = LocalDate.parse(diary.getDate())
+        val stringDate = parseDate.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
+        toolbar_diary.title = stringDate
+        setEditDiaryText()
     }
 
     private fun createDiary() {
@@ -111,11 +99,26 @@ class DiaryActivity : AppCompatActivity() {
             .setText(diaryText)
             .setMood(diaryMood)
             .setDate(diaryDate)
-        autosave = false
+        setEditDiaryText()
         reffDB.child(diaryId).setValue(diary)
     }
 
+    private fun setEditDiaryText() {
+        et_edit_diary_text.setText(diary.getText())
+        et_edit_diary_text.setSelection(et_edit_diary_text.length())
+        et_edit_diary_text.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                saveDiary()
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+    }
+
     private fun saveDiary() {
+        diary.setText(et_edit_diary_text.text.toString().trim())
         reffDB.child(diary.getId()).setValue(diary)
     }
 
@@ -133,39 +136,40 @@ class DiaryActivity : AppCompatActivity() {
         })
         angryMood.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
+                diary.setMood(Diary.ANGRY_MOOD)
+                saveDiary()
                 Toast.makeText(applicationContext, "Angry Mood", Toast.LENGTH_SHORT).show()
                 dialog.dismiss()
             }
         })
         happyMood.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
+                diary.setMood(Diary.HAPPY_MOOD)
+                saveDiary()
                 Toast.makeText(applicationContext, "Happy Mood", Toast.LENGTH_SHORT).show()
                 dialog.dismiss()
             }
         })
         sadMood.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
+                diary.setMood(Diary.SAD_MOOD)
+                saveDiary()
                 Toast.makeText(applicationContext, "Sad Mood", Toast.LENGTH_SHORT).show()
                 dialog.dismiss()
+            }
+        })
+        fab_add_expense_income.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(v: View?) {
+                var intent = Intent(applicationContext, ExpenseIncomeActivity::class.java)
+                intent.putExtra(Diary.DIARY_ID, diary.getId())
+                startActivity(intent)
             }
         })
     }
 
     private fun initializeToolbar() {
-        setSupportActionBar(toolbar)
+        setSupportActionBar(toolbar_diary)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        if (item.itemId == R.id.save_diary_button){
-//            saveDiary()
-//        }
-        return super.onOptionsItemSelected(item)
     }
 }

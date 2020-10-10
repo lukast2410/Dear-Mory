@@ -2,10 +2,4 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/save_diary_button"
-        android:icon="@drawable/ico_done"
-        app:showAsAction="always"
-        android:title="@string/save_diary_button"/>
-
 </menu>

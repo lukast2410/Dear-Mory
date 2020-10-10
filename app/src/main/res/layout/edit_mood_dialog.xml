@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="272dp"
     android:layout_height="100dp"
-    android:background="@drawable/edit_mood_dialog_background"
+    android:background="@drawable/dialog_background"
     android:layout_gravity="center">
 
     <LinearLayout
