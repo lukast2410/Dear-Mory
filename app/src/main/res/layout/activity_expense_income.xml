@@ -31,8 +31,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:layout_below="@+id/ll_for_toolbar_expense_income">
+        android:gravity="center">
 
         <LinearLayout
             android:id="@+id/ll_form_container_expense_income"
@@ -48,7 +47,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="5dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -61,12 +60,29 @@
                         android:layout_height="wrap_content"
                         android:text="@string/type"/>
 
-                    <Spinner
-                        android:id="@+id/spinner_expense_income_type"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_expense_income_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:entries="@array/expense_income_type"
-                        android:paddingVertical="10dp"/>
+                        android:backgroundTint="?attr/editTextColor"
+                        android:textColorHint="?attr/colorAccent"
+                        app:boxBackgroundMode="outline"
+                        app:hintTextColor="?attr/editTextColor">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_expense_income_type"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="?attr/editTextColor"
+                            android:text="@string/expense"
+                            android:paddingHorizontal="5dp"
+                            android:paddingVertical="7dp"
+                            android:focusable="false"
+                            android:enabled="true"
+                            android:cursorVisible="false"
+                            android:drawableEnd="@drawable/ic_dropdown"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
 
@@ -83,19 +99,36 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/time"
-                            android:layout_alignParentEnd="true"/>
+                            android:layout_alignParentEnd="true"
+                            android:text="@string/pick_time" />
 
                     </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/tv_time_picker"
+                    <LinearLayout
+                        android:id="@+id/ll_time_picker_container"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="10:10"
+                        android:orientation="horizontal"
                         android:paddingVertical="10dp"
                         android:paddingHorizontal="15dp"
-                        android:background="@drawable/layer_border"/>
+                        android:background="@drawable/layer_border">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_time"
+                            app:tint="?attr/editTextColor"/>
+
+                        <TextView
+                            android:id="@+id/tv_time_picker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10:10"
+                            android:paddingVertical="2.3dp"
+                            android:layout_marginStart="10dp"
+                            android:textAlignment="center"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -152,17 +185,24 @@
             android:layout_below="@+id/ll_form_container_expense_income"
             android:layout_marginTop="-40dp">
 
-            <Button
-                android:id="@+id/btn_save_expense_income"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/save"
-                android:paddingVertical="10dp"
-                android:paddingHorizontal="100dp"
                 android:layout_centerHorizontal="true"
-                android:textColor="?attr/editTextColor"
-                android:elevation="10dp"
-                android:background="@drawable/button_background_theme"/>
+                android:background="@drawable/button_background_theme">
+
+                <Button
+                    android:id="@+id/btn_save_expense_income"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/save"
+                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="100dp"
+                    android:textColor="?attr/editTextColor"
+                    android:elevation="10dp"
+                    android:background="@color/transparent"/>
+
+            </LinearLayout>
 
         </RelativeLayout>
 

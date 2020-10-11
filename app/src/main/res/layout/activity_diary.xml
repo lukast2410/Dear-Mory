@@ -41,6 +41,11 @@
             android:textColor="?attr/editTextColor"
             android:textColorHint="?attr/colorAccent"/>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_expense_income"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
     </LinearLayout>
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu

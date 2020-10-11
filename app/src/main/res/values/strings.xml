@@ -10,7 +10,11 @@
     <string name="amount">Amount</string>
     <string name="type">Type</string>
     <string name="expense_income">Expense or Income</string>
-    <string name="time">Time</string>
+    <string name="pick_time">Pick Time</string>
     <string name="input_amount_error">Must be more than one</string>
+    <string name="input_amount_empty">Amount must be filled</string>
+    <string name="success_save_expense_income">Success save expense or income</string>
     <string name="save">Save</string>
+    <string name="income">Income</string>
+    <string name="expense">Expense</string>
 </resources>

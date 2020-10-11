@@ -1,6 +1,5 @@
 package edu.bluejack20_1.dearmory.activities
 
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -10,35 +9,37 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.database.*
 import edu.bluejack20_1.dearmory.R
 import edu.bluejack20_1.dearmory.ThemeManager
+import edu.bluejack20_1.dearmory.adapters.ExpenseIncomeAdapter
 import edu.bluejack20_1.dearmory.models.Diary
-import edu.bluejack20_1.dearmory.models.User
+import edu.bluejack20_1.dearmory.models.ExpenseIncome
+import edu.bluejack20_1.dearmory.viewmodels.ExpenseIncomeViewModel
 import kotlinx.android.synthetic.main.activity_app.iv_main_background
 import kotlinx.android.synthetic.main.activity_diary.*
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 
 @RequiresApi(Build.VERSION_CODES.O)
-class DiaryActivity : AppCompatActivity() {
+class DiaryActivity : AppCompatActivity(){
     private lateinit var dialog: Dialog
-    private lateinit var reffDB: DatabaseReference
+    private lateinit var refsDB: DatabaseReference
     private lateinit var diary: Diary
     private lateinit var userId: String
+    private lateinit var expenseIncomeAdapter: ExpenseIncomeAdapter
+    private lateinit var expenseIncomeViewModel: ExpenseIncomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,19 +52,33 @@ class DiaryActivity : AppCompatActivity() {
         initializePopUpEditMood()
     }
 
+    private fun initializeExpenseIncomeRecyclerView() {
+        recycler_expense_income.setHasFixedSize(true)
+        recycler_expense_income.layoutManager = LinearLayoutManager(this)
+        expenseIncomeViewModel = ViewModelProviders.of(this).get(ExpenseIncomeViewModel::class.java)
+        expenseIncomeViewModel.init(diary.getId())
+        expenseIncomeAdapter = ExpenseIncomeAdapter(expenseIncomeViewModel.getExpenseIncomes()?.value!!)
+        expenseIncomeViewModel.getExpenseIncomes().observe(this, object : Observer<ArrayList<ExpenseIncome>>{
+            override fun onChanged(t: ArrayList<ExpenseIncome>?) {
+                expenseIncomeAdapter.notifyDataSetChanged()
+            }
+        })
+        recycler_expense_income.adapter = expenseIncomeAdapter
+    }
+
     private fun diaryToDatabase() {
-        reffDB = FirebaseDatabase.getInstance().getReference("Diary").child(userId)
+        refsDB = FirebaseDatabase.getInstance().getReference("Diary").child(userId)
         checkDiaryToday()
     }
 
     private fun checkDiaryToday() {
         val dateNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
         var checkToday: Boolean = false
-        reffDB.addListenerForSingleValueEvent(object :
+        refsDB.addListenerForSingleValueEvent(object :
             ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                for (data: DataSnapshot in snapshot.getChildren()) {
-                    if (data.child("date").getValue().toString().equals(dateNow)) {
+                for (data: DataSnapshot in snapshot.children) {
+                    if (data.child("date").value.toString() == dateNow) {
                         checkToday = true
                         getDiary(data)
                         break
@@ -87,6 +102,7 @@ class DiaryActivity : AppCompatActivity() {
         val parseDate = LocalDate.parse(diary.getDate())
         val stringDate = parseDate.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
         toolbar_diary.title = stringDate
+        initializeExpenseIncomeRecyclerView()
         setEditDiaryText()
     }
 
@@ -94,13 +110,14 @@ class DiaryActivity : AppCompatActivity() {
         val diaryDate: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
         val diaryText: String = et_edit_diary_text.text.toString().trim()
         val diaryMood: String = "Happy"
-        val diaryId: String = reffDB.push().key.toString()
+        val diaryId: String = refsDB.push().key.toString()
         diary = Diary().setId(diaryId)
             .setText(diaryText)
             .setMood(diaryMood)
             .setDate(diaryDate)
+        initializeExpenseIncomeRecyclerView()
         setEditDiaryText()
-        reffDB.child(diaryId).setValue(diary)
+        refsDB.child(diaryId).setValue(diary)
     }
 
     private fun setEditDiaryText() {
@@ -109,9 +126,7 @@ class DiaryActivity : AppCompatActivity() {
         et_edit_diary_text.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                saveDiary()
-            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { saveDiary() }
 
             override fun afterTextChanged(s: Editable?) {}
         })
@@ -119,52 +134,41 @@ class DiaryActivity : AppCompatActivity() {
 
     private fun saveDiary() {
         diary.setText(et_edit_diary_text.text.toString().trim())
-        reffDB.child(diary.getId()).setValue(diary)
+        refsDB.child(diary.getId()).setValue(diary)
     }
 
     private fun initializePopUpEditMood() {
         dialog = Dialog(this)
         dialog.setContentView(R.layout.edit_mood_dialog)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        var angryMood = dialog.findViewById(R.id.angry_mood) as ImageView
-        var happyMood = dialog.findViewById(R.id.happy_mood) as ImageView
-        var sadMood = dialog.findViewById(R.id.sad_mood) as ImageView
-        fab_edit_mood.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                dialog.show()
-            }
-        })
-        angryMood.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                diary.setMood(Diary.ANGRY_MOOD)
-                saveDiary()
-                Toast.makeText(applicationContext, "Angry Mood", Toast.LENGTH_SHORT).show()
-                dialog.dismiss()
-            }
-        })
-        happyMood.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                diary.setMood(Diary.HAPPY_MOOD)
-                saveDiary()
-                Toast.makeText(applicationContext, "Happy Mood", Toast.LENGTH_SHORT).show()
-                dialog.dismiss()
-            }
-        })
-        sadMood.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                diary.setMood(Diary.SAD_MOOD)
-                saveDiary()
-                Toast.makeText(applicationContext, "Sad Mood", Toast.LENGTH_SHORT).show()
-                dialog.dismiss()
-            }
-        })
-        fab_add_expense_income.setOnClickListener(object : View.OnClickListener{
-            override fun onClick(v: View?) {
-                var intent = Intent(applicationContext, ExpenseIncomeActivity::class.java)
-                intent.putExtra(Diary.DIARY_ID, diary.getId())
-                startActivity(intent)
-            }
-        })
+        val angryMood = dialog.findViewById(R.id.angry_mood) as ImageView
+        val happyMood = dialog.findViewById(R.id.happy_mood) as ImageView
+        val sadMood = dialog.findViewById(R.id.sad_mood) as ImageView
+        fab_edit_mood.setOnClickListener { dialog.show() }
+        angryMood.setOnClickListener {
+            diary.setMood(Diary.ANGRY_MOOD)
+            saveDiary()
+            Toast.makeText(applicationContext, "Angry Mood", Toast.LENGTH_SHORT).show()
+            dialog.dismiss()
+        }
+        happyMood.setOnClickListener {
+            diary.setMood(Diary.HAPPY_MOOD)
+            saveDiary()
+            Toast.makeText(applicationContext, "Happy Mood", Toast.LENGTH_SHORT).show()
+            dialog.dismiss()
+        }
+        sadMood.setOnClickListener {
+            diary.setMood(Diary.SAD_MOOD)
+            saveDiary()
+            Toast.makeText(applicationContext, "Sad Mood", Toast.LENGTH_SHORT).show()
+            dialog.dismiss()
+        }
+        fab_add_expense_income.setOnClickListener {
+            val intent = Intent(applicationContext, ExpenseIncomeActivity::class.java)
+            intent.putExtra(Diary.DIARY_ID, diary.getId())
+            intent.putExtra(ExpenseIncome.GO_TO_EXPENSE_INCOME, ExpenseIncome.ADD_EXPENSE_INCOME)
+            startActivity(intent)
+        }
     }
 
     private fun initializeToolbar() {
