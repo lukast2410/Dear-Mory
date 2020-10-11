@@ -3,4 +3,6 @@
     <string name="edit_mood">Edit Mood</string>
     <string name="add_images">Add Images</string>
     <string name="add_expense_income">Add Expense or Income</string>
+    <string name="reminder_label_hint">Label</string>
+    <string name="add_reminder_button">Add</string>
 </resources>

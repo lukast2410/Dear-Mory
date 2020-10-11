@@ -28,7 +28,6 @@ class ProfileFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
     private lateinit var dialog: Dialog
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,10 +60,12 @@ class ProfileFragment : Fragment() {
 
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if(snapshot.exists()){
-                        profile_name.text = snapshot.child("name").value.toString()
-                        profile_email.text = snapshot.child("email").value.toString()
-                        val pp = snapshot.child("profilePicture").value.toString()
-                        Glide.with(this@ProfileFragment).load(pp).into(profile_picture)
+                        if(profile_name != null){
+                            profile_name.text = snapshot.child("name").value.toString()
+                            profile_email.text = snapshot.child("email").value.toString()
+                            val pp = snapshot.child("profilePicture").value.toString()
+                            Glide.with(this@ProfileFragment).load(pp).into(profile_picture)
+                        }
                     }
                 }
             })
@@ -116,10 +117,8 @@ class ProfileFragment : Fragment() {
 
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val name = snapshot.child("name").value.toString()
-                    Log.d("uName", name)
                     val uName = dialog.findViewById<EditText>(R.id.username_field)
                     uName.setText(name, TextView.BufferType.EDITABLE)
-                    Log.d("uName", "oh yes")
                 }
             })
         }

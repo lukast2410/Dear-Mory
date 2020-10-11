@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:padding="10dp"
-        android:text=""
+        android:text="-"
         android:textAlignment="center"
         android:clickable="true"
         android:textSize="36sp"

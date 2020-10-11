@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/LightTheme">
+
         <activity android:name="edu.bluejack20_1.dearmory.activities.LogInActivity"></activity>
         <activity android:name="edu.bluejack20_1.dearmory.activities.SplashActivity">
             <intent-filter>

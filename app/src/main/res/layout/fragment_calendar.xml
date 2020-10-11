@@ -3,14 +3,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="edu.bluejack20_1.dearmory.fragments.CalendarFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Calendar Fragment"
-        android:textSize="30dp"
-        android:gravity="center" />
+    <EditText
+        android:id="@+id/reminder_label"
+        android:layout_width="200dp"
+        android:hint="@string/reminder_label_hint"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/add_reminder_button"
+        android:layout_width="wrap_content"
+        android:layout_gravity="end"
+        android:text="@string/add_reminder_button"
+        android:layout_height="wrap_content" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_reminder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:src="@drawable/ico_plus"
+        app:backgroundTint="?attr/backgroundForIcon"
+        app:elevation="6dp"
+        app:fabSize="normal"
+        app:tint="?attr/colorIconWithBackground" />
 
 </FrameLayout>

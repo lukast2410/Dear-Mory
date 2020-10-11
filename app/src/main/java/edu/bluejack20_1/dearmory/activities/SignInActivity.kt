@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
 import edu.bluejack20_1.dearmory.R
 import edu.bluejack20_1.dearmory.models.User
 import com.google.android.gms.auth.api.signin.GoogleSignIn
