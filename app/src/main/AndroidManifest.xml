@@ -22,6 +22,10 @@
         <activity android:name="edu.bluejack20_1.dearmory.activities.DiaryActivity"></activity>
         <activity android:name="edu.bluejack20_1.dearmory.activities.MainActivity"></activity>
         <activity android:name="edu.bluejack20_1.dearmory.activities.SignInActivity"></activity>
+
+        <receiver android:name=".receivers.AlertReceiver">
+
+        </receiver>
     </application>
 
 </manifest>

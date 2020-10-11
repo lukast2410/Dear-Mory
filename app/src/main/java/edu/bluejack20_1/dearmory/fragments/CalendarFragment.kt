@@ -1,14 +1,16 @@
 package edu.bluejack20_1.dearmory.fragments
 
 import android.annotation.SuppressLint
-import android.app.DatePickerDialog
-import android.app.Dialog
-import android.app.TimePickerDialog
+import android.app.*
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.hardware.SensorManager
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
+import android.provider.AlarmClock
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,10 +20,12 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.TimePicker
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.database.*
 import edu.bluejack20_1.dearmory.R
+import edu.bluejack20_1.dearmory.receivers.AlertReceiver
 import kotlinx.android.synthetic.main.fragment_calendar.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -35,6 +39,13 @@ class CalendarFragment : Fragment(){
     private lateinit var databaseReference: DatabaseReference
     private lateinit var choosenDate: String
     private lateinit var choosenTime: String
+
+    private var th: Int = 0
+    private  var tm: Int = 0
+    private  var ts: Int = 0
+    private  var ty: Int = 0
+    private  var tmonth: Int = 0
+    private  var td: Int = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -69,6 +80,9 @@ class CalendarFragment : Fragment(){
                     val date = "$i3/$month/$i"
                     openTimePicker(hour, minute)
                     choosenDate = date
+                    ty = i
+                    tmonth = month
+                    td = i3
                     add_reminder_button.text = date
                 }
                 ,year,month,day) }
@@ -80,12 +94,15 @@ class CalendarFragment : Fragment(){
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun openTimePicker(hour: Int, minute: Int){
         val timePickerDialog = TimePickerDialog(context,TimePickerDialog.OnTimeSetListener(){ timePicker: TimePicker, i: Int, i1: Int ->
             timeToNotify = "$i:$i1"
             add_reminder_button.text = formatTime(i,i1)
 //            add_reminder_button.text = "$i:$i1"
             choosenTime = "$i:$i1"
+            th = i
+            tm = i1
             showLabelPopUp()
         },hour,minute,false)
 //        timePickerDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -115,6 +132,7 @@ class CalendarFragment : Fragment(){
         return time
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun showLabelPopUp(){
         dialog.setContentView(R.layout.reminder_label_pop_up)
         val saveBtn = dialog.findViewById<Button>(R.id.save_label_reminder_logo)
@@ -124,6 +142,7 @@ class CalendarFragment : Fragment(){
         dialog.show()
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun saveReminder(){
         val label = dialog.findViewById<EditText>(R.id.label_reminder_field).text
         val account = GoogleSignIn.getLastSignedInAccount(activity)
@@ -147,6 +166,17 @@ class CalendarFragment : Fragment(){
             }
         }else{
         }
+
+        val alarmManager: AlarmManager = activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(context, AlertReceiver::class.java)
+        val pendingIntent: PendingIntent = PendingIntent.getBroadcast(context, 1, intent, 0)
+        val n: Calendar = Calendar.getInstance()
+        n.set(Calendar.HOUR_OF_DAY, th)
+        n.set(Calendar.MINUTE, tm)
+        n.set(Calendar.YEAR, ty)
+        n.set(Calendar.MONTH, tmonth)
+        n.set(Calendar.DAY_OF_MONTH, td)
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, n.timeInMillis, pendingIntent)
 
 //        val n = "1,2,3,4,5,6,7".split(",").map { it.toInt() }
 //        for(t in n){
