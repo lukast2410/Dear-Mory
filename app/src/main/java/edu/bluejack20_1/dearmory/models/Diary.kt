@@ -9,10 +9,18 @@ class Diary() {
     private lateinit var diaryDate: String
 
     companion object{
-        val ANGRY_MOOD = "Angry"
-        val HAPPY_MOOD = "Happy"
-        val SAD_MOOD = "Sad"
-        val DIARY_ID = "diaryId"
+        const val DIARY = "Diary"
+        const val DIARY_ID = "diaryId"
+        const val ANGRY_MOOD = "Angry"
+        const val HAPPY_MOOD = "Happy"
+        const val SAD_MOOD = "Sad"
+    }
+
+    init {
+        diaryId = "false"
+        diaryMood = Diary.HAPPY_MOOD
+        diaryText = ""
+        diaryDate = ""
     }
 
     fun setId(id: String): Diary{

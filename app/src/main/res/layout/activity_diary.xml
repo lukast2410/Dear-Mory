@@ -28,18 +28,18 @@
             android:id="@+id/et_edit_diary_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:background="@drawable/edit_diary_container"
             android:drawablePadding="5dp"
-            android:singleLine="false"
-            android:inputType="textCapSentences|textMultiLine"
-            android:hint="@string/edit_diary_hint"
-            android:maxLength ="2000"
-            android:padding="10dp"
-            android:minLines="15"
-            android:layout_margin="10dp"
             android:gravity="top|start"
+            android:hint="@string/edit_diary_hint"
+            android:inputType="textCapSentences|textMultiLine"
+            android:maxLength="2000"
+            android:minLines="15"
+            android:padding="10dp"
+            android:singleLine="false"
             android:textColor="?attr/editTextColor"
-            android:textColorHint="?attr/colorAccent"/>
+            android:textColorHint="?attr/colorAccent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_expense_income"

@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.*
 import android.widget.TextView
 import android.widget.Toast
@@ -24,7 +25,6 @@ import edu.bluejack20_1.dearmory.models.ExpenseIncome
 import kotlinx.android.synthetic.main.activity_expense_income.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-
 
 @RequiresApi(Build.VERSION_CODES.O)
 class ExpenseIncomeActivity : AppCompatActivity() {
@@ -54,7 +54,7 @@ class ExpenseIncomeActivity : AppCompatActivity() {
         btn_save_expense_income.setOnClickListener{
             val check = validateMoneyAmount(til_money_amount.editText?.text.toString(), true)
             if(check){
-                refsDB = FirebaseDatabase.getInstance().getReference("ExpenseIncome").child(diaryId)
+                refsDB = FirebaseDatabase.getInstance().getReference(ExpenseIncome.EXPENSE_INCOME).child(diaryId)
                 if(actType == ExpenseIncome.ADD_EXPENSE_INCOME){
                     createExpenseIncome()
                 }else if(actType == ExpenseIncome.UPDATE_EXPENSE_INCOME){
@@ -181,6 +181,8 @@ class ExpenseIncomeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.toolbar_delete_menu){
             //delete
+            refsDB = FirebaseDatabase.getInstance().getReference(ExpenseIncome.EXPENSE_INCOME)
+            refsDB.child(expenseIncome.getId()).removeValue()
             finish()
         }
         return super.onOptionsItemSelected(item)

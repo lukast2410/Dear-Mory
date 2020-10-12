@@ -1,15 +1,13 @@
 package edu.bluejack20_1.dearmory.repositories
 
-import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.*
 import edu.bluejack20_1.dearmory.models.ExpenseIncome
 
-class ExpenseIncomeRepository {
+class ExpenseIncomeRepository private constructor(){
     private var expenseIncomeModels: ArrayList<ExpenseIncome> = ArrayList()
-    private var expenseIncomeModel: MutableLiveData<ArrayList<ExpenseIncome>> = MutableLiveData()
+    private var expenseIncomeLiveData: MutableLiveData<ArrayList<ExpenseIncome>> = MutableLiveData()
 
     companion object{
         var instance: ExpenseIncomeRepository? = null
@@ -25,16 +23,18 @@ class ExpenseIncomeRepository {
         if(expenseIncomeModels.size == 0)
             loadExpenseIncomeModels(diaryId)
 
-        expenseIncomeModel.value = expenseIncomeModels
+        expenseIncomeLiveData.value = expenseIncomeModels
 
-        return expenseIncomeModel
+        return expenseIncomeLiveData
     }
 
     private fun loadExpenseIncomeModels(diaryId: String) {
-        var refsDB: DatabaseReference = FirebaseDatabase.getInstance().getReference()
-        var query: Query = refsDB.child("ExpenseIncome").child(diaryId)
-        query.addListenerForSingleValueEvent(object : ValueEventListener{
+        val refsDB: DatabaseReference = FirebaseDatabase.getInstance().getReference()
+        val query: Query = refsDB.child("ExpenseIncome").child(diaryId)
+        query.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
+                if(expenseIncomeModels.size > 0)
+                    expenseIncomeModels.removeAll(expenseIncomeModels)
                 for (data: DataSnapshot in snapshot.children){
                     expenseIncomeModels.add(ExpenseIncome()
                         .setId(data.child("id").getValue().toString())
@@ -42,12 +42,10 @@ class ExpenseIncomeRepository {
                         .setTime(data.child("time").getValue().toString())
                         .setAmount(data.child("amount").getValue().toString().toInt()))
                 }
-                expenseIncomeModel.postValue(expenseIncomeModels)
+                expenseIncomeLiveData.postValue(expenseIncomeModels)
             }
 
-            override fun onCancelled(error: DatabaseError) {
-
-            }
+            override fun onCancelled(error: DatabaseError) {}
         })
     }
 }

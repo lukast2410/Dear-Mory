@@ -1,18 +1,19 @@
 package edu.bluejack20_1.dearmory.viewmodels
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import edu.bluejack20_1.dearmory.models.ExpenseIncome
 import edu.bluejack20_1.dearmory.repositories.ExpenseIncomeRepository
 
-class ExpenseIncomeViewModel: ViewModel() {
+class ExpenseIncomeViewModel(private val repository: ExpenseIncomeRepository): ViewModel() {
     private var expenseIncomeModels: MutableLiveData<ArrayList<ExpenseIncome>>? = null
 
     fun init(diaryId: String){
         if(expenseIncomeModels == null){
-            expenseIncomeModels = ExpenseIncomeRepository.getInstance().getExpenseIncomeModels(diaryId)
+            expenseIncomeModels = repository.getExpenseIncomeModels(diaryId)
         }
     }
 

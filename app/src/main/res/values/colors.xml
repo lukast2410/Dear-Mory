@@ -24,6 +24,11 @@
     <color name="colorIconForNavDarkTheme">#175A61</color>
     <color name="buttonPressedColorDarkTheme">#C1175A61</color>
 
+    <color name="expenseIconDarkTheme">#E80000</color>
+    <color name="angryMoodDarkTheme">#cfB60601</color>
+    <color name="happyMoodDarkTheme">#CBEFCC00</color>
+    <color name="sadMoodDarkTheme">#DA0198E1</color>
+
     <!--    Light Theme-->
     <color name="colorPrimaryLightTheme">#000000</color>
     <color name="colorPrimaryDarkLightTheme">#85C4D4</color>
@@ -38,6 +43,11 @@
     <color name="backgroundForIconLightTheme">#6FBEDE</color>
     <color name="colorIconForNavLightTheme">#6FBEDE</color>
     <color name="buttonPressedColorLightTheme">#C16FBEDE</color>
+
+    <color name="expenseIconLightTheme">#CA0000</color>
+    <color name="angryMoodLightTheme">#d8ff2400</color>
+    <color name="happyMoodLightTheme">#D5F4CA16</color>
+    <color name="sadMoodLightTheme">#E12895FF</color>
 
     <!--    Galaxy Theme-->
     <color name="colorPrimaryGalaxyTheme">#ffffff</color>
@@ -54,8 +64,15 @@
     <color name="colorIconForNavGalaxyTheme">#10052D</color>
     <color name="buttonPressedColorGalaxyTheme">#C110052D</color>
 
+    <color name="expenseIconGalaxyTheme">#E80000</color>
+    <color name="angryMoodGalaxyTheme">#cf880316</color>
+    <color name="happyMoodGalaxyTheme">#CEFCD12A</color>
+    <color name="sadMoodGalaxyTheme">#D823238E</color>
+
 <!--    Others-->
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+    <color name="defaultExpense">#E80000</color>
+    <color name="defaultIncome">#12DC12</color>
 
 </resources>

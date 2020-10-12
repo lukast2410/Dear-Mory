@@ -7,10 +7,11 @@ class ExpenseIncome {
     private lateinit var expenseIncomeTime: String
 
     companion object{
-        val GO_TO_EXPENSE_INCOME = "goToExpenseIncome"
-        val ADD_EXPENSE_INCOME = "add expense income"
-        val UPDATE_EXPENSE_INCOME = "update expense income"
-        val EXPENSE_INCOME_ID = "expenseIncomeId"
+        const val EXPENSE_INCOME = "ExpenseIncome"
+        const val GO_TO_EXPENSE_INCOME = "goToExpenseIncome"
+        const val ADD_EXPENSE_INCOME = "add expense income"
+        const val UPDATE_EXPENSE_INCOME = "update expense income"
+        const val EXPENSE_INCOME_ID = "expenseIncomeId"
     }
 
     fun setId(id: String): ExpenseIncome{

@@ -29,6 +29,11 @@
         <item name="backgroundForIcon">@color/backgroundForIconDarkTheme</item>
         <item name="colorIconForNav">@color/colorIconForNavDarkTheme</item>
         <item name="buttonPressedColor">@color/buttonPressedColorDarkTheme</item>
+
+        <item name="expenseIconColor">@color/expenseIconDarkTheme</item>
+        <item name="angryMoodBackground">@color/angryMoodDarkTheme</item>
+        <item name="happyMoodBackground">@color/happyMoodDarkTheme</item>
+        <item name="sadMoodBackground">@color/sadMoodDarkTheme</item>
     </style>
 
     <style name="LightTheme" parent="AppTheme">
@@ -50,6 +55,11 @@
         <item name="backgroundForIcon">@color/backgroundForIconLightTheme</item>
         <item name="colorIconForNav">@color/colorIconForNavLightTheme</item>
         <item name="buttonPressedColor">@color/buttonPressedColorLightTheme</item>
+
+        <item name="expenseIconColor">@color/expenseIconLightTheme</item>
+        <item name="angryMoodBackground">@color/angryMoodLightTheme</item>
+        <item name="happyMoodBackground">@color/happyMoodLightTheme</item>
+        <item name="sadMoodBackground">@color/sadMoodLightTheme</item>
     </style>
 
     <style name="GalaxyTheme" parent="AppTheme">
@@ -72,6 +82,11 @@
         <item name="backgroundForIcon">@color/backgroundForIconGalaxyTheme</item>
         <item name="colorIconForNav">@color/colorIconForNavGalaxyTheme</item>
         <item name="buttonPressedColor">@color/buttonPressedColorGalaxyTheme</item>
+
+        <item name="expenseIconColor">@color/expenseIconGalaxyTheme</item>
+        <item name="angryMoodBackground">@color/angryMoodGalaxyTheme</item>
+        <item name="happyMoodBackground">@color/happyMoodGalaxyTheme</item>
+        <item name="sadMoodBackground">@color/sadMoodGalaxyTheme</item>
     </style>
 
 <!--    Custom FAB-->
