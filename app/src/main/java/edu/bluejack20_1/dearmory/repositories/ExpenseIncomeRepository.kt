@@ -40,7 +40,7 @@ class ExpenseIncomeRepository private constructor(){
                         .setId(data.child("id").getValue().toString())
                         .setNotes(data.child("notes").getValue().toString())
                         .setTime(data.child("time").getValue().toString())
-                        .setAmount(data.child("amount").getValue().toString().toInt()))
+                        .setAmount(data.child("amount").getValue().toString().toLong()))
                 }
                 expenseIncomeLiveData.postValue(expenseIncomeModels)
             }

@@ -24,8 +24,8 @@
     <color name="colorIconForNavDarkTheme">#175A61</color>
     <color name="buttonPressedColorDarkTheme">#C1175A61</color>
 
-    <color name="expenseIconDarkTheme">#E80000</color>
-    <color name="angryMoodDarkTheme">#cfB60601</color>
+    <color name="expenseIconDarkTheme">#e50000</color>
+    <color name="angryMoodDarkTheme">#7E2727</color>
     <color name="happyMoodDarkTheme">#CBEFCC00</color>
     <color name="sadMoodDarkTheme">#DA0198E1</color>
 

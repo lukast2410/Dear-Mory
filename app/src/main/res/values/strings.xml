@@ -13,6 +13,7 @@
     <string name="pick_time">Pick Time</string>
     <string name="input_amount_error">Must be more than one</string>
     <string name="input_amount_empty">Amount must be filled</string>
+    <string name="input_amount_too_big">The amount is too big</string>
     <string name="success_save_expense_income">Success save expense or income</string>
     <string name="save">Save</string>
     <string name="income">Income</string>

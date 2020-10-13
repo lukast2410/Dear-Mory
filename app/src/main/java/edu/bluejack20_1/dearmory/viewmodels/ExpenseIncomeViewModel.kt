@@ -20,4 +20,12 @@ class ExpenseIncomeViewModel(private val repository: ExpenseIncomeRepository): V
     fun getExpenseIncomes(): MutableLiveData<ArrayList<ExpenseIncome>> {
         return expenseIncomeModels as MutableLiveData<ArrayList<ExpenseIncome>>
     }
+
+    fun reloadExpenseIncomes(){
+        val size = expenseIncomeModels?.value?.size!!
+        if (size > 0){
+            val temp = expenseIncomeModels?.value!!
+            expenseIncomeModels?.value = temp
+        }
+    }
 }

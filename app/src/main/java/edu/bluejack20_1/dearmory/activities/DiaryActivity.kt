@@ -37,7 +37,7 @@ import java.time.format.DateTimeFormatter
 
 
 @RequiresApi(Build.VERSION_CODES.O)
-class DiaryActivity : AppCompatActivity(){
+class DiaryActivity : AppCompatActivity(), ExpenseIncomeAdapter.ExpenseIncomeListener{
     private lateinit var dialog: Dialog
     private lateinit var refsDB: DatabaseReference
     private lateinit var diaryViewModel: DiaryViewModel
@@ -78,9 +78,10 @@ class DiaryActivity : AppCompatActivity(){
         val factory = ExpenseIncomeViewModelFactory(ExpenseIncomeRepository.getInstance())
         expenseIncomeViewModel = ViewModelProviders.of(this, factory).get(ExpenseIncomeViewModel::class.java)
         expenseIncomeViewModel.init(diary.getId())
-        expenseIncomeAdapter = ExpenseIncomeAdapter(expenseIncomeViewModel.getExpenseIncomes()?.value!!, diary.getMood())
+        expenseIncomeAdapter = ExpenseIncomeAdapter(expenseIncomeViewModel.getExpenseIncomes()?.value!!, diary.getMood(), this)
         expenseIncomeViewModel.getExpenseIncomes().observe(this,
             Observer<ArrayList<ExpenseIncome>>{
+                expenseIncomeAdapter.setDiaryMood(diary.getMood())
                 expenseIncomeAdapter.notifyDataSetChanged()
                 recycler_expense_income.adapter = expenseIncomeAdapter
             })
@@ -111,18 +112,24 @@ class DiaryActivity : AppCompatActivity(){
         fab_edit_mood.setOnClickListener { dialog.show() }
         angryMood.setOnClickListener {
             diary.setMood(Diary.ANGRY_MOOD)
+            expenseIncomeAdapter.setDiaryMood(diary.getMood())
+            expenseIncomeViewModel.reloadExpenseIncomes()
             diaryViewModel.saveDiary(userId, diary)
             Toast.makeText(applicationContext, "Angry Mood", Toast.LENGTH_SHORT).show()
             dialog.dismiss()
         }
         happyMood.setOnClickListener {
             diary.setMood(Diary.HAPPY_MOOD)
+            expenseIncomeAdapter.setDiaryMood(diary.getMood())
+            expenseIncomeViewModel.reloadExpenseIncomes()
             diaryViewModel.saveDiary(userId, diary)
             Toast.makeText(applicationContext, "Happy Mood", Toast.LENGTH_SHORT).show()
             dialog.dismiss()
         }
         sadMood.setOnClickListener {
             diary.setMood(Diary.SAD_MOOD)
+            expenseIncomeAdapter.setDiaryMood(diary.getMood())
+            expenseIncomeViewModel.reloadExpenseIncomes()
             diaryViewModel.saveDiary(userId, diary)
             Toast.makeText(applicationContext, "Sad Mood", Toast.LENGTH_SHORT).show()
             dialog.dismiss()
@@ -139,5 +146,15 @@ class DiaryActivity : AppCompatActivity(){
         setSupportActionBar(toolbar_diary)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+    }
+
+    override fun onExpenseIncomeClick(position: Int) {
+        Log.d("checkviewclick", "clicked")
+        var temp = expenseIncomeViewModel.getExpenseIncomes().value?.get(position) as ExpenseIncome
+        var intent: Intent = Intent(this, ExpenseIncomeActivity::class.java)
+        intent.putExtra(ExpenseIncome.GO_TO_EXPENSE_INCOME, ExpenseIncome.UPDATE_EXPENSE_INCOME)
+        intent.putExtra(Diary.DIARY_ID, diary.getId())
+        intent.putExtra(ExpenseIncome.EXPENSE_INCOME, temp)
+        startActivity(intent)
     }
 }

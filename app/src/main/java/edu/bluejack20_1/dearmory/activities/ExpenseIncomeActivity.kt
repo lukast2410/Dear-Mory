@@ -24,6 +24,7 @@ import edu.bluejack20_1.dearmory.models.Diary
 import edu.bluejack20_1.dearmory.models.ExpenseIncome
 import kotlinx.android.synthetic.main.activity_expense_income.*
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -66,12 +67,13 @@ class ExpenseIncomeActivity : AppCompatActivity() {
     }
 
     private fun updateExpenseIncome() {
-
+        refsDB.child(expenseIncome.getId()).setValue(expenseIncome)
+        Toast.makeText(applicationContext, getString(R.string.success_save_expense_income), Toast.LENGTH_SHORT).show()
     }
 
     private fun createExpenseIncome() {
         val notes = til_expense_income_notes.editText?.text.toString()
-        var amount = til_money_amount.editText?.text.toString().toInt()
+        var amount = til_money_amount.editText?.text.toString().toLong()
         val id: String = refsDB.push().key.toString()
         if(expenseIncomeType == EXPENSE_TYPE)
             amount *= (-1)
@@ -98,7 +100,14 @@ class ExpenseIncomeActivity : AppCompatActivity() {
 
     private fun validateMoneyAmount(text: String, showToast: Boolean): Boolean {
         if(text.isNotBlank()){
-            val amount = text.toInt()
+            if(text.length > 18){
+                til_money_amount.isErrorEnabled = true
+                til_money_amount.error = getString(R.string.input_amount_too_big)
+                if(showToast)
+                    Toast.makeText(applicationContext, getString(R.string.input_amount_too_big), Toast.LENGTH_SHORT).show()
+                return false
+            }
+            val amount = text.toLong()
             return if(amount <= 0){
                 til_money_amount.isErrorEnabled = true
                 til_money_amount.error = getString(R.string.input_amount_error)
@@ -119,11 +128,14 @@ class ExpenseIncomeActivity : AppCompatActivity() {
     }
 
     private fun initializeTimePicker() {
-        val timeNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm")).toString()
-        expenseIncome.setTime(timeNow)
-        tv_time_picker.text = timeNow
         ll_time_picker_container.setOnClickListener(View.OnClickListener {
-            val dialogFragment = TimePickerDialogFragment()
+            var dialogFragment: TimePickerDialogFragment
+            if(actType == ExpenseIncome.UPDATE_EXPENSE_INCOME){
+                var time = LocalTime.parse(expenseIncome.getTime(), DateTimeFormatter.ofPattern("HH:mm")) as LocalTime
+                dialogFragment = TimePickerDialogFragment(true, time.hour,time.minute)
+            }
+            else
+                dialogFragment = TimePickerDialogFragment(false,1,1)
             dialogFragment.show(supportFragmentManager, "timePicker")
             dialogFragment.setListener(object : TimePickerDialogListener {
                 @SuppressLint("SetTextI18n")
@@ -165,14 +177,33 @@ class ExpenseIncomeActivity : AppCompatActivity() {
     private fun getExtraFromLastActivity() {
         actType = intent.getStringExtra(ExpenseIncome.GO_TO_EXPENSE_INCOME).toString()
         diaryId = intent.getStringExtra(Diary.DIARY_ID).toString()
-        expenseIncome = ExpenseIncome()
-        if(intent.getStringExtra(ExpenseIncome.EXPENSE_INCOME_ID).toString().isNotBlank()){
-            expenseIncome.setId(intent.getStringExtra(ExpenseIncome.EXPENSE_INCOME_ID).toString())
+        val timeNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm")).toString()
+        if(actType == ExpenseIncome.UPDATE_EXPENSE_INCOME){
+            expenseIncome = intent.getSerializableExtra(ExpenseIncome.EXPENSE_INCOME) as ExpenseIncome
+            setExpenseIncomeData()
+        }else{
+            expenseIncome = ExpenseIncome()
+            expenseIncome.setTime(timeNow)
+            tv_time_picker.text = timeNow
         }
     }
 
+    private fun setExpenseIncomeData() {
+        if (expenseIncome.getAmount().toLong() < 0){
+            til_expense_income_type.editText?.setText(R.string.expense)
+            til_money_amount.editText?.setText((expenseIncome.getAmount().toLong() * -1).toString())
+            expenseIncomeType = EXPENSE_TYPE
+        }else{
+            til_expense_income_type.editText?.setText(R.string.income)
+            til_money_amount.editText?.setText(expenseIncome.getAmount().toString())
+            expenseIncomeType = INCOME_TYPE
+        }
+        til_expense_income_notes.editText?.setText(expenseIncome.getNotes())
+        tv_time_picker.text = expenseIncome.getTime()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        if(actType.equals(ExpenseIncome.UPDATE_EXPENSE_INCOME)){
+        if(actType == ExpenseIncome.UPDATE_EXPENSE_INCOME){
             menuInflater.inflate(R.menu.menu, menu)
         }
         return super.onCreateOptionsMenu(menu)
@@ -182,7 +213,7 @@ class ExpenseIncomeActivity : AppCompatActivity() {
         if(item.itemId == R.id.toolbar_delete_menu){
             //delete
             refsDB = FirebaseDatabase.getInstance().getReference(ExpenseIncome.EXPENSE_INCOME)
-            refsDB.child(expenseIncome.getId()).removeValue()
+            refsDB.child(diaryId).child(expenseIncome.getId()).removeValue()
             finish()
         }
         return super.onOptionsItemSelected(item)

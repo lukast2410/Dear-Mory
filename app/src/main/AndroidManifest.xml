@@ -11,8 +11,8 @@
         android:theme="@style/LightTheme">
         <activity android:name=".activities.ExpenseIncomeActivity"
             android:parentActivityName=".activities.DiaryActivity"
-            android:windowSoftInputMode="adjustResize"></activity>
-        <activity android:name=".activities.LogInActivity" />
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name=".activities.LogInActivity"/>
         <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

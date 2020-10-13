@@ -11,7 +11,11 @@ import edu.bluejack20_1.dearmory.ThemeManager
 import java.util.*
 
 
-class TimePickerDialogFragment : DialogFragment(), OnTimeSetListener {
+class TimePickerDialogFragment(
+    private val setTime: Boolean,
+    private val setHour: Int,
+    private val setMinute: Int
+) : DialogFragment(), OnTimeSetListener {
     private lateinit var listener: TimePickerDialogListener
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -21,11 +25,14 @@ class TimePickerDialogFragment : DialogFragment(), OnTimeSetListener {
         val currentHour: Int = calendar.get(Calendar.HOUR_OF_DAY)
         val currentMinute: Int = calendar.get(Calendar.MINUTE)
         var theme = R.style.DialogDarkTheme
-        when(ThemeManager.THEME_INDEX){
+        when (ThemeManager.THEME_INDEX) {
             ThemeManager.LIGHT_THEME_INDEX -> theme = R.style.DialogLightTheme
             ThemeManager.GALAXY_THEME_INDEX -> theme = R.style.DialogGalaxyTheme
         }
-        return TimePickerDialog(context, theme, this, currentHour, currentMinute, false)
+        if(!setTime)
+            return TimePickerDialog(context, theme, this, currentHour, currentMinute, false)
+        else
+            return TimePickerDialog(context, theme, this, setHour, setMinute, false)
     }
 
     override fun onTimeSet(timePicker: TimePicker, i: Int, i1: Int) {

@@ -1,6 +1,8 @@
 package edu.bluejack20_1.dearmory.models
 
-class ExpenseIncome {
+import java.io.Serializable
+
+class ExpenseIncome: Serializable {
     private lateinit var expenseIncomeId: String
     private lateinit var expenseIncomeNotes: String
     private lateinit var expenseIncomeAmount: Number
