@@ -7,20 +7,13 @@
     tools:context="edu.bluejack20_1.dearmory.fragments.CalendarFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <EditText
-        android:id="@+id/reminder_label"
-        android:layout_width="200dp"
-        android:hint="@string/reminder_label_hint"
-        android:padding="10dp"
-        android:textColor="@color/black"
-        android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/add_reminder_button"
-        android:layout_width="wrap_content"
-        android:layout_gravity="end"
-        android:text="@string/add_reminder_button"
-        android:layout_height="wrap_content" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/reminder_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add_reminder"

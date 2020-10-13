@@ -6,10 +6,17 @@ class User private constructor() {
     private lateinit var name: String
     private lateinit var email: String
     private lateinit var profilePicture: String
-    private lateinit var id: String
+    private var id: String? = null
 
     companion object{
-        var instance: User = User()
+        var instance: User? = null
+        @JvmName("user")
+        fun getInstance(): User{
+            if(instance == null){
+                instance = User()
+            }
+            return instance as User
+        }
     }
 
     fun getName(): String {
@@ -36,7 +43,7 @@ class User private constructor() {
         this.profilePicture = newProfileId.toString()
     }
 
-    fun getId(): String {
+    fun getId(): String? {
         return id
     }
 

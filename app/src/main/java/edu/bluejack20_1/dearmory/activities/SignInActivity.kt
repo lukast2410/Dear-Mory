@@ -111,13 +111,15 @@ class SignInActivity : AppCompatActivity() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if(snapshot.exists()){
                         Log.d("REF", "USER ALREADY EXISTS")
+                        User.getInstance().setName(snapshot.child("name").toString())
+                        User.getInstance().setId(snapshot.child("id").toString())
                     }else{
                         Log.d("REF", "USER DOES NOT EXISTS..CREATING NEW USER..")
-                        User.instance.setName(user.displayName as String)
-                        User.instance.setEmail(user.email as String)
-                        User.instance.setProfilePicture(user.photoUrl)
-                        User.instance.setId(user.id as String)
-                        ref.setValue(User.instance).addOnCompleteListener {
+                        User.getInstance().setName(user.displayName as String)
+                        User.getInstance().setEmail(user.email as String)
+                        User.getInstance().setProfilePicture(user.photoUrl)
+                        User.getInstance().setId(user.id as String)
+                        ref.setValue(User.getInstance()).addOnCompleteListener {
                             Log.d("REF", "SUCCESS CREATE NEW USER")
                         }
                     }

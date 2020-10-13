@@ -15,24 +15,33 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.TimePicker
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.database.*
 import edu.bluejack20_1.dearmory.R
+import edu.bluejack20_1.dearmory.adapters.ReminderAdapter
+import edu.bluejack20_1.dearmory.models.Reminder
+import edu.bluejack20_1.dearmory.modelsViews.ReminderViewModel
 import edu.bluejack20_1.dearmory.receivers.AlertReceiver
 import kotlinx.android.synthetic.main.fragment_calendar.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class CalendarFragment : Fragment(){
 
-    private lateinit var button: Button
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var reminderAdapter: ReminderAdapter
+    private lateinit var reminderViewModel: ReminderViewModel
+
     private lateinit var calendar: Calendar
     private lateinit var timeToNotify: String
     private lateinit var dialog: Dialog
@@ -65,6 +74,20 @@ class CalendarFragment : Fragment(){
 
         dialog = context?.let { Dialog(it) }!!
 
+        reminder_recycler_view.setHasFixedSize(true)
+        reminder_recycler_view.layoutManager = LinearLayoutManager(context)
+        reminderViewModel = ViewModelProviders.of(this).get(ReminderViewModel::class.java)
+        reminderViewModel.init()
+        reminderAdapter = ReminderAdapter(reminderViewModel.getReminders().value!!)
+        reminderViewModel.getReminders().observe(viewLifecycleOwner, object : Observer<ArrayList<Reminder>>{
+            override fun onChanged(t: ArrayList<Reminder>?) {
+                reminderAdapter.notifyDataSetChanged()
+            }
+
+        })
+
+        reminder_recycler_view.adapter = reminderAdapter
+
         fab_add_reminder.setOnClickListener {
             calendar = Calendar.getInstance()
 
@@ -83,7 +106,6 @@ class CalendarFragment : Fragment(){
                     ty = i
                     tmonth = month
                     td = i3
-                    add_reminder_button.text = date
                 }
                 ,year,month,day) }
             if (datePickerDialog != null) {
@@ -98,7 +120,6 @@ class CalendarFragment : Fragment(){
     private fun openTimePicker(hour: Int, minute: Int){
         val timePickerDialog = TimePickerDialog(context,TimePickerDialog.OnTimeSetListener(){ timePicker: TimePicker, i: Int, i1: Int ->
             timeToNotify = "$i:$i1"
-            add_reminder_button.text = formatTime(i,i1)
 //            add_reminder_button.text = "$i:$i1"
             choosenTime = "$i:$i1"
             th = i
@@ -184,5 +205,6 @@ class CalendarFragment : Fragment(){
 //        }
 
     }
+
 
 }
