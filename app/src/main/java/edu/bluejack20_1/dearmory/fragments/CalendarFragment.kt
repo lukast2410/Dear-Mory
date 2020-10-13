@@ -79,14 +79,10 @@ class CalendarFragment : Fragment(){
         reminderViewModel = ViewModelProviders.of(this).get(ReminderViewModel::class.java)
         reminderViewModel.init()
         reminderAdapter = ReminderAdapter(reminderViewModel.getReminders().value!!)
-        reminderViewModel.getReminders().observe(viewLifecycleOwner, object : Observer<ArrayList<Reminder>>{
-            override fun onChanged(t: ArrayList<Reminder>?) {
-                reminderAdapter.notifyDataSetChanged()
-            }
-
+        reminderViewModel.getReminders().observe(viewLifecycleOwner, Observer<ArrayList<Reminder>> {
+            reminderAdapter.notifyDataSetChanged()
+            reminder_recycler_view.adapter = reminderAdapter
         })
-
-        reminder_recycler_view.adapter = reminderAdapter
 
         fab_add_reminder.setOnClickListener {
             calendar = Calendar.getInstance()

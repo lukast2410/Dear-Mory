@@ -1,9 +1,11 @@
 package edu.bluejack20_1.dearmory.repository
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.database.*
+import com.google.firebase.database.ktx.getValue
 import edu.bluejack20_1.dearmory.models.Reminder
 import edu.bluejack20_1.dearmory.models.User
 
@@ -41,6 +43,7 @@ class ReminderRepo {
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
+                reminders.clear()
                 for (snap in snapshot.children){
                     reminders.add(snap.getValue(Reminder::class.java)!!)
                 }
