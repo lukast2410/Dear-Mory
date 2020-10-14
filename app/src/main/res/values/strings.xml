@@ -18,4 +18,11 @@
     <string name="save">Save</string>
     <string name="income">Income</string>
     <string name="expense">Expense</string>
+    <string name="confirm_delete_expense_income">Are you sure you want to delete?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="uploading">Uploading...</string>
+    <string name="upload_success">Image uploaded successfully</string>
+    <string name="upload_failed">Failed to upload image</string>
+    <string name="uploaded">Uploaded</string>
 </resources>

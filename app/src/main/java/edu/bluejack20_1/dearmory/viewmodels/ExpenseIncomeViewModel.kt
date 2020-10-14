@@ -9,23 +9,25 @@ import edu.bluejack20_1.dearmory.models.ExpenseIncome
 import edu.bluejack20_1.dearmory.repositories.ExpenseIncomeRepository
 
 class ExpenseIncomeViewModel(private val repository: ExpenseIncomeRepository): ViewModel() {
-    private var expenseIncomeModels: MutableLiveData<ArrayList<ExpenseIncome>>? = null
+    private lateinit var expenseIncomeModels: MutableLiveData<ArrayList<ExpenseIncome>>
 
     fun init(diaryId: String){
-        if(expenseIncomeModels == null){
-            expenseIncomeModels = repository.getExpenseIncomeModels(diaryId)
-        }
+        expenseIncomeModels = repository.getExpenseIncomeModels(diaryId)
     }
 
     fun getExpenseIncomes(): MutableLiveData<ArrayList<ExpenseIncome>> {
-        return expenseIncomeModels as MutableLiveData<ArrayList<ExpenseIncome>>
+        return expenseIncomeModels
     }
 
-    fun reloadExpenseIncomes(){
-        val size = expenseIncomeModels?.value?.size!!
-        if (size > 0){
-            val temp = expenseIncomeModels?.value!!
-            expenseIncomeModels?.value = temp
-        }
+    fun createExpenseIncome(diaryId: String, expenseIncome: ExpenseIncome){
+        return repository.createExpenseIncome(diaryId, expenseIncome)
+    }
+
+    fun updateExpenseIncome(diaryId: String, expenseIncome: ExpenseIncome){
+        return repository.updateExpenseIncome(diaryId, expenseIncome)
+    }
+
+    fun deleteExpenseIncome(diaryId: String, expenseIncome: ExpenseIncome){
+        return repository.deleteExpenseIncome(diaryId, expenseIncome)
     }
 }

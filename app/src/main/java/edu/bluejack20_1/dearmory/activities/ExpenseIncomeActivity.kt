@@ -1,7 +1,9 @@
 package edu.bluejack20_1.dearmory.activities
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.Dialog
+import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
@@ -10,19 +12,26 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProviders
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import edu.bluejack20_1.dearmory.R
 import edu.bluejack20_1.dearmory.ThemeManager
+import edu.bluejack20_1.dearmory.factories.ExpenseIncomeViewModelFactory
 import edu.bluejack20_1.dearmory.fragments.TimePickerDialogFragment
 import edu.bluejack20_1.dearmory.fragments.TimePickerDialogFragment.TimePickerDialogListener
 import edu.bluejack20_1.dearmory.models.Diary
 import edu.bluejack20_1.dearmory.models.ExpenseIncome
+import edu.bluejack20_1.dearmory.repositories.ExpenseIncomeRepository
+import edu.bluejack20_1.dearmory.viewmodels.ExpenseIncomeViewModel
 import kotlinx.android.synthetic.main.activity_expense_income.*
+import org.w3c.dom.Text
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -35,8 +44,9 @@ class ExpenseIncomeActivity : AppCompatActivity() {
     private lateinit var diaryId: String
     private lateinit var expenseIncome: ExpenseIncome
     private lateinit var expenseIncomeType: String
+    private lateinit var expenseIncomeViewModel: ExpenseIncomeViewModel
     private lateinit var dialog: Dialog
-    private lateinit var refsDB: DatabaseReference
+    private lateinit var confirmDialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,18 +54,24 @@ class ExpenseIncomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_expense_income)
         iv_main_background_expense_income.setImageResource(ThemeManager.setUpBackground())
         getExtraFromLastActivity()
+        initializeViewModel()
         initializeToolbar()
         initializeTypePopUp()
         initializeTimePicker()
+        initializeDeleteConfirmation()
         setMoneyInput()
         saveExpenseIncome()
+    }
+
+    private fun initializeViewModel() {
+        val factory = ExpenseIncomeViewModelFactory(ExpenseIncomeRepository.getInstance())
+        expenseIncomeViewModel = ViewModelProviders.of(this, factory).get(ExpenseIncomeViewModel::class.java)
     }
 
     private fun saveExpenseIncome() {
         btn_save_expense_income.setOnClickListener{
             val check = validateMoneyAmount(til_money_amount.editText?.text.toString(), true)
             if(check){
-                refsDB = FirebaseDatabase.getInstance().getReference(ExpenseIncome.EXPENSE_INCOME).child(diaryId)
                 if(actType == ExpenseIncome.ADD_EXPENSE_INCOME){
                     createExpenseIncome()
                 }else if(actType == ExpenseIncome.UPDATE_EXPENSE_INCOME){
@@ -67,21 +83,28 @@ class ExpenseIncomeActivity : AppCompatActivity() {
     }
 
     private fun updateExpenseIncome() {
-        refsDB.child(expenseIncome.getId()).setValue(expenseIncome)
+        val notes = til_expense_income_notes.editText?.text.toString()
+        var amount = til_money_amount.editText?.text.toString().toLong()
+        Log.d("checkviewamount", amount.toString())
+        if(expenseIncomeType == EXPENSE_TYPE)
+            amount *= (-1)
+        Log.d("checkviewamount", amount.toString())
+        Log.d("checkviewtype", expenseIncomeType)
+        expenseIncome.setNotes(notes)
+        expenseIncome.setAmount(amount)
+        expenseIncomeViewModel.updateExpenseIncome(diaryId, expenseIncome)
         Toast.makeText(applicationContext, getString(R.string.success_save_expense_income), Toast.LENGTH_SHORT).show()
     }
 
     private fun createExpenseIncome() {
         val notes = til_expense_income_notes.editText?.text.toString()
         var amount = til_money_amount.editText?.text.toString().toLong()
-        val id: String = refsDB.push().key.toString()
         if(expenseIncomeType == EXPENSE_TYPE)
             amount *= (-1)
-        expenseIncome.setId(id)
-            .setAmount(amount)
+        expenseIncome.setAmount(amount)
             .setNotes(notes)
 
-        refsDB.child(id).setValue(expenseIncome)
+        expenseIncomeViewModel.createExpenseIncome(diaryId, expenseIncome)
         Toast.makeText(applicationContext, getString(R.string.success_save_expense_income), Toast.LENGTH_SHORT).show()
     }
 
@@ -130,18 +153,20 @@ class ExpenseIncomeActivity : AppCompatActivity() {
     private fun initializeTimePicker() {
         ll_time_picker_container.setOnClickListener(View.OnClickListener {
             var dialogFragment: TimePickerDialogFragment
-            if(actType == ExpenseIncome.UPDATE_EXPENSE_INCOME){
-                var time = LocalTime.parse(expenseIncome.getTime(), DateTimeFormatter.ofPattern("HH:mm")) as LocalTime
-                dialogFragment = TimePickerDialogFragment(true, time.hour,time.minute)
-            }
-            else
-                dialogFragment = TimePickerDialogFragment(false,1,1)
+            val time = LocalTime.parse(expenseIncome.getTime(), DateTimeFormatter.ofPattern("HH:mm")) as LocalTime
+            dialogFragment = TimePickerDialogFragment(true, time.hour, time.minute)
             dialogFragment.show(supportFragmentManager, "timePicker")
             dialogFragment.setListener(object : TimePickerDialogListener {
                 @SuppressLint("SetTextI18n")
                 override fun onTimePickerDialogTimeSet(hour: Int, minute: Int) {
-                    tv_time_picker.text = "${hour}:${minute}"
-                    expenseIncome.setTime("${hour}:${minute}")
+                    var finalHour: String = hour.toString()
+                    var finalMinute: String = minute.toString()
+                    if(hour < 10)
+                        finalHour = "0${hour}"
+                    if(minute < 10)
+                        finalMinute = "0${minute}"
+                    tv_time_picker.text = "$finalHour:$finalMinute"
+                    expenseIncome.setTime("$finalHour:$finalMinute")
                 }
             })
         })
@@ -166,6 +191,23 @@ class ExpenseIncomeActivity : AppCompatActivity() {
             expenseIncomeType = INCOME_TYPE
             dialog.dismiss()
         }
+    }
+
+    private fun initializeDeleteConfirmation(){
+        confirmDialog = Dialog(this)
+        confirmDialog.setContentView(R.layout.confirmation_dialog)
+        confirmDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val dialogMessage = confirmDialog.findViewById(R.id.tv_confirmation_message) as TextView
+        val confirmYes = confirmDialog.findViewById(R.id.btn_confirm_yes) as Button
+        val confirmNo = confirmDialog.findViewById(R.id.btn_confirm_no) as Button
+        dialogMessage.text = getString(R.string.confirm_delete_expense_income)
+        confirmYes.setOnClickListener(View.OnClickListener {
+            expenseIncomeViewModel.deleteExpenseIncome(diaryId, expenseIncome)
+            finish()
+        })
+        confirmNo.setOnClickListener(View.OnClickListener {
+            confirmDialog.dismiss()
+        })
     }
 
     private fun initializeToolbar() {
@@ -211,10 +253,7 @@ class ExpenseIncomeActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.toolbar_delete_menu){
-            //delete
-            refsDB = FirebaseDatabase.getInstance().getReference(ExpenseIncome.EXPENSE_INCOME)
-            refsDB.child(diaryId).child(expenseIncome.getId()).removeValue()
-            finish()
+            confirmDialog.show()
         }
         return super.onOptionsItemSelected(item)
     }

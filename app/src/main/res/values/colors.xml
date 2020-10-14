@@ -35,7 +35,7 @@
     <color name="colorAccentLightTheme">#787878</color>
     <color name="colorIconIfBgWhiteLightTheme">#1F3F4C</color>
     <color name="navBackgroundColorLightTheme">#1F3F4C</color>
-    <color name="componentBgLightTheme">#CEE1E1E1</color>
+    <color name="componentBgLightTheme">#E9EDEDED</color>
     <color name="colorIconWithoutBgLightTheme">#ffffff</color>
     <color name="textColorLightTheme">#000000</color>
 
@@ -74,5 +74,8 @@
     <color name="black">#000000</color>
     <color name="defaultExpense">#E80000</color>
     <color name="defaultIncome">#12DC12</color>
+    <color name="angryMoodDiary">#66FF3B1F</color>
+    <color name="happyMoodDiary">#4FFCD12A</color>
+    <color name="sadMoodDiary">#590076dc</color>
 
 </resources>

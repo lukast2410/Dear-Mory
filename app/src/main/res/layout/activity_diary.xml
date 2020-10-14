@@ -11,42 +11,62 @@
         android:id="@+id/iv_main_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:src="@drawable/dark"/>
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/rl_background_shading_mood"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:overScrollMode="always">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_diary"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/transparent"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/et_edit_diary_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/edit_diary_container"
-            android:drawablePadding="5dp"
-            android:gravity="top|start"
-            android:hint="@string/edit_diary_hint"
-            android:inputType="textCapSentences|textMultiLine"
-            android:maxLength="2000"
-            android:minLines="15"
-            android:padding="10dp"
-            android:singleLine="false"
-            android:textColor="?attr/editTextColor"
-            android:textColorHint="?attr/colorAccent" />
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_diary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_expense_income"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/et_edit_diary_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:background="@drawable/edit_diary_container"
+                android:drawablePadding="5dp"
+                android:gravity="top|start"
+                android:hint="@string/edit_diary_hint"
+                android:inputType="textCapSentences|textMultiLine"
+                android:maxLength="2000"
+                android:minLines="15"
+                android:padding="10dp"
+                android:singleLine="false"
+                android:textColor="?attr/editTextColor"
+                android:textColorHint="?attr/colorAccent" />
 
-    </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_expense_income"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/fab_expand_menu_button"

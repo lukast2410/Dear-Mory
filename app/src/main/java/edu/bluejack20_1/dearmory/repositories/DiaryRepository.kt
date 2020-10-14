@@ -1,21 +1,17 @@
 package edu.bluejack20_1.dearmory.repositories
 
-import android.os.Build
-import android.util.Log
-import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.*
 import edu.bluejack20_1.dearmory.models.Diary
-import edu.bluejack20_1.dearmory.models.ExpenseIncome
-import kotlinx.android.synthetic.main.activity_diary.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class DiaryRepository private constructor(){
-    private val refsDB: DatabaseReference = FirebaseDatabase.getInstance().getReference(Diary.DIARY)
+    private val refsDB: DatabaseReference = FirebaseDatabase.getInstance().getReference()
     private var diary: Diary = Diary()
     private var diaryLiveData: MutableLiveData<Diary> = MutableLiveData()
+    private var diaryModels: ArrayList<Diary> = ArrayList()
+    private var diariesLiveData: MutableLiveData<ArrayList<Diary>> = MutableLiveData()
 
     companion object{
         var instance: DiaryRepository? = null
@@ -26,6 +22,38 @@ class DiaryRepository private constructor(){
             }
             return instance as DiaryRepository
         }
+    }
+
+    fun getDiaries(userId: String): MutableLiveData<ArrayList<Diary>>{
+        loadDiaries(userId)
+
+        diariesLiveData.value = diaryModels
+
+        return diariesLiveData
+    }
+
+    private fun loadDiaries(userId: String) {
+        if(diaryModels.size > 0)
+            diaryModels.clear()
+        refsDB.child(Diary.DIARY).child(userId).addChildEventListener(object : ChildEventListener{
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                var key = snapshot.key as String
+                diaryModels.add(Diary()
+                    .setId(snapshot.child("id").getValue().toString())
+                    .setDate(snapshot.child("date").getValue().toString())
+                    .setText(snapshot.child("text").getValue().toString())
+                    .setMood(snapshot.child("mood").getValue().toString())
+                )
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {}
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+
+            override fun onCancelled(error: DatabaseError) {}
+        })
     }
 
     fun getDiary(userId: String): MutableLiveData<Diary>{
@@ -43,7 +71,7 @@ class DiaryRepository private constructor(){
             "Error"
         }
         var checkToday: Boolean = false
-        refsDB.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
+        refsDB.child(Diary.DIARY).child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (data: DataSnapshot in snapshot.children) {
                     if (data.child("date").value.toString() == dateNow) {
