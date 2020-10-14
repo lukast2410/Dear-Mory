@@ -26,9 +26,9 @@ class ReminderRepo {
     }
 
     fun getReminders(): MutableLiveData<ArrayList<Reminder>>{
-        if(reminders.size == 0){
+//        if(reminders.size == 0){
             loadReminder()
-        }
+//        }
 
         reminder.value = reminders
         return reminder

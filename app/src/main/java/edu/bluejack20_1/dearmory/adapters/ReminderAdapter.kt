@@ -3,6 +3,7 @@ package edu.bluejack20_1.dearmory.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
@@ -24,6 +25,8 @@ class ReminderAdapter : RecyclerView.Adapter<ReminderAdapter.ViewHolder> {
         val vibration: ImageView = itemView.findViewById(R.id.vibrate_button)
         val label: TextView = itemView.findViewById(R.id.reminder_label_label)
         val repeatedDays: TextView = itemView.findViewById(R.id.repetition_day_label)
+        val date: TextView = itemView.findViewById(R.id.reminder_date_label)
+        val repeatCheckBox: CheckBox = itemView.findViewById(R.id.repeat_check_box)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,9 +43,17 @@ class ReminderAdapter : RecyclerView.Adapter<ReminderAdapter.ViewHolder> {
         holder.time.text = reminderList[position].getTime()
         holder.label.text = reminderList[position].getLabel()
         holder.repeatedDays.text = reminderList[position].getRepeatDays()
+        holder.date.text = reminderList[position].getDate()
+        if(reminderList[position].getRepeat() == "on"){
+            holder.repeatCheckBox.isChecked = true
+            holder.repeatedDays.visibility = View.VISIBLE
+        }else if(reminderList[position].getRepeat() == "off"){
+            holder.repeatCheckBox.isChecked = false
+            holder.repeatedDays.visibility = View.INVISIBLE
+        }
         if(reminderList[position].getVibrate() == "on"){
             holder.vibration.setImageResource(R.drawable.notifications_on)
-        }else{
+        }else if(reminderList[position].getVibrate() == "off"){
             holder.vibration.setImageResource(R.drawable.notifications_off)
         }
     }

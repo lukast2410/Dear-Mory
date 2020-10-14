@@ -6,35 +6,34 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.hardware.SensorManager
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
-import android.provider.AlarmClock
-import android.util.Log
+import android.text.InputFilter
+import android.text.InputFilter.LengthFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TimePicker
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.firebase.database.*
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import edu.bluejack20_1.dearmory.R
 import edu.bluejack20_1.dearmory.adapters.ReminderAdapter
 import edu.bluejack20_1.dearmory.models.Reminder
 import edu.bluejack20_1.dearmory.modelsViews.ReminderViewModel
 import edu.bluejack20_1.dearmory.receivers.AlertReceiver
 import kotlinx.android.synthetic.main.fragment_calendar.*
-import java.text.SimpleDateFormat
+import kotlinx.android.synthetic.main.reminder_label_pop_up.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 class CalendarFragment : Fragment(){
 
@@ -152,6 +151,8 @@ class CalendarFragment : Fragment(){
     @RequiresApi(Build.VERSION_CODES.N)
     private fun showLabelPopUp(){
         dialog.setContentView(R.layout.reminder_label_pop_up)
+        val label = dialog.findViewById<EditText>(R.id.label_reminder_field)
+        label.filters = arrayOf<InputFilter>(LengthFilter(18))
         val saveBtn = dialog.findViewById<Button>(R.id.save_label_reminder_logo)
         saveBtn.setOnClickListener {
             saveReminder()

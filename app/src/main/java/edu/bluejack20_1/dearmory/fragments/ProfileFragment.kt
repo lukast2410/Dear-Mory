@@ -2,7 +2,9 @@ package edu.bluejack20_1.dearmory.fragments
 
 import android.app.Dialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -28,6 +30,8 @@ class ProfileFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
     private lateinit var dialog: Dialog
+    private lateinit var chosen_profile_image_url: Uri
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -71,6 +75,10 @@ class ProfileFragment : Fragment() {
             })
         }
 
+        profile_picture.setOnClickListener {
+            selectPictureIntent()
+        }
+
         profile_name.setOnClickListener {
             Log.d("Updated", "name clicked")
             showUsernameUpdatePopUp()
@@ -90,6 +98,22 @@ class ProfileFragment : Fragment() {
             val intent = Intent(context, SignInActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
+        }
+    }
+
+    fun selectPictureIntent(){
+        val intent: Intent = Intent()
+        intent.setType("image/*")
+        intent.setAction(Intent.ACTION_GET_CONTENT)
+        startActivityForResult(intent, 1)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode==1 && resultCode == -1 && data != null && data.data != null){
+            chosen_profile_image_url = data.data!!
+            profile_picture.setImageURI(chosen_profile_image_url)
+            updateProfilePicture(chosen_profile_image_url)
         }
     }
 
@@ -142,6 +166,23 @@ class ProfileFragment : Fragment() {
             Log.d("UPDATE USERNAME", "acc not null but name is blank")
         }else{
             Log.d("UPDATE USERNAME", "acc null or name null")
+        }
+    }
+
+    private fun updateProfilePicture(uri: Uri){
+        val account = GoogleSignIn.getLastSignedInAccount(activity)
+        if(account != null){
+                databaseReference = FirebaseDatabase.getInstance().getReference("User").child(
+                    account.id!!
+                )
+                val hashMap: HashMap<String, String> = HashMap<String, String>()
+                hashMap["profilePicture"] = uri.toString()
+                databaseReference.updateChildren(hashMap as Map<String, Any>).addOnCompleteListener {
+                    dialog.dismiss()
+                }
+                Log.d("UPDATE PP", "acc not null and pp not null ")
+        }else{
+            Log.d("UPDATE PP", "acc null or pp null")
         }
     }
 

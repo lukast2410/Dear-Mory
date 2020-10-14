@@ -5,4 +5,5 @@
     <string name="add_expense_income">Add Expense or Income</string>
     <string name="reminder_label_hint">Label</string>
     <string name="add_reminder_button">Add</string>
+    <string name="repeat_reminder_label">Repeat</string>
 </resources>
