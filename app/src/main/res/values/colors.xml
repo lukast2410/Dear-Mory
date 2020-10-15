@@ -77,5 +77,6 @@
     <color name="angryMoodDiary">#66FF3B1F</color>
     <color name="happyMoodDiary">#4FFCD12A</color>
     <color name="sadMoodDiary">#590076dc</color>
+    <color name="dialogBackground">#80323232</color>
 
 </resources>

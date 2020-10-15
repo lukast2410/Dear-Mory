@@ -8,7 +8,7 @@ import java.lang.IllegalArgumentException
 
 class ImageViewModelFactory(private val repository: ImageRepository): ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if(modelClass.isAssignableFrom(ImageRepository::class.java))
+        if(modelClass.isAssignableFrom(ImageViewModel::class.java))
             return ImageViewModel(repository) as T
         throw IllegalArgumentException("Unknown View Model Class")
     }

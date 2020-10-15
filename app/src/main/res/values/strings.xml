@@ -25,4 +25,6 @@
     <string name="upload_success">Image uploaded successfully</string>
     <string name="upload_failed">Failed to upload image</string>
     <string name="uploaded">Uploaded</string>
+    <string name="close">Close</string>
+    <string name="delete">Delete</string>
 </resources>

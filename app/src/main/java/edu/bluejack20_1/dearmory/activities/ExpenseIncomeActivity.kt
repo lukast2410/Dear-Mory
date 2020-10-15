@@ -154,7 +154,7 @@ class ExpenseIncomeActivity : AppCompatActivity() {
         ll_time_picker_container.setOnClickListener(View.OnClickListener {
             var dialogFragment: TimePickerDialogFragment
             val time = LocalTime.parse(expenseIncome.getTime(), DateTimeFormatter.ofPattern("HH:mm")) as LocalTime
-            dialogFragment = TimePickerDialogFragment(true, time.hour, time.minute)
+            dialogFragment = TimePickerDialogFragment(time.hour, time.minute)
             dialogFragment.show(supportFragmentManager, "timePicker")
             dialogFragment.setListener(object : TimePickerDialogListener {
                 @SuppressLint("SetTextI18n")

@@ -14,6 +14,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDarkDarkTheme</item>
         <item name="colorAccent">@color/colorAccentDarkTheme</item>
         <item name="editTextColor">@color/textColorDarkTheme</item>
+        <item name="customTextColor">@color/textColorDarkTheme</item>
         <item name="android:textColorPrimary">@color/textColorDarkTheme</item>
         <item name="android:textColorSecondary">@color/textColorDarkTheme</item>
         <item name="android:textColorTertiary">@color/textColorDarkTheme</item>
@@ -41,12 +42,14 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDarkLightTheme</item>
         <item name="colorAccent">@color/colorAccentLightTheme</item>
         <item name="editTextColor">@color/textColorLightTheme</item>
+        <item name="customTextColor">@color/textColorLightTheme</item>
         <item name="android:textColorPrimary">@color/textColorLightTheme</item>
         <item name="android:textColorSecondary">@color/textColorLightTheme</item>
         <item name="android:textColorTertiary">@color/textColorLightTheme</item>
         <item name="android:textColorPrimaryInverse">@color/textColorLightTheme</item>
         <item name="android:textColorSecondaryInverse">@color/textColorLightTheme</item>
         <item name="android:textColorTertiaryInverse">@color/textColorLightTheme</item>
+
         <item name="colorIconIfBgWhite">@color/colorIconIfBgWhiteLightTheme</item>
         <item name="navBotBackgroundColor">@color/navBackgroundColorLightTheme</item>
         <item name="componentBackgroundColor">@color/componentBgLightTheme</item>
@@ -67,6 +70,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDarkGalaxyTheme</item>
         <item name="colorAccent">@color/colorAccentGalaxyTheme</item>
         <item name="editTextColor">@color/textColorGalaxyTheme</item>
+        <item name="customTextColor">@color/textColorGalaxyTheme</item>
         <item name="android:textColorPrimary">@color/textColorGalaxyTheme</item>
         <item name="android:textColorSecondary">@color/textColorGalaxyTheme</item>
         <item name="android:textColorTertiary">@color/textColorGalaxyTheme</item>
@@ -96,19 +100,38 @@
     </style>
 
 <!--    Custom Time Picker-->
-    <style name="DialogDarkTheme" parent="Theme.AppCompat.Light.Dialog">
+    <style name="DialogDarkTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="colorPrimary">@color/colorPrimaryDarkDarkTheme</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkDarkTheme</item>
         <item name="colorAccent">@color/colorPrimaryDarkDarkTheme</item>
         <item name="colorControlNormal">@color/colorPrimaryDarkDarkTheme</item>
+        <item name="colorOnPrimary">@color/colorPrimaryDarkDarkTheme</item>
+        <item name="colorOnSecondary">@color/colorPrimaryDarkDarkTheme</item>
     </style>
 
     <style name="DialogLightTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/colorPrimaryDarkLightTheme</item>
         <item name="colorAccent">@color/colorPrimaryDarkLightTheme</item>
         <item name="colorControlNormal">@color/colorPrimaryDarkLightTheme</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkLightTheme</item>
+        <item name="colorOnSecondary">@color/colorPrimaryDarkLightTheme</item>
+        <item name="colorOnPrimary">@color/colorPrimaryDarkLightTheme</item>
     </style>
 
     <style name="DialogGalaxyTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="editTextColor">@color/colorPrimaryDarkGalaxyTheme</item>
         <item name="colorAccent">@color/colorPrimaryDarkGalaxyTheme</item>
         <item name="colorControlNormal">@color/colorPrimaryDarkGalaxyTheme</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkGalaxyTheme</item>
+        <item name="colorOnSecondary">@color/colorPrimaryDarkGalaxyTheme</item>
+        <item name="colorOnPrimary">@color/colorPrimaryDarkGalaxyTheme</item>
     </style>
+
+<!--    Dialog Style-->
+    <style name="FullScreenDialogFragment" parent="Theme.AppCompat.Light.DialogWhenLarge">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowAnimationStyle">@style/Animation.Design.BottomSheetDialog</item>
+    </style>
+
 
 </resources>

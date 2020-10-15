@@ -5,22 +5,23 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.*
 import edu.bluejack20_1.dearmory.models.ExpenseIncome
 
-class ExpenseIncomeRepository private constructor(){
+class ExpenseIncomeRepository private constructor() {
     private val refsDB: DatabaseReference = FirebaseDatabase.getInstance().getReference()
     private var expenseIncomeModels: ArrayList<ExpenseIncome> = ArrayList()
     private var expenseIncomeLiveData: MutableLiveData<ArrayList<ExpenseIncome>> = MutableLiveData()
 
-    companion object{
+    companion object {
         var instance: ExpenseIncomeRepository? = null
+
         @JvmName("getInstance1")
-        fun getInstance(): ExpenseIncomeRepository{
-            if(instance == null)
+        fun getInstance(): ExpenseIncomeRepository {
+            if (instance == null)
                 instance = ExpenseIncomeRepository()
             return instance as ExpenseIncomeRepository
         }
     }
 
-    fun getExpenseIncomeModels(diaryId: String): MutableLiveData<ArrayList<ExpenseIncome>>{
+    fun getExpenseIncomeModels(diaryId: String): MutableLiveData<ArrayList<ExpenseIncome>> {
         loadExpenseIncomeModels(diaryId)
 
         expenseIncomeLiveData.value = expenseIncomeModels
@@ -29,26 +30,31 @@ class ExpenseIncomeRepository private constructor(){
     }
 
     private fun loadExpenseIncomeModels(diaryId: String) {
-        val query: Query = refsDB.child(ExpenseIncome.EXPENSE_INCOME).child(diaryId).orderByChild("time")
-        query.addValueEventListener(object : ValueEventListener{
+        val query: Query =
+            refsDB.child(ExpenseIncome.EXPENSE_INCOME).child(diaryId).orderByChild("time")
+        query.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if(expenseIncomeModels.size > 0)
+                if (expenseIncomeModels.size > 0)
                     expenseIncomeModels.removeAll(expenseIncomeModels)
-                for (data: DataSnapshot in snapshot.children){
-                    expenseIncomeModels.add(ExpenseIncome()
-                        .setId(data.child("id").getValue().toString())
-                        .setNotes(data.child("notes").getValue().toString())
-                        .setTime(data.child("time").getValue().toString())
-                        .setAmount(data.child("amount").getValue().toString().toLong()))
+                if (snapshot.exists()) {
+                    for (data: DataSnapshot in snapshot.children) {
+                        expenseIncomeModels.add(
+                            ExpenseIncome()
+                                .setId(data.child("id").getValue().toString())
+                                .setNotes(data.child("notes").getValue().toString())
+                                .setTime(data.child("time").getValue().toString())
+                                .setAmount(data.child("amount").getValue().toString().toLong())
+                        )
+                    }
+                    expenseIncomeLiveData.postValue(expenseIncomeModels)
                 }
-                expenseIncomeLiveData.postValue(expenseIncomeModels)
             }
 
             override fun onCancelled(error: DatabaseError) {}
         })
     }
 
-    fun createExpenseIncome(diaryId: String, expenseIncome: ExpenseIncome){
+    fun createExpenseIncome(diaryId: String, expenseIncome: ExpenseIncome) {
         val id = refsDB.child(diaryId).push().key.toString()
         expenseIncome.setId(id)
         refsDB.child(ExpenseIncome.EXPENSE_INCOME)
@@ -57,14 +63,14 @@ class ExpenseIncomeRepository private constructor(){
             .setValue(expenseIncome)
     }
 
-    fun updateExpenseIncome(diaryId: String, expenseIncome: ExpenseIncome){
+    fun updateExpenseIncome(diaryId: String, expenseIncome: ExpenseIncome) {
         refsDB.child(ExpenseIncome.EXPENSE_INCOME)
             .child(diaryId)
             .child(expenseIncome.getId())
             .setValue(expenseIncome)
     }
 
-    fun deleteExpenseIncome(diaryId: String, expenseIncome: ExpenseIncome){
+    fun deleteExpenseIncome(diaryId: String, expenseIncome: ExpenseIncome) {
         refsDB.child(ExpenseIncome.EXPENSE_INCOME)
             .child(diaryId)
             .child(expenseIncome.getId())
