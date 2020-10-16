@@ -41,7 +41,7 @@
                 android:layout_height="100dp"
                 app:cardBackgroundColor="?attr/componentBackgroundColor"
                 app:cardElevation="0dp"
-                android:layout_marginHorizontal="10dp"
+                android:layout_marginHorizontal="15dp"
                 app:cardCornerRadius="10dp"
                 android:visibility="gone">
 

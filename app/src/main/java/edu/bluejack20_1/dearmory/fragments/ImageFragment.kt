@@ -13,8 +13,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
+import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import edu.bluejack20_1.dearmory.R
 import edu.bluejack20_1.dearmory.models.Image
@@ -23,6 +25,7 @@ import kotlinx.android.synthetic.main.fragment_image.*
 
 @RequiresApi(Build.VERSION_CODES.N)
 class ImageFragment : DialogFragment() {
+    private val storageRefs: FirebaseStorage = FirebaseStorage.getInstance()
     private lateinit var imageViewModel: ImageViewModel
     private lateinit var diaryId: String
     private lateinit var images: ArrayList<Image>
@@ -55,7 +58,8 @@ class ImageFragment : DialogFragment() {
 
     private fun initializeButton() {
         btn_close_image.setOnClickListener {
-            activity?.supportFragmentManager!!.beginTransaction().addToBackStack("done").remove(this).commit()
+
+            activity?.supportFragmentManager!!.beginTransaction().hide(this).addToBackStack(null).remove(this).commit()
         }
         rl_image_fragment_container.setOnClickListener {
             if(showFAB){
@@ -96,9 +100,14 @@ class ImageFragment : DialogFragment() {
             rl_delete_confirmation_container.visibility = View.GONE
         }
         btn_confirm_yes.setOnClickListener{
-//            delete image from databasse and firebase storage
-//            imageViewModel.deleteImage(diaryId, images[position])
-            activity?.supportFragmentManager!!.beginTransaction().addToBackStack("done").remove(this).commit()
+//            delete image from database and firebase storage
+            val url = images[position].getImageUrl()
+            val imageRefs = storageRefs.getReferenceFromUrl(url)
+            imageRefs.delete().addOnSuccessListener {
+                imageViewModel.deleteImage(diaryId, images[position])
+                Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show()
+                activity?.supportFragmentManager!!.beginTransaction().addToBackStack("done").remove(this).commit()
+            }
         }
     }
 

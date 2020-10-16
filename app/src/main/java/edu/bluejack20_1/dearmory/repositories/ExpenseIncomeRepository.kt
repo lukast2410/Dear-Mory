@@ -40,10 +40,10 @@ class ExpenseIncomeRepository private constructor() {
                     for (data: DataSnapshot in snapshot.children) {
                         expenseIncomeModels.add(
                             ExpenseIncome()
-                                .setId(data.child("id").getValue().toString())
-                                .setNotes(data.child("notes").getValue().toString())
-                                .setTime(data.child("time").getValue().toString())
-                                .setAmount(data.child("amount").getValue().toString().toLong())
+                                .setId(data.child("id").value.toString())
+                                .setNotes(data.child("notes").value.toString())
+                                .setTime(data.child("time").value.toString())
+                                .setAmount(data.child("amount").value.toString().toLong())
                         )
                     }
                     expenseIncomeLiveData.postValue(expenseIncomeModels)

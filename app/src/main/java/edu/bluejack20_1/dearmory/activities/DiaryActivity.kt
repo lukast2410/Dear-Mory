@@ -290,4 +290,15 @@ class DiaryActivity : AppCompatActivity(), ExpenseIncomeAdapter.ExpenseIncomeLis
         imageFragment.setImages(imageViewModel.getImages().value!!, position, imageViewModel, diary.getId())
         imageFragment.show(supportFragmentManager, "customDialog")
     }
+
+    override fun onBackPressed() {
+        var entry: Int = supportFragmentManager.backStackEntryCount
+        if (entry > 0){
+            for(i in 0 until entry){
+                supportFragmentManager.popBackStackImmediate()
+            }
+        }
+        finish()
+        super.onBackPressed()
+    }
 }
