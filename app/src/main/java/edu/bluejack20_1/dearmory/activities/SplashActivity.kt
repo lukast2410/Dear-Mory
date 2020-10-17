@@ -23,7 +23,7 @@ class SplashActivity : AppCompatActivity() {
                 }catch (e: InterruptedException){
                     e.printStackTrace()
                 }finally {
-                    startActivity(Intent(this, AppActivity::class.java))
+                    startActivity(Intent(this, LogInActivity::class.java))
                     finish()
                 }
             }

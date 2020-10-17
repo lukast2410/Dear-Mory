@@ -25,7 +25,11 @@
     <string name="uploading">Uploading...</string>
     <string name="upload_success">Image uploaded successfully</string>
     <string name="upload_failed">Failed to upload image</string>
+    <string name="delete_image_success">Successfully delete image</string>
     <string name="uploaded">Uploaded</string>
     <string name="close">Close</string>
     <string name="delete">Delete</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+    <string name="this_month">This Month</string>
 </resources>

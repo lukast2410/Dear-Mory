@@ -80,7 +80,7 @@ class DiaryActivity : AppCompatActivity(), ExpenseIncomeAdapter.ExpenseIncomeLis
         setContentView(R.layout.activity_diary)
         iv_main_background.setImageResource(ThemeManager.setUpBackground())
         userId = GoogleSignIn.getLastSignedInAccount(applicationContext)?.id.toString()
-        initializeDiary()
+        getExtraFromPreviousActivity()
         initializeStorage()
         initializeToolbar()
         initializePopUpEditMood()
@@ -92,7 +92,7 @@ class DiaryActivity : AppCompatActivity(), ExpenseIncomeAdapter.ExpenseIncomeLis
         val factory = DiaryViewModelFactory(DiaryRepository.getInstance())
         diaryViewModel = ViewModelProviders.of(this, factory).get(DiaryViewModel::class.java)
         diaryViewModel.getDiary(userId).observe(this, Observer { d ->
-            if (!d.getId().equals("false") && !success) {
+            if (d.getId() != "false" && !success) {
                 diary = d
                 setBackgroundBasedOnMood()
                 setEditDiaryText()
@@ -268,7 +268,6 @@ class DiaryActivity : AppCompatActivity(), ExpenseIncomeAdapter.ExpenseIncomeLis
                         var image: Image = Image()
                             .setImageUrl(uri.toString())
                         imageViewModel.createImage(diary.getId(), image)
-                        Log.d("checkviewupload", uri.toString())
                     }
                 }
                 .addOnFailureListener {
@@ -300,5 +299,21 @@ class DiaryActivity : AppCompatActivity(), ExpenseIncomeAdapter.ExpenseIncomeLis
         }
         finish()
         super.onBackPressed()
+    }
+
+    private fun getExtraFromPreviousActivity() {
+        var type = intent.getStringExtra(Diary.SEND_DIARY_TYPE).toString()
+        if (type == Diary.WRITE_DIARY){
+            initializeDiary()
+        }else{
+            diary = intent.getSerializableExtra(Diary.DIARY) as Diary
+            setBackgroundBasedOnMood()
+            setEditDiaryText()
+            val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
+            val date = LocalDate.parse(diary.getDate()) as LocalDate
+            toolbar_diary.title = date.format(formatter).toString()
+            initializeImageRecyclerView()
+            initializeExpenseIncomeRecyclerView()
+        }
     }
 }

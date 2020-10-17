@@ -85,11 +85,8 @@ class ExpenseIncomeActivity : AppCompatActivity() {
     private fun updateExpenseIncome() {
         val notes = til_expense_income_notes.editText?.text.toString()
         var amount = til_money_amount.editText?.text.toString().toLong()
-        Log.d("checkviewamount", amount.toString())
         if(expenseIncomeType == EXPENSE_TYPE)
             amount *= (-1)
-        Log.d("checkviewamount", amount.toString())
-        Log.d("checkviewtype", expenseIncomeType)
         expenseIncome.setNotes(notes)
         expenseIncome.setAmount(amount)
         expenseIncomeViewModel.updateExpenseIncome(diaryId, expenseIncome)

@@ -87,7 +87,7 @@ class SignInActivity : AppCompatActivity() {
 
     fun signOut(){
         googleSignInClient.signOut()
-        Log.w("SignInAct", "Singed out")
+//        Log.w("SignInAct", "Singed out")
 //        auth.signOut()
 //        Toast.makeText(this, "Logged out",Toast.LENGTH_SHORT).show()
 //        sign_out_button.visibility = View.INVISIBLE
@@ -149,14 +149,14 @@ class SignInActivity : AppCompatActivity() {
                 try {
                     // Google Sign In was successful, authenticate with Firebase
                     val account = task.getResult(ApiException::class.java)!!
-                    Log.d("SignInActivity", "firebaseAuthWithGoogle:" + account.id)
+//                    Log.d("SignInActivity", "firebaseAuthWithGoogle:" + account.id)
                     firebaseAuthWithGoogle(account.idToken!!)
                 } catch (e: ApiException) {
                     // Google Sign In failed, update UI appropriately
-                    Log.w("SignInActivity", "Google sign in failed", e)
+//                    Log.w("SignInActivity", "Google sign in failed", e)
                 }
             }else{
-                Log.w("SignInActivity",  exception.toString())
+//                Log.w("SignInActivity",  exception.toString())
                 Toast.makeText(applicationContext,exception.toString(),Toast.LENGTH_SHORT).show()
                 val loginIntent = Intent(this, MainActivity::class.java)
                 startActivity(loginIntent)

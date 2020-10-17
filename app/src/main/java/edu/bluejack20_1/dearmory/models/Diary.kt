@@ -1,8 +1,9 @@
 package edu.bluejack20_1.dearmory.models
 
+import java.io.Serializable
 import java.util.*
 
-class Diary() {
+class Diary(): Serializable {
     private lateinit var diaryId: String
     private lateinit var diaryText: String
     private lateinit var diaryMood: String
@@ -14,6 +15,9 @@ class Diary() {
         const val ANGRY_MOOD = "Angry"
         const val HAPPY_MOOD = "Happy"
         const val SAD_MOOD = "Sad"
+        const val SEND_DIARY_TYPE = "DiaryType"
+        const val WRITE_DIARY = "Write"
+        const val SELECT_DIARY = "Select"
     }
 
     init {

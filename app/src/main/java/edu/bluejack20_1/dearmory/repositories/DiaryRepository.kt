@@ -61,7 +61,6 @@ class DiaryRepository private constructor() {
                 diariesLiveData.postValue(diaryModels)
 
                 var position = diaryModels.size
-                Log.d("checkviewdiary$position", key)
                 refsDB.child(ExpenseIncome.EXPENSE_INCOME).child(key).addChildEventListener(object : ChildEventListener{
                     override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                         if(totalModels.size < position)
@@ -74,7 +73,6 @@ class DiaryRepository private constructor() {
                                 .setTime(snapshot.child("time").value.toString())
                                 .setAmount(snapshot.child("amount").value.toString().toLong())
                         )
-                        Log.d("checkviewtotal$position: ${totalModels[position-1].size}", totalKey)
                         totalLiveData.postValue(totalModels)
                     }
 

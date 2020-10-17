@@ -58,8 +58,7 @@ class ImageFragment : DialogFragment() {
 
     private fun initializeButton() {
         btn_close_image.setOnClickListener {
-
-            activity?.supportFragmentManager!!.beginTransaction().hide(this).addToBackStack(null).remove(this).commit()
+            dialog!!.dismiss()
         }
         rl_image_fragment_container.setOnClickListener {
             if(showFAB){
@@ -105,8 +104,8 @@ class ImageFragment : DialogFragment() {
             val imageRefs = storageRefs.getReferenceFromUrl(url)
             imageRefs.delete().addOnSuccessListener {
                 imageViewModel.deleteImage(diaryId, images[position])
-                Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show()
-                activity?.supportFragmentManager!!.beginTransaction().addToBackStack("done").remove(this).commit()
+                Toast.makeText(context, getString(R.string.delete_image_success), Toast.LENGTH_SHORT).show()
+                dialog!!.dismiss()
             }
         }
     }

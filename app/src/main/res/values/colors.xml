@@ -78,5 +78,11 @@
     <color name="happyMoodDiary">#4FFCD12A</color>
     <color name="sadMoodDiary">#590076dc</color>
     <color name="dialogBackground">#80323232</color>
+    <color name="angryDiaryContainerDark">#EBCF000F</color>
+    <color name="sadDiaryContainerDark">#EB4183D7</color>
+    <color name="happyDiaryContainerDark">#EDE9A12F</color>
+    <color name="angryDiaryContainerLight">#E9FD5419</color>
+    <color name="sadDiaryContainerLight">#ED05DAF1</color>
+    <color name="happyDiaryContainerLight">#E2FDC51B</color>
 
 </resources>
