@@ -2,6 +2,8 @@ package edu.bluejack20_1.dearmory.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.widget.Toast
 import androidx.viewpager.widget.ViewPager
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation

@@ -1,5 +1,15 @@
 package edu.bluejack20_1.dearmory.models
 
+import android.R
+import android.app.DatePickerDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.icu.util.Calendar
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
+import kotlin.coroutines.coroutineContext
+
 class Reminder {
     private lateinit var date: String
     private lateinit var id: String
@@ -10,6 +20,10 @@ class Reminder {
     private lateinit var vibrate: String
 
     constructor() {
+
+    }
+
+    fun updateDate(date: String){
 
     }
 

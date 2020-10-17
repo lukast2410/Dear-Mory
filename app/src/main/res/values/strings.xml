@@ -6,4 +6,12 @@
     <string name="reminder_label_hint">Label</string>
     <string name="add_reminder_button">Add</string>
     <string name="repeat_reminder_label">Repeat</string>
+    <string name="day_of_week_mo">Mo</string>
+    <string name="day_of_week_tu">Tu</string>
+    <string name="day_of_week_we">We</string>
+    <string name="day_of_week_th">Th</string>
+    <string name="day_of_week_fr">Fr</string>
+    <string name="day_of_week_sa">Sa</string>
+    <string name="day_of_week_su">Su</string>
+    <string name="month_calendar_indicator_hint">month</string>
 </resources>
