@@ -336,7 +336,7 @@ class CalendarFragment : Fragment(){
 ////                expenseIncome.setTime("$finalHour:$finalMinute")
 //            }
 //        })
-        val timePickerDialog = TimePickerDialog(context, R.style.Testing,
+        val timePickerDialog = TimePickerDialog(context,
             TimePickerDialog.OnTimeSetListener(){ timePicker: TimePicker, i: Int, i1: Int ->
                 val time = "$i:$i1"
                 if(time.isNotBlank()){
