@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.bluejack20_1.dearmory">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <application
         android:allowBackup="true"
@@ -11,7 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/LightTheme">
 
-        <activity android:name="edu.bluejack20_1.dearmory.activities.LogInActivity"></activity>
+        <activity
+            android:name=".activities.ExpenseIncomeActivity"
+            android:parentActivityName=".activities.DiaryActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name="edu.bluejack20_1.dearmory.activities.LogInActivity" />
         <activity android:name="edu.bluejack20_1.dearmory.activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,10 +26,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="edu.bluejack20_1.dearmory.activities.AppActivity"></activity>
-        <activity android:name="edu.bluejack20_1.dearmory.activities.DiaryActivity"></activity>
-        <activity android:name="edu.bluejack20_1.dearmory.activities.MainActivity"></activity>
-        <activity android:name="edu.bluejack20_1.dearmory.activities.SignInActivity"></activity>
+        <activity android:name="edu.bluejack20_1.dearmory.activities.AppActivity"/>
+        <activity android:name="edu.bluejack20_1.dearmory.activities.DiaryActivity"
+            android:parentActivityName=".activities.AppActivity"/>
+        <activity android:name="edu.bluejack20_1.dearmory.activities.MainActivity"/>
+        <activity android:name="edu.bluejack20_1.dearmory.activities.SignInActivity"/>
 
         <receiver android:name=".receivers.AlertReceiver">
 

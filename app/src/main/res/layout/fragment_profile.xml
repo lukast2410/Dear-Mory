@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     tools:context="edu.bluejack20_1.dearmory.fragments.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <Button
         android:id="@+id/sign_out_button"
         android:layout_width="wrap_content"

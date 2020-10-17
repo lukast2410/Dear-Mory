@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
 import edu.bluejack20_1.dearmory.R
 import edu.bluejack20_1.dearmory.models.User
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -19,8 +20,7 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_signin.*
 
 
@@ -65,29 +65,29 @@ class SignInActivity : AppCompatActivity() {
 //            signOut()
 //        }
 
-        save_button.setOnClickListener {
-            val user =
-                GoogleSignIn.getLastSignedInAccount(applicationContext)
-            if(user != null){
-                val temp: User =
-                    User()
-                temp.setName(user.displayName as String)
-                temp.setEmail(user.email as String)
-                temp.setProfilePicture(user.photoUrl)
-                temp.setId(user.id as String)
-                Toast.makeText(this, temp.getName(),Toast.LENGTH_LONG).show()
-                Toast.makeText(this, temp.getEmail(),Toast.LENGTH_LONG).show()
-                Toast.makeText(this, temp.getProfilePicture(),Toast.LENGTH_LONG).show()
-                Toast.makeText(this, temp.getId(),Toast.LENGTH_LONG).show()
-
-                ref.child(user.id as String).setValue(temp)
-            }
-        }
+//        save_button.setOnClickListener {
+//            val user =
+//                GoogleSignIn.getLastSignedInAccount(applicationContext)
+//            if(user != null){
+//                val temp: User =
+//                    User()
+//                temp.setName(user.displayName as String)
+//                temp.setEmail(user.email as String)
+//                temp.setProfilePicture(user.photoUrl)
+//                temp.setId(user.id as String)
+//                Toast.makeText(this, temp.getName(),Toast.LENGTH_LONG).show()
+//                Toast.makeText(this, temp.getEmail(),Toast.LENGTH_LONG).show()
+//                Toast.makeText(this, temp.getProfilePicture(),Toast.LENGTH_LONG).show()
+//                Toast.makeText(this, temp.getId(),Toast.LENGTH_LONG).show()
+//
+//                ref.child(user.id as String).setValue(temp)
+//            }
+//        }
     }
 
     fun signOut(){
         googleSignInClient.signOut()
-//        Log.w("SignInAct", "Singed out")
+        Log.w("SignInAct", "Singed out")
 //        auth.signOut()
 //        Toast.makeText(this, "Logged out",Toast.LENGTH_SHORT).show()
 //        sign_out_button.visibility = View.INVISIBLE
@@ -98,22 +98,33 @@ class SignInActivity : AppCompatActivity() {
 //        finish()
     }
 
-    fun saveUser(){
+    private fun saveUser(){
         val user =
             GoogleSignIn.getLastSignedInAccount(applicationContext)
         if(user != null){
-            val temp: User =
-                User()
-            temp.setName(user.displayName as String)
-            temp.setEmail(user.email as String)
-            temp.setProfilePicture(user.photoUrl)
-            temp.setId(user.id as String)
-            Toast.makeText(this, temp.getName(),Toast.LENGTH_LONG).show()
-            Toast.makeText(this, temp.getEmail(),Toast.LENGTH_LONG).show()
-            Toast.makeText(this, temp.getProfilePicture(),Toast.LENGTH_LONG).show()
-            Toast.makeText(this, temp.getId(),Toast.LENGTH_LONG).show()
+            ref = user.id?.let { FirebaseDatabase.getInstance().reference.child("User").child(it) }!!
+            ref.addValueEventListener(object : ValueEventListener{
+                override fun onCancelled(error: DatabaseError) {
 
-            ref.child(user.id as String).setValue(temp)
+                }
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if(snapshot.exists()){
+                        Log.d("REF", "USER ALREADY EXISTS")
+                        User.getInstance().setName(snapshot.child("name").value.toString())
+                        User.getInstance().setId(snapshot.child("id").value.toString())
+                    }else{
+                        Log.d("REF", "USER DOES NOT EXISTS..CREATING NEW USER..")
+                        User.getInstance().setName(user.displayName as String)
+                        User.getInstance().setEmail(user.email as String)
+                        User.getInstance().setProfilePicture(user.photoUrl)
+                        User.getInstance().setId(user.id as String)
+                        ref.setValue(User.getInstance()).addOnCompleteListener {
+                            Log.d("REF", "SUCCESS CREATE NEW USER")
+                        }
+                    }
+                }
+            })
         }
     }
 
@@ -149,14 +160,14 @@ class SignInActivity : AppCompatActivity() {
                 try {
                     // Google Sign In was successful, authenticate with Firebase
                     val account = task.getResult(ApiException::class.java)!!
-//                    Log.d("SignInActivity", "firebaseAuthWithGoogle:" + account.id)
+                    Log.d("SignInActivity", "firebaseAuthWithGoogle:" + account.id)
                     firebaseAuthWithGoogle(account.idToken!!)
                 } catch (e: ApiException) {
                     // Google Sign In failed, update UI appropriately
-//                    Log.w("SignInActivity", "Google sign in failed", e)
+                    Log.w("SignInActivity", "Google sign in failed", e)
                 }
             }else{
-//                Log.w("SignInActivity",  exception.toString())
+                Log.w("SignInActivity",  exception.toString())
                 Toast.makeText(applicationContext,exception.toString(),Toast.LENGTH_SHORT).show()
                 val loginIntent = Intent(this, MainActivity::class.java)
                 startActivity(loginIntent)
@@ -232,7 +243,9 @@ class SignInActivity : AppCompatActivity() {
 //                        google_sign_in_button.visibility = View.INVISIBLE
                         updateUI(user)
                         saveUser()
-                        startActivity(Intent(this, LogInActivity::class.java))
+                        val intent = Intent(this, LogInActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
                     }
                 } else {
                     // If sign in fails, display a message to the user.

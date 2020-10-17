@@ -109,7 +109,7 @@
         <item name="colorOnSecondary">@color/colorPrimaryDarkDarkTheme</item>
     </style>
 
-    <style name="DialogLightTheme" parent="Theme.AppCompat.Light.Dialog">
+    <style name="DialogLightTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
         <item name="colorPrimary">@color/colorPrimaryDarkLightTheme</item>
         <item name="colorAccent">@color/colorPrimaryDarkLightTheme</item>
         <item name="colorControlNormal">@color/colorPrimaryDarkLightTheme</item>
@@ -118,7 +118,7 @@
         <item name="colorOnPrimary">@color/colorPrimaryDarkLightTheme</item>
     </style>
 
-    <style name="DialogGalaxyTheme" parent="Theme.AppCompat.Light.Dialog">
+    <style name="DialogGalaxyTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
         <item name="editTextColor">@color/colorPrimaryDarkGalaxyTheme</item>
         <item name="colorAccent">@color/colorPrimaryDarkGalaxyTheme</item>
         <item name="colorControlNormal">@color/colorPrimaryDarkGalaxyTheme</item>

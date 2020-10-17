@@ -8,6 +8,9 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="bgTransparentPopUp">#9F535353</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="whiteGrey">#8C8C8B</color>
+    <color name="whiteSmoke">#D9D9D9</color>
+    <color name="yellow">#F2CE11</color>
 
     <!--    Dark Theme-->
     <color name="colorPrimaryDarkTheme">#ffffff</color>

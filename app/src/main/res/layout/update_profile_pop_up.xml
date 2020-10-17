@@ -20,7 +20,8 @@
         android:gravity="center"
         android:text="X"
         android:textColor="@color/colorWhite"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_marginRight="5dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,13 +38,19 @@
             android:textColor="@color/black"
             />
 
-        <Button
-            android:id="@+id/save_username_logo"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:padding="5dp"
-            android:background="@drawable/ico_tick_mark"
-            />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/save_username_logo"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/ico_tick_mark"
+                android:padding="5dp"
+                android:layout_alignParentBottom="true"/>
+
+        </RelativeLayout>
 
     </LinearLayout>
 
