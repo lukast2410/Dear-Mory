@@ -8,4 +8,11 @@
     <attr name="backgroundForIcon" format="color"/>
     <attr name="colorIconForNav" format="color"/>
     <attr name="buttonPressedColor" format="color"/>
+    <attr name="customTextColor" format="color"/>
+    <declare-styleable name="MoodStyle">
+        <attr name="angryMoodBackground" format="color"/>
+        <attr name="happyMoodBackground" format="color"/>
+        <attr name="sadMoodBackground" format="color"/>
+        <attr name="expenseIconColor" format="color"/>
+    </declare-styleable>
 </resources>

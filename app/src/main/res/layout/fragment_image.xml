@@ -1,0 +1,139 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="edu.bluejack20_1.dearmory.fragments.ImageFragment"
+    android:background="@color/componentBgDarkTheme">
+
+    <RelativeLayout
+        android:id="@+id/rl_image_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/componentBackgroundColor">
+
+        <ImageView
+            android:id="@+id/iv_show_image_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/ll_btn_container_for_show_image"/>
+
+        <LinearLayout
+            android:id="@+id/ll_btn_container_for_show_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:background="?attr/backgroundForIcon">
+
+            <Button
+                android:id="@+id/btn_delete_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/delete"
+                android:background="@color/transparent"/>
+
+            <LinearLayout
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="?attr/colorIconWithBackground"/>
+
+            <Button
+                android:id="@+id/btn_close_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/close"
+                android:background="@color/transparent"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_previous_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|center"
+        app:fab_colorNormal="?attr/backgroundForIcon"
+        app:fab_colorPressed="?attr/buttonPressedColor"
+        app:fab_size="mini"
+        app:fab_icon="@drawable/ic_previous"
+        app:fab_title="@string/edit_mood"/>
+
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_next_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|center"
+        app:fab_colorNormal="?attr/backgroundForIcon"
+        app:fab_colorPressed="?attr/buttonPressedColor"
+        app:fab_size="mini"
+        app:fab_icon="@drawable/ic_next"
+        app:fab_title="@string/edit_mood"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_delete_confirmation_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dialogBackground"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_alignParentBottom="true"
+            android:background="?attr/backgroundForIcon"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:textSize="20sp"
+                android:paddingVertical="20dp"
+                android:paddingHorizontal="20dp"
+                android:text="@string/confirm_delete_expense_income"
+                android:textColor="?attr/customTextColor"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="?attr/colorIconWithBackground"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="?attr/backgroundForIcon">
+
+                <Button
+                    android:id="@+id/btn_confirm_yes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/yes"
+                    android:background="@color/transparent"/>
+
+                <LinearLayout
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="?attr/colorIconWithBackground"/>
+
+                <Button
+                    android:id="@+id/btn_confirm_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/no"
+                    android:background="@color/transparent"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</FrameLayout>

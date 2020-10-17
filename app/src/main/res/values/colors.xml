@@ -6,9 +6,8 @@
     <color name="label_bg">#C33C3F41</color>
     <color name="colorTransparent">#7A888888</color>
     <color name="colorWhite">#FFFFFF</color>
-    <color name="whiteGrey">#8C8C8B</color>
-    <color name="whiteSmoke">#D9D9D9</color>
-    <color name="yellow">#F2CE11</color>
+    <color name="bgTransparentPopUp">#9F535353</color>
+    <color name="transparent">#00FFFFFF</color>
 
     <!--    Dark Theme-->
     <color name="colorPrimaryDarkTheme">#ffffff</color>
@@ -17,7 +16,7 @@
     <color name="colorIconIfBgWhiteDarkTheme">#051F2F</color>
     <color name="navBackgroundColorDarkTheme">#051F2F</color>
     <color name="textColorDarkTheme">#ffffff</color>
-    <color name="componentBgDarkTheme">#ffffff</color>
+    <color name="componentBgDarkTheme">#CE222222</color>
     <color name="colorIconWithoutBgDarkTheme">#D8D8D8</color>
 
     <color name="colorIconWithBackgroundDarkTheme">#051F2F</color>
@@ -25,13 +24,18 @@
     <color name="colorIconForNavDarkTheme">#175A61</color>
     <color name="buttonPressedColorDarkTheme">#C1175A61</color>
 
+    <color name="expenseIconDarkTheme">#e50000</color>
+    <color name="angryMoodDarkTheme">#7E2727</color>
+    <color name="happyMoodDarkTheme">#CBEFCC00</color>
+    <color name="sadMoodDarkTheme">#DA0198E1</color>
+
     <!--    Light Theme-->
     <color name="colorPrimaryLightTheme">#000000</color>
     <color name="colorPrimaryDarkLightTheme">#85C4D4</color>
     <color name="colorAccentLightTheme">#787878</color>
     <color name="colorIconIfBgWhiteLightTheme">#1F3F4C</color>
     <color name="navBackgroundColorLightTheme">#1F3F4C</color>
-    <color name="componentBgLightTheme">#000000</color>
+    <color name="componentBgLightTheme">#E9EDEDED</color>
     <color name="colorIconWithoutBgLightTheme">#ffffff</color>
     <color name="textColorLightTheme">#000000</color>
 
@@ -40,13 +44,18 @@
     <color name="colorIconForNavLightTheme">#6FBEDE</color>
     <color name="buttonPressedColorLightTheme">#C16FBEDE</color>
 
+    <color name="expenseIconLightTheme">#CA0000</color>
+    <color name="angryMoodLightTheme">#d8ff2400</color>
+    <color name="happyMoodLightTheme">#D5F4CA16</color>
+    <color name="sadMoodLightTheme">#E12895FF</color>
+
     <!--    Galaxy Theme-->
     <color name="colorPrimaryGalaxyTheme">#ffffff</color>
     <color name="colorPrimaryDarkGalaxyTheme">#10054A</color>
     <color name="colorAccentGalaxyTheme">#787878</color>
     <color name="colorIconIfBgWhiteGalaxyTheme">#A33789</color>
     <color name="navBackgroundColorGalaxyTheme">#A33789</color>
-    <color name="componentBgGalaxyTheme">#000000</color>
+    <color name="componentBgGalaxyTheme">#CE222222</color>
     <color name="colorIconWithoutBgGalaxyTheme">#D8D8D8</color>
     <color name="textColorGalaxyTheme">#ffffff</color>
 
@@ -55,8 +64,25 @@
     <color name="colorIconForNavGalaxyTheme">#10052D</color>
     <color name="buttonPressedColorGalaxyTheme">#C110052D</color>
 
+    <color name="expenseIconGalaxyTheme">#E80000</color>
+    <color name="angryMoodGalaxyTheme">#cf880316</color>
+    <color name="happyMoodGalaxyTheme">#CEFCD12A</color>
+    <color name="sadMoodGalaxyTheme">#D823238E</color>
+
 <!--    Others-->
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+    <color name="defaultExpense">#E80000</color>
+    <color name="defaultIncome">#12DC12</color>
+    <color name="angryMoodDiary">#66FF3B1F</color>
+    <color name="happyMoodDiary">#4FFCD12A</color>
+    <color name="sadMoodDiary">#590076dc</color>
+    <color name="dialogBackground">#80323232</color>
+    <color name="angryDiaryContainerDark">#EBCF000F</color>
+    <color name="sadDiaryContainerDark">#EB4183D7</color>
+    <color name="happyDiaryContainerDark">#EDE9A12F</color>
+    <color name="angryDiaryContainerLight">#E9FD5419</color>
+    <color name="sadDiaryContainerLight">#ED05DAF1</color>
+    <color name="happyDiaryContainerLight">#E2FDC51B</color>
 
 </resources>

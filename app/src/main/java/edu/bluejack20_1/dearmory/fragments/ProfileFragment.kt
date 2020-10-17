@@ -1,19 +1,12 @@
 package edu.bluejack20_1.dearmory.fragments
 
-import android.app.Dialog
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
 import com.bumptech.glide.Glide
 
 import edu.bluejack20_1.dearmory.R
@@ -21,16 +14,13 @@ import edu.bluejack20_1.dearmory.activities.SignInActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.firebase.database.ktx.getValue
+import edu.bluejack20_1.dearmory.models.User
 import kotlinx.android.synthetic.main.fragment_profile.*
-import kotlinx.android.synthetic.main.update_profile_pop_up.*
 
 class ProfileFragment : Fragment() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
-    private lateinit var dialog: Dialog
-    private lateinit var chosen_profile_image_url: Uri
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,8 +39,6 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dialog = context?.let { Dialog(it) }!!
-
         auth = FirebaseAuth.getInstance()
         var user = auth.currentUser
         val account = GoogleSignIn.getLastSignedInAccount(activity)
@@ -64,24 +52,24 @@ class ProfileFragment : Fragment() {
 
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if(snapshot.exists()){
-                        if(profile_name != null){
-                            profile_name.text = snapshot.child("name").value.toString()
-                            profile_email.text = snapshot.child("email").value.toString()
-                            val pp = snapshot.child("profilePicture").value.toString()
-                            Glide.with(this@ProfileFragment).load(pp).into(profile_picture)
-                        }
+                        profile_name.text = snapshot.child("name").value.toString()
+                        profile_email.text = snapshot.child("email").value.toString()
+                        val pp = snapshot.child("profilePicture").value.toString()
+                        Glide.with(this@ProfileFragment).load(pp).into(profile_picture)
                     }
                 }
             })
         }
 
-        profile_picture.setOnClickListener {
-            selectPictureIntent()
-        }
-
         profile_name.setOnClickListener {
             Log.d("Updated", "name clicked")
-            showUsernameUpdatePopUp()
+            username_field.visibility = View.VISIBLE
+            profile_name.visibility = View.INVISIBLE
+        }
+
+        username_field.setOnClickListener{
+            username_field.visibility = View.INVISIBLE
+            profile_name.visibility = View.VISIBLE
         }
 
         sign_out_button.setOnClickListener {
@@ -95,94 +83,7 @@ class ProfileFragment : Fragment() {
                 Log.d("IN", "name is. ${user?.displayName}")
             }
 
-            val intent = Intent(context, SignInActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-        }
-    }
-
-    fun selectPictureIntent(){
-        val intent: Intent = Intent()
-        intent.setType("image/*")
-        intent.setAction(Intent.ACTION_GET_CONTENT)
-        startActivityForResult(intent, 1)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode==1 && resultCode == -1 && data != null && data.data != null){
-            chosen_profile_image_url = data.data!!
-            profile_picture.setImageURI(chosen_profile_image_url)
-            updateProfilePicture(chosen_profile_image_url)
-        }
-    }
-
-    private fun showUsernameUpdatePopUp(){
-        dialog.setContentView(R.layout.update_profile_pop_up)
-        val btn = dialog.findViewById<TextView>(R.id.close_update_username_button)
-        btn.setOnClickListener {
-            dialog.dismiss()
-        }
-        val saveBtn = dialog.findViewById<Button>(R.id.save_username_logo)
-        saveBtn.setOnClickListener {
-            updateUsername()
-        }
-        dialog.show()
-
-
-        val account = GoogleSignIn.getLastSignedInAccount(activity)
-        if (account != null) {
-            databaseReference = account.id?.let {
-                FirebaseDatabase.getInstance().getReference("User").child(it) }!!
-            databaseReference.addValueEventListener(object : ValueEventListener{
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val name = snapshot.child("name").value.toString()
-                    val uName = dialog.findViewById<EditText>(R.id.username_field)
-                    uName.setText(name, TextView.BufferType.EDITABLE)
-                }
-            })
-        }
-    }
-
-    private fun updateUsername(){
-        val name = dialog.findViewById<EditText>(R.id.username_field).text
-        val account = GoogleSignIn.getLastSignedInAccount(activity)
-        if(account != null && name != null){
-            if(name.isNotBlank()){
-                databaseReference = FirebaseDatabase.getInstance().getReference("User").child(
-                    account.id!!
-                )
-                val hashMap: HashMap<String, String> = HashMap<String, String>()
-                hashMap["name"] = name.toString()
-                databaseReference.updateChildren(hashMap as Map<String, Any>).addOnCompleteListener {
-                    dialog.dismiss()
-                }
-                Log.d("UPDATE USERNAME", "acc not null and name not null ")
-            }
-            Log.d("UPDATE USERNAME", "acc not null but name is blank")
-        }else{
-            Log.d("UPDATE USERNAME", "acc null or name null")
-        }
-    }
-
-    private fun updateProfilePicture(uri: Uri){
-        val account = GoogleSignIn.getLastSignedInAccount(activity)
-        if(account != null){
-                databaseReference = FirebaseDatabase.getInstance().getReference("User").child(
-                    account.id!!
-                )
-                val hashMap: HashMap<String, String> = HashMap<String, String>()
-                hashMap["profilePicture"] = uri.toString()
-                databaseReference.updateChildren(hashMap as Map<String, Any>).addOnCompleteListener {
-                    dialog.dismiss()
-                }
-                Log.d("UPDATE PP", "acc not null and pp not null ")
-        }else{
-            Log.d("UPDATE PP", "acc null or pp null")
+            startActivity(Intent(context, SignInActivity::class.java))
         }
     }
 

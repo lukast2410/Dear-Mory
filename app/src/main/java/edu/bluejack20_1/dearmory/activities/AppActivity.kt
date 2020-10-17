@@ -16,8 +16,8 @@ class AppActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_app)
         setTheme(ThemeManager.setUpTheme())
+        setContentView(R.layout.activity_app)
         iv_main_background.setImageResource(ThemeManager.setUpBackground())
         initFragments()
         setViewPagerAdapter()
