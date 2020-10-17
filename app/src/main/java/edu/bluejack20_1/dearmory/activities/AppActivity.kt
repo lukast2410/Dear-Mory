@@ -26,7 +26,7 @@ class AppActivity : AppCompatActivity() {
     }
     override fun onResume() {
         super.onResume()
-        Toast.makeText(applicationContext, "Back Main", Toast.LENGTH_LONG).show()
+//        Toast.makeText(applicationContext, "Back Main", Toast.LENGTH_LONG).show()
     }
 
     private fun initFragments() {

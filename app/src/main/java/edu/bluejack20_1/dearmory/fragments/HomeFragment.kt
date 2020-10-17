@@ -53,7 +53,6 @@ class HomeFragment : Fragment(), DiaryAdapter.DiaryClickListener {
         rv_diaries_container.setHasFixedSize(true)
         rv_diaries_container.layoutManager = LinearLayoutManager(context)
         val factory = DiaryViewModelFactory(DiaryRepository.getInstance())
-        Log.d("checkview", "test")
         diaryViewModel = ViewModelProviders.of(this, factory).get(DiaryViewModel::class.java)
         diaryViewModel.init(userId)
         diariesAdapter = DiaryAdapter(diaryViewModel.getDiaries().value!!, diaryViewModel.getTotals().value!!, this)
