@@ -100,31 +100,40 @@
     </style>
 
 <!--    Custom Time Picker-->
-    <style name="DialogDarkTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
-        <item name="colorPrimary">@color/colorPrimaryDarkDarkTheme</item>
+    <style name="DialogDarkTheme" parent="Theme.AppCompat.DayNight.Dialog">
+        <item name="colorPrimary">@color/navBackgroundColorDarkTheme</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkDarkTheme</item>
-        <item name="colorAccent">@color/colorPrimaryDarkDarkTheme</item>
-        <item name="colorControlNormal">@color/colorPrimaryDarkDarkTheme</item>
-        <item name="colorOnPrimary">@color/colorPrimaryDarkDarkTheme</item>
-        <item name="colorOnSecondary">@color/colorPrimaryDarkDarkTheme</item>
+        <item name="colorAccent">@color/navBackgroundColorDarkTheme</item>
+        <item name="colorControlNormal">@color/textColorDarkTheme</item>
+        <item name="colorOnPrimary">@color/textColorDarkTheme</item>
+        <item name="colorOnSecondary">@color/textColorDarkTheme</item>
+        <item name="android:windowBackground">@color/colorPrimaryDarkDarkTheme</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:textColorSecondary">@color/textColorDarkTheme</item>
     </style>
 
-    <style name="DialogLightTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
-        <item name="colorPrimary">@color/colorPrimaryDarkLightTheme</item>
-        <item name="colorAccent">@color/colorPrimaryDarkLightTheme</item>
-        <item name="colorControlNormal">@color/colorPrimaryDarkLightTheme</item>
+    <style name="DialogLightTheme" parent="Theme.AppCompat.DayNight.Dialog">
+        <item name="colorPrimary">@color/navBackgroundColorLightTheme</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkLightTheme</item>
-        <item name="colorOnSecondary">@color/colorPrimaryDarkLightTheme</item>
-        <item name="colorOnPrimary">@color/colorPrimaryDarkLightTheme</item>
+        <item name="colorAccent">@color/navBackgroundColorLightTheme</item>
+        <item name="colorControlNormal">@color/textColorLightTheme</item>
+        <item name="colorOnPrimary">@color/textColorLightTheme</item>
+        <item name="colorOnSecondary">@color/textColorLightTheme</item>
+        <item name="android:windowBackground">@color/colorPrimaryDarkLightTheme</item>
+        <item name="android:textColorPrimary">@color/textColorLightTheme</item>
+        <item name="android:textColorSecondary">@color/textColorLightTheme</item>
     </style>
 
-    <style name="DialogGalaxyTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
-        <item name="editTextColor">@color/colorPrimaryDarkGalaxyTheme</item>
-        <item name="colorAccent">@color/colorPrimaryDarkGalaxyTheme</item>
-        <item name="colorControlNormal">@color/colorPrimaryDarkGalaxyTheme</item>
+    <style name="DialogGalaxyTheme" parent="Theme.AppCompat.DayNight.Dialog">
+        <item name="colorPrimary">@color/navBackgroundColorGalaxyTheme</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkGalaxyTheme</item>
-        <item name="colorOnSecondary">@color/colorPrimaryDarkGalaxyTheme</item>
-        <item name="colorOnPrimary">@color/colorPrimaryDarkGalaxyTheme</item>
+        <item name="colorAccent">@color/navBackgroundColorGalaxyTheme</item>
+        <item name="colorControlNormal">@color/textColorGalaxyTheme</item>
+        <item name="colorOnPrimary">@color/textColorGalaxyTheme</item>
+        <item name="colorOnSecondary">@color/textColorGalaxyTheme</item>
+        <item name="android:windowBackground">@color/colorPrimaryDarkGalaxyTheme</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:textColorSecondary">@color/textColorGalaxyTheme</item>
     </style>
 
 <!--    Dialog Style-->
@@ -133,5 +142,17 @@
         <item name="android:windowAnimationStyle">@style/Animation.Design.BottomSheetDialog</item>
     </style>
 
+<!--    Date Picker Dialog-->
+    <style name="DatePickerDark" parent="DialogDarkTheme">
+        <item name="android:textColorPrimary">@color/textColorDarkTheme</item>
+    </style>
+
+    <style name="DatePickerLight" parent="DialogLightTheme">
+        <item name="android:textColorPrimary">@color/textColorLightTheme</item>
+    </style>
+
+    <style name="DatePickerGalaxy" parent="DialogGalaxyTheme">
+        <item name="android:textColorPrimary">@color/textColorGalaxyTheme</item>
+    </style>
 
 </resources>

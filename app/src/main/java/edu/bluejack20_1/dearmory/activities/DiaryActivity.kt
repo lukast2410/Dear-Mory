@@ -87,11 +87,11 @@ class DiaryActivity : AppCompatActivity(), ExpenseIncomeAdapter.ExpenseIncomeLis
         initializeFloatingActionButton()
     }
 
-    private fun initializeDiary() {
+    private fun initializeDiary(date: String) {
         var success = false
         val factory = DiaryViewModelFactory(DiaryRepository.getInstance())
         diaryViewModel = ViewModelProviders.of(this, factory).get(DiaryViewModel::class.java)
-        diaryViewModel.getDiary(userId).observe(this, Observer { d ->
+        diaryViewModel.getDiary(userId, date).observe(this, Observer { d ->
             if (d.getId() != "false" && !success) {
                 diary = d
                 setBackgroundBasedOnMood()
@@ -304,7 +304,8 @@ class DiaryActivity : AppCompatActivity(), ExpenseIncomeAdapter.ExpenseIncomeLis
     private fun getExtraFromPreviousActivity() {
         var type = intent.getStringExtra(Diary.SEND_DIARY_TYPE).toString()
         if (type == Diary.WRITE_DIARY){
-            initializeDiary()
+            val date = intent.getStringExtra(Diary.DATE_DIARY) as String
+            initializeDiary(date)
         }else{
             val factory = DiaryViewModelFactory(DiaryRepository.getInstance())
             diaryViewModel = ViewModelProviders.of(this, factory).get(DiaryViewModel::class.java)

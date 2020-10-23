@@ -5,12 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.*
 import edu.bluejack20_1.dearmory.models.Diary
 import edu.bluejack20_1.dearmory.models.ExpenseIncome
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 class DiaryRepository private constructor() {
     private val refsDB: DatabaseReference = FirebaseDatabase.getInstance().reference
-    private var diary: Diary = Diary()
+    private lateinit var diary: Diary
     private var diaryLiveData: MutableLiveData<Diary> = MutableLiveData()
     private var diaryModels: ArrayList<Diary> = ArrayList()
     private var diariesLiveData: MutableLiveData<ArrayList<Diary>> = MutableLiveData()
@@ -29,8 +27,8 @@ class DiaryRepository private constructor() {
         }
     }
 
-    fun getDiaries(userId: String): MutableLiveData<ArrayList<Diary>> {
-        loadDiaries(userId)
+    fun getDiaries(userId: String, date: String): MutableLiveData<ArrayList<Diary>> {
+        loadDiaries(userId, date)
 
         diariesLiveData.value = diaryModels
 
@@ -43,68 +41,87 @@ class DiaryRepository private constructor() {
         return totalLiveData
     }
 
-    private fun loadDiaries(userId: String) {
+    private fun loadDiaries(userId: String, date: String) {
         if (diaryModels.size > 0)
             diaryModels.clear()
         if (totalModels.size > 0)
             totalModels.clear()
         refsDB.child(Diary.DIARY).child(userId).addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                var key = snapshot.key as String
-                diaryModels.add(
-                    Diary()
-                        .setId(snapshot.child("id").value.toString())
-                        .setDate(snapshot.child("date").value.toString())
-                        .setText(snapshot.child("text").value.toString())
-                        .setMood(snapshot.child("mood").value.toString())
-                )
-                diariesLiveData.postValue(diaryModels)
+                val getDate = snapshot.child("date").value.toString()
 
-                var position = diaryModels.size
-                refsDB.child(ExpenseIncome.EXPENSE_INCOME).child(key).addChildEventListener(object : ChildEventListener{
-                    override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                        if(totalModels.size < position)
-                            totalModels.add(HashMap())
-                        var totalKey = snapshot.key.toString()
-                        totalModels[position-1].put(
-                            totalKey,
-                            ExpenseIncome().setId(snapshot.child("id").value.toString())
-                                .setNotes(snapshot.child("notes").value.toString())
-                                .setTime(snapshot.child("time").value.toString())
-                                .setAmount(snapshot.child("amount").value.toString().toLong())
-                        )
-                        totalLiveData.postValue(totalModels)
-                    }
+                if(getDate.contains(date)){
+                    val key = snapshot.key as String
+                    diaryModels.add(
+                        Diary()
+                            .setId(snapshot.child("id").value.toString())
+                            .setDate(snapshot.child("date").value.toString())
+                            .setText(snapshot.child("text").value.toString())
+                            .setMood(snapshot.child("mood").value.toString())
+                    )
+                    diariesLiveData.postValue(diaryModels)
 
-                    override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                        var totalKey = snapshot.key.toString()
-                        totalModels[position-1].get(totalKey)
-                            ?.setId(snapshot.child("id").value.toString())
-                            ?.setNotes(snapshot.child("notes").value.toString())
-                            ?.setTime(snapshot.child("time").value.toString())
-                            ?.setAmount(snapshot.child("amount").value.toString().toLong())
-                        totalLiveData.postValue(totalModels)
-                    }
+                    val position = diaryModels.size
+                    if (totalModels.size < position)
+                        totalModels.add(HashMap())
 
-                    override fun onChildRemoved(snapshot: DataSnapshot) {
-                        var totalKey = snapshot.key.toString()
-                        totalModels[position-1].remove(totalKey)
-                        totalLiveData.postValue(totalModels)
-                    }
+                    val diaryDate = snapshot.child("date").value.toString()
+                    sortDiaryDesc()
+                    refsDB.child(ExpenseIncome.EXPENSE_INCOME).child(key).addChildEventListener(object :
+                        ChildEventListener {
+                        override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                            val totalKey = snapshot.key.toString()
+                            val idx = diaryModels.indexOfFirst { diary -> diary.getDate() == diaryDate }
 
-                    override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
-                    override fun onCancelled(error: DatabaseError) {}
-                })
+                            totalModels[idx].put(
+                                totalKey,
+                                ExpenseIncome().setId(snapshot.child("id").value.toString())
+                                    .setNotes(snapshot.child("notes").value.toString())
+                                    .setTime(snapshot.child("time").value.toString())
+                                    .setAmount(snapshot.child("amount").value.toString().toLong())
+                            )
+                            totalLiveData.postValue(totalModels)
+                        }
+
+                        override fun onChildChanged(
+                            snapshot: DataSnapshot,
+                            previousChildName: String?
+                        ) {
+                            val totalKey = snapshot.key.toString()
+                            val idx = diaryModels.indexOfFirst { diary -> diary.getDate() == diaryDate }
+
+                            totalModels[idx].get(totalKey)
+                                ?.setId(snapshot.child("id").value.toString())
+                                ?.setNotes(snapshot.child("notes").value.toString())
+                                ?.setTime(snapshot.child("time").value.toString())
+                                ?.setAmount(snapshot.child("amount").value.toString().toLong())
+                            totalLiveData.postValue(totalModels)
+                        }
+
+                        override fun onChildRemoved(snapshot: DataSnapshot) {
+                            val totalKey = snapshot.key.toString()
+                            val idx = diaryModels.indexOfFirst { diary -> diary.getDate() == diaryDate }
+
+                            totalModels[idx].remove(totalKey)
+                            totalLiveData.postValue(totalModels)
+                        }
+
+                        override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+                        override fun onCancelled(error: DatabaseError) {}
+                    })
+                }
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
                 var idx = diaryModels.indexOfFirst { diary -> diary.getId() == snapshot.key }
-                diaryModels[idx]
-                    .setId(snapshot.child("id").value.toString())
-                    .setDate(snapshot.child("date").value.toString())
-                    .setText(snapshot.child("text").value.toString())
-                    .setMood(snapshot.child("mood").value.toString())
-                diariesLiveData.postValue(diaryModels)
+                if(idx >= 0){
+                    diaryModels[idx]
+                        .setId(snapshot.child("id").value.toString())
+                        .setDate(snapshot.child("date").value.toString())
+                        .setText(snapshot.child("text").value.toString())
+                        .setMood(snapshot.child("mood").value.toString())
+                    diariesLiveData.postValue(diaryModels)
+                }
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {}
@@ -113,40 +130,35 @@ class DiaryRepository private constructor() {
         })
     }
 
-    fun getDiary(userId: String): MutableLiveData<Diary> {
-        loadDiary(userId)
+    fun getDiary(userId: String, date: String): MutableLiveData<Diary> {
+        diary = Diary()
+        loadDiary(userId, date)
 
         diaryLiveData.value = diary
 
         return diaryLiveData
     }
 
-    private fun loadDiary(userId: String) {
-        val dateNow: String =
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).toString()
-            } else {
-                "Error"
-            }
+    private fun loadDiary(userId: String, date: String) {
         var checkToday: Boolean = false
         refsDB.child(Diary.DIARY).child(userId)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         for (data: DataSnapshot in snapshot.children) {
-                            if (data.child("date").value.toString() == dateNow) {
+                            if (data.child("date").value.toString() == date) {
                                 checkToday = true
-                                diary.setId(data.child("id").getValue().toString())
-                                    .setText(data.child("text").getValue().toString())
-                                    .setMood(data.child("mood").getValue().toString())
-                                    .setDate(data.child("date").getValue().toString())
+                                diary.setId(data.child("id").value.toString())
+                                    .setText(data.child("text").value.toString())
+                                    .setMood(data.child("mood").value.toString())
+                                    .setDate(data.child("date").value.toString())
                                 diaryLiveData.postValue(diary)
                                 break
                             }
                         }
                     }
                     if (!checkToday) {
-                        createDiary(userId)
+                        createDiary(userId, date)
                     }
                 }
 
@@ -154,13 +166,7 @@ class DiaryRepository private constructor() {
             })
     }
 
-    fun createDiary(userId: String) {
-        val diaryDate: String =
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).toString()
-            } else {
-                "Error"
-            }
+    fun createDiary(userId: String, diaryDate: String) {
         val diaryText: String = ""
         val diaryMood: String = Diary.HAPPY_MOOD
         val diaryId: String = refsDB.push().key.toString()
@@ -180,5 +186,22 @@ class DiaryRepository private constructor() {
             .child(userId)
             .child(diary.getId())
             .setValue(diary)
+    }
+
+    private fun sortDiaryDesc(){
+        for (i in 0 until diaryModels.size - 1) {
+            var m = i
+            for (j in i + 1 until diaryModels.size) {
+                if (diaryModels.get(m).getDate() < diaryModels.get(j).getDate()) m = j
+            }
+
+            val tempDiary: Diary = diaryModels[i]
+            diaryModels[i] = diaryModels[m]
+            diaryModels[m] = tempDiary
+
+            val tempTotal: HashMap<String, ExpenseIncome> = totalModels[i]
+            totalModels[i] = totalModels[m]
+            totalModels[m] = tempTotal
+        }
     }
 }

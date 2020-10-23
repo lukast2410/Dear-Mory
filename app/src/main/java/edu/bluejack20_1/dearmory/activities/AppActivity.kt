@@ -24,10 +24,6 @@ class AppActivity : AppCompatActivity() {
         setBottomNav()
         setViewPagerListener()
     }
-    override fun onResume() {
-        super.onResume()
-//        Toast.makeText(applicationContext, "Back Main", Toast.LENGTH_LONG).show()
-    }
 
     private fun initFragments() {
         val bottomNav: MeowBottomNavigation = bottom_nav

@@ -7,7 +7,7 @@ import edu.bluejack20_1.dearmory.models.ExpenseIncome
 
 class ExpenseIncomeRepository private constructor() {
     private val refsDB: DatabaseReference = FirebaseDatabase.getInstance().getReference()
-    private var expenseIncomeModels: ArrayList<ExpenseIncome> = ArrayList()
+    private lateinit var expenseIncomeModels: ArrayList<ExpenseIncome>
     private var expenseIncomeLiveData: MutableLiveData<ArrayList<ExpenseIncome>> = MutableLiveData()
 
     companion object {
@@ -22,6 +22,7 @@ class ExpenseIncomeRepository private constructor() {
     }
 
     fun getExpenseIncomeModels(diaryId: String): MutableLiveData<ArrayList<ExpenseIncome>> {
+        expenseIncomeModels = ArrayList()
         loadExpenseIncomeModels(diaryId)
 
         expenseIncomeLiveData.value = expenseIncomeModels
