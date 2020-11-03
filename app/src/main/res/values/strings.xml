@@ -43,4 +43,20 @@
     <string name="day_of_week_sa">Sa</string>
     <string name="day_of_week_su">Su</string>
     <string name="month_calendar_indicator_hint">month</string>
+    <string name="setting">Setting</string>
+    <string name="languages">LANGUAGES</string>
+    <string name="english" translatable="false">English</string>
+    <string name="indonesia" translatable="false">Indonesia</string>
+    <string name="text_size">TEXT SIZE</string>
+    <string name="theme">THEME</string>
+    <string name="dark_theme" translatable="false">Dark</string>
+    <string name="galaxy_theme" translatable="false">Galaxy</string>
+    <string name="light_theme" translatable="false">Light</string>
+    <string name="small_size">Small</string>
+    <string name="medium_size">Medium</string>
+    <string name="large_size">Large</string>
+    <string name="preview_text">Text Example</string>
+    <string name="finish">FINISH</string>
+    <string name="developer">By LT and RR</string>
+    <string name="signout">SIGN OUT</string>
 </resources>

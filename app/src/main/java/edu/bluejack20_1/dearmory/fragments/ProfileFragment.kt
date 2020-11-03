@@ -2,6 +2,8 @@ package edu.bluejack20_1.dearmory.fragments
 
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -14,6 +16,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import com.bumptech.glide.Glide
 
 import edu.bluejack20_1.dearmory.R
@@ -22,6 +25,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
+import edu.bluejack20_1.dearmory.activities.SettingActivity
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.update_profile_pop_up.*
 
@@ -99,6 +103,10 @@ class ProfileFragment : Fragment() {
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
+
+        ib_go_setting.setOnClickListener {
+            startActivity(Intent(context, SettingActivity::class.java))
+        }
     }
 
     fun selectPictureIntent(){
@@ -119,11 +127,8 @@ class ProfileFragment : Fragment() {
 
     private fun showUsernameUpdatePopUp(){
         dialog.setContentView(R.layout.update_profile_pop_up)
-        val btn = dialog.findViewById<TextView>(R.id.close_update_username_button)
-        btn.setOnClickListener {
-            dialog.dismiss()
-        }
-        val saveBtn = dialog.findViewById(R.id.save_username_logo) as ImageView
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val saveBtn = dialog.findViewById(R.id.save_username_logo) as CardView
         saveBtn.setOnClickListener {
             updateUsername()
         }

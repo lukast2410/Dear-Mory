@@ -237,6 +237,8 @@ class CalendarFragment : Fragment(){
         compactCalendar.setUseThreeLetterAbbreviation(true)
         compactCalendar.shouldDrawIndicatorsBelowSelectedDays(true)
         compactCalendar.setFirstDayOfWeek(Calendar.SUNDAY)
+        if(ThemeManager.THEME_INDEX == ThemeManager.LIGHT_THEME_INDEX)
+            compactCalendar.setCurrentSelectedDayTextColor(Color.WHITE)
 
         setCalendarEvent()
 

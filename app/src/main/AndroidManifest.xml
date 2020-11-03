@@ -6,35 +6,37 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/LightTheme">
-
-        <activity
-            android:name=".activities.ExpenseIncomeActivity"
-            android:parentActivityName=".activities.DiaryActivity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity android:name="edu.bluejack20_1.dearmory.activities.LogInActivity" />
-        <activity android:name="edu.bluejack20_1.dearmory.activities.SplashActivity">
+        android:theme="@style/DarkTheme">
+        <activity android:name=".activities.SettingActivity"
+            android:parentActivityName=".activities.AppActivity"/>
+        <activity android:name=".activities.LogInActivity" />
+        <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="edu.bluejack20_1.dearmory.activities.AppActivity"/>
-        <activity android:name="edu.bluejack20_1.dearmory.activities.DiaryActivity"
-            android:parentActivityName=".activities.AppActivity"/>
-        <activity android:name="edu.bluejack20_1.dearmory.activities.MainActivity"/>
-        <activity android:name="edu.bluejack20_1.dearmory.activities.SignInActivity"/>
+        <activity android:name=".activities.AppActivity" />
+        <activity
+            android:name=".activities.DiaryActivity"
+            android:parentActivityName=".activities.DiaryActivity" />
+        <activity android:name=".activities.MainActivity">
+        </activity>
+        <activity android:name=".activities.SignInActivity" />
+        <activity
+            android:name=".activities.ExpenseIncomeActivity"
+            android:parentActivityName=".activities.DiaryActivity"
+            android:windowSoftInputMode="adjustPan" />
 
-        <receiver android:name=".receivers.AlertReceiver">
-
-        </receiver>
+        <receiver android:name=".receivers.AlertReceiver"></receiver>
     </application>
 
 </manifest>

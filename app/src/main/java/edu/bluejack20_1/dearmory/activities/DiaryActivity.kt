@@ -161,21 +161,18 @@ class DiaryActivity : AppCompatActivity(), ExpenseIncomeAdapter.ExpenseIncomeLis
             diary.setMood(Diary.ANGRY_MOOD)
             setBackgroundBasedOnMood()
             diaryViewModel.saveDiary(userId, diary)
-            Toast.makeText(applicationContext, "Angry Mood", Toast.LENGTH_SHORT).show()
             dialog.dismiss()
         }
         happyMood.setOnClickListener {
             diary.setMood(Diary.HAPPY_MOOD)
             setBackgroundBasedOnMood()
             diaryViewModel.saveDiary(userId, diary)
-            Toast.makeText(applicationContext, "Happy Mood", Toast.LENGTH_SHORT).show()
             dialog.dismiss()
         }
         sadMood.setOnClickListener {
             diary.setMood(Diary.SAD_MOOD)
             setBackgroundBasedOnMood()
             diaryViewModel.saveDiary(userId, diary)
-            Toast.makeText(applicationContext, "Sad Mood", Toast.LENGTH_SHORT).show()
             dialog.dismiss()
         }
     }

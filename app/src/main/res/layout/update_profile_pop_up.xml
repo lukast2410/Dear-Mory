@@ -3,52 +3,51 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="350dp"
-    android:layout_height="125dp"
+    android:layout_width="272dp"
+    android:layout_marginHorizontal="15dp"
+    android:layout_height="80dp"
     android:layout_gravity="center"
-    android:background="@color/colorWhite"
-    android:padding="10dp"
-    android:orientation="vertical"
-    >
-
-    <TextView
-        android:id="@+id/close_update_username_button"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="end"
-        android:background="@drawable/rounded_button"
-        android:gravity="center"
-        android:text="X"
-        android:textColor="@color/colorWhite"
-        android:textStyle="bold"
-        android:layout_marginRight="5dp"/>
+    android:background="@drawable/dialog_background"
+    android:paddingVertical="10dp"
+    android:paddingHorizontal="15dp"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:paddingStart="20dp"
         android:clickable="true"
         android:focusable="true">
 
         <EditText
             android:id="@+id/username_field"
-            android:layout_width="250dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textColor="@color/black"
+            android:layout_marginEnd="40dp"
             />
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="-40dp">
 
-            <ImageView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/save_username_logo"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/ico_tick_mark"
-                android:padding="5dp"
-                android:layout_alignParentBottom="true"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="?attr/colorIconWithBackground"
+                app:cardCornerRadius="100dp">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/ico_done"
+                    android:padding="5dp"/>
+
+            </androidx.cardview.widget.CardView>
 
         </RelativeLayout>
 

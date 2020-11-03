@@ -21,6 +21,7 @@
     <color name="textColorDarkTheme">#ffffff</color>
     <color name="componentBgDarkTheme">#CE222222</color>
     <color name="colorIconWithoutBgDarkTheme">#D8D8D8</color>
+    <color name="backgroundShadingDarkTheme">#BA222222</color>
 
     <color name="colorIconWithBackgroundDarkTheme">#051F2F</color>
     <color name="backgroundForIconDarkTheme">#175A61</color>
@@ -38,9 +39,10 @@
     <color name="colorAccentLightTheme">#787878</color>
     <color name="colorIconIfBgWhiteLightTheme">#1F3F4C</color>
     <color name="navBackgroundColorLightTheme">#1F3F4C</color>
-    <color name="componentBgLightTheme">#E9EDEDED</color>
+    <color name="componentBgLightTheme">#D7F3F3F3</color>
     <color name="colorIconWithoutBgLightTheme">#ffffff</color>
     <color name="textColorLightTheme">#000000</color>
+    <color name="backgroundShadingLightTheme">#B0EDEDED</color>
 
     <color name="colorIconWithBackgroundLightTheme">#1F3F4C</color>
     <color name="backgroundForIconLightTheme">#6FBEDE</color>
@@ -61,6 +63,7 @@
     <color name="componentBgGalaxyTheme">#CE222222</color>
     <color name="colorIconWithoutBgGalaxyTheme">#D8D8D8</color>
     <color name="textColorGalaxyTheme">#ffffff</color>
+    <color name="backgroundShadingGalaxyTheme">#BA222222</color>
 
     <color name="colorIconWithBackgroundGalaxyTheme">#A33789</color>
     <color name="backgroundForIconGalaxyTheme">#10052D</color>

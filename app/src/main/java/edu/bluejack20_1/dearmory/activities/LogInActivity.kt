@@ -10,7 +10,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import edu.bluejack20_1.dearmory.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import edu.bluejack20_1.dearmory.ThemeManager
 import edu.bluejack20_1.dearmory.models.User
+import kotlinx.android.synthetic.main.activity_log_in.*
 
 class LogInActivity : AppCompatActivity() {
 
@@ -19,7 +21,9 @@ class LogInActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(ThemeManager.setUpTheme())
         setContentView(R.layout.activity_log_in)
+        iv_logIn_background.setImageResource(ThemeManager.setUpBackground())
 
         val loadingDialog = LoadingSignIn(this)
         loadingDialog.startLoading()
@@ -31,13 +35,11 @@ class LogInActivity : AppCompatActivity() {
             if(user != null){
                 updateStaticUser()
                 loadingDialog.dismissDialog()
-                Toast.makeText(this, "Welcome ${user.displayName}", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, AppActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
             }else {
                 loadingDialog.dismissDialog()
-                Toast.makeText(this, "Please login", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, SignInActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)

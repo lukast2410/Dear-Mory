@@ -36,7 +36,7 @@ class ExpenseIncomeRepository private constructor() {
         query.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (expenseIncomeModels.size > 0)
-                    expenseIncomeModels.removeAll(expenseIncomeModels)
+                    expenseIncomeModels.clear()
                 if (snapshot.exists()) {
                     for (data: DataSnapshot in snapshot.children) {
                         expenseIncomeModels.add(
@@ -47,8 +47,8 @@ class ExpenseIncomeRepository private constructor() {
                                 .setAmount(data.child("amount").value.toString().toLong())
                         )
                     }
-                    expenseIncomeLiveData.postValue(expenseIncomeModels)
                 }
+                expenseIncomeLiveData.postValue(expenseIncomeModels)
             }
 
             override fun onCancelled(error: DatabaseError) {}

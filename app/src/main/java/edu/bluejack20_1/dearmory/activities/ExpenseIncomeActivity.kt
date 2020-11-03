@@ -249,8 +249,12 @@ class ExpenseIncomeActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.toolbar_delete_menu){
-            confirmDialog.show()
+        when(item.itemId){
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+            R.id.toolbar_delete_menu -> confirmDialog.show()
         }
         return super.onOptionsItemSelected(item)
     }
