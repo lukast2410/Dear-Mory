@@ -306,6 +306,8 @@ class DiaryActivity : AppCompatActivity(), ExpenseIncomeAdapter.ExpenseIncomeLis
         if (type == Diary.WRITE_DIARY){
             initializeDiary()
         }else{
+            val factory = DiaryViewModelFactory(DiaryRepository.getInstance())
+            diaryViewModel = ViewModelProviders.of(this, factory).get(DiaryViewModel::class.java)
             diary = intent.getSerializableExtra(Diary.DIARY) as Diary
             setBackgroundBasedOnMood()
             setEditDiaryText()
