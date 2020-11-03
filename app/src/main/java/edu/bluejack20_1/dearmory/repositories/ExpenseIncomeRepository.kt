@@ -7,7 +7,7 @@ import edu.bluejack20_1.dearmory.models.ExpenseIncome
 
 class ExpenseIncomeRepository private constructor() {
     private val refsDB: DatabaseReference = FirebaseDatabase.getInstance().getReference()
-    private var expenseIncomeModels: ArrayList<ExpenseIncome> = ArrayList()
+    private lateinit var expenseIncomeModels: ArrayList<ExpenseIncome>
     private var expenseIncomeLiveData: MutableLiveData<ArrayList<ExpenseIncome>> = MutableLiveData()
 
     companion object {
@@ -22,6 +22,7 @@ class ExpenseIncomeRepository private constructor() {
     }
 
     fun getExpenseIncomeModels(diaryId: String): MutableLiveData<ArrayList<ExpenseIncome>> {
+        expenseIncomeModels = ArrayList()
         loadExpenseIncomeModels(diaryId)
 
         expenseIncomeLiveData.value = expenseIncomeModels
@@ -35,7 +36,7 @@ class ExpenseIncomeRepository private constructor() {
         query.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (expenseIncomeModels.size > 0)
-                    expenseIncomeModels.removeAll(expenseIncomeModels)
+                    expenseIncomeModels.clear()
                 if (snapshot.exists()) {
                     for (data: DataSnapshot in snapshot.children) {
                         expenseIncomeModels.add(
@@ -46,8 +47,8 @@ class ExpenseIncomeRepository private constructor() {
                                 .setAmount(data.child("amount").value.toString().toLong())
                         )
                     }
-                    expenseIncomeLiveData.postValue(expenseIncomeModels)
                 }
+                expenseIncomeLiveData.postValue(expenseIncomeModels)
             }
 
             override fun onCancelled(error: DatabaseError) {}

@@ -13,13 +13,14 @@
 
         <TextView
             android:id="@+id/month_indicator"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/month_calendar_indicator_hint"
-            android:textSize="30sp"
+            android:textSize="25sp"
+            android:textStyle="bold"
             android:padding="10dp"
-            android:layout_gravity="center"
-            android:gravity="center"/>
+            android:textAlignment="center"/>
+
         <com.github.sundeepk.compactcalendarview.CompactCalendarView
             android:id="@+id/compactcalendar_view"
             android:layout_width="fill_parent"
@@ -28,17 +29,18 @@
             android:layout_height="250dp"
             app:compactCalendarTargetHeight="250dp"
             app:compactCalendarTextSize="12sp"
-            app:compactCalendarBackgroundColor="#0800A8"
-            app:compactCalendarTextColor="#fff"
-            app:compactCalendarCurrentSelectedDayBackgroundColor="#4238FF"
-            app:compactCalendarCurrentDayBackgroundColor="#1C11F2"
-            app:compactCalendarMultiEventIndicatorColor="#fff"
-            />
+            app:compactCalendarBackgroundColor="?attr/colorPrimaryDark"
+            app:compactCalendarTextColor="?attr/editTextColor"
+            app:compactCalendarCurrentSelectedDayBackgroundColor="?attr/colorIconIfBgWhite"
+            app:compactCalendarCurrentDayBackgroundColor="?attr/backgroundShading"
+            app:compactCalendarMultiEventIndicatorColor="?attr/editTextColor"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/reminder_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingTop="15dp"
+            android:overScrollMode="never">
 
         </androidx.recyclerview.widget.RecyclerView>
 
@@ -51,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
-        android:src="@drawable/ico_plus"
+        android:src="@drawable/ic_plus"
         app:backgroundTint="?attr/backgroundForIcon"
         app:elevation="6dp"
         app:fabSize="normal"

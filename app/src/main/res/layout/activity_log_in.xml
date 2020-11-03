@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     tools:context="edu.bluejack20_1.dearmory.activities.LogInActivity">
 
+    <ImageView
+        android:id="@+id/iv_logIn_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"/>
+
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"

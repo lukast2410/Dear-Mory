@@ -6,20 +6,116 @@
     android:layout_height="match_parent"
     tools:context="edu.bluejack20_1.dearmory.fragments.ProfileFragment">
 
-    <Button
-        android:id="@+id/sign_out_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="200dp"
-        android:text="Sign Out"
-        android:background="@drawable/rounded_button"
-        android:elevation="20dp"
-        android:shadowColor="@color/black"
-        android:shadowRadius="20"
-        android:shadowDx="5"
-        android:shadowDy="5"
-        android:visibility="visible" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/ib_go_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/setting"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"/>
+
+        <RelativeLayout
+            android:id="@+id/rl_profile_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="15dp"
+                android:layout_marginHorizontal="15dp"
+                android:paddingTop="20dp"
+                app:cardBackgroundColor="?attr/backgroundShading"
+                app:cardElevation="0dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="50dp">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/profile_picture"
+                            android:layout_width="225dp"
+                            android:layout_height="225dp"
+                            android:layout_gravity="center_horizontal"
+                            android:padding="30dp"
+                            android:src="@drawable/profile"
+                            app:civ_border_width="3dp"
+                            app:civ_border_color="@color/colorWhite"/>
+
+                        <TextView
+                            android:id="@+id/profile_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:padding="10dp"
+                            android:text="-"
+                            android:textAlignment="center"
+                            android:clickable="true"
+                            android:textSize="36sp"
+                            android:textColor="@color/colorAccentLightTheme"
+                            android:focusable="true" />
+
+                        <TextView
+                            android:id="@+id/profile_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:elegantTextHeight="true"
+                            android:padding="5dp"
+                            android:text=""
+                            android:textAlignment="center"
+                            android:textSize="26sp"/>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_below="@id/rl_profile_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-27dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/button_background_theme">
+
+                <Button
+                    android:id="@+id/sign_out_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/signout"
+                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="100dp"
+                    android:textColor="?attr/editTextColor"
+                    android:textSize="16sp"
+                    android:elevation="10dp"
+                    android:background="@color/transparent"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
 
 <!--    <ImageView-->
 <!--        android:id="@+id/profile_picture"-->
@@ -30,41 +126,5 @@
 <!--        android:padding="30dp"-->
 <!--        android:src="@drawable/journal" />-->
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/profile_picture"
-        android:layout_width="225dp"
-        android:layout_height="225dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="100dp"
-        android:padding="30dp"
-        android:src="@drawable/profile"
-        app:civ_border_width="3dp"
-        app:civ_border_color="@color/colorWhite"/>
 
-    <TextView
-        android:id="@+id/profile_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="10dp"
-        android:text="-"
-        android:textAlignment="center"
-        android:clickable="true"
-        android:textSize="36sp"
-        android:textColor="@color/colorAccentLightTheme"
-        android:focusable="true" />
-
-    <TextView
-        android:id="@+id/profile_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="70dp"
-        android:elegantTextHeight="true"
-        android:padding="5dp"
-        android:text=""
-        android:textAlignment="center"
-        android:textColor="#DA000000"
-        android:textSize="26sp" />
 </FrameLayout>

@@ -30,9 +30,9 @@ class AlertReceiver: BroadcastReceiver() {
             .setContentTitle("Title here")
             .setContentText("Text here")
             .setAutoCancel(true)
-        Log.d("asd", "10")
+//        Log.d("asd", "10")
         notificationManager.notify(100, builder.build())
-        Log.d("asd", "11")
+//        Log.d("asd", "11")
 
         val label = p1?.getSerializableExtra("label").toString()
 
@@ -41,7 +41,7 @@ class AlertReceiver: BroadcastReceiver() {
             notification = context.let {
                 NotificationCompat.Builder(it, NotificationChannelApp.channel_1_id)
                     .setContentIntent(pendingIntent)
-                    .setSmallIcon(R.drawable.journal)
+                    .setSmallIcon(R.drawable.ic_dear_mory_rounded)
                     .setContentTitle(label)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setCategory(NotificationCompat.CATEGORY_MESSAGE)
@@ -53,13 +53,28 @@ class AlertReceiver: BroadcastReceiver() {
             notification = context.let {
                 NotificationCompat.Builder(it, NotificationChannelApp.channel_1_id)
                     .setContentIntent(pendingIntent)
-                    .setSmallIcon(R.drawable.journal)
+                    .setSmallIcon(R.drawable.ic_dear_mory_rounded)
                     .setContentTitle(label)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                     .setLights(Color.BLUE, 3000, 3000)
                     .build()
             }!!
+        }
+
+        if(p1?.getSerializableExtra("daily").toString() == "true"){
+            notification = context.let {
+                NotificationCompat.Builder(it, NotificationChannelApp.channel_2_id)
+                    .setContentIntent(pendingIntent)
+                    .setSmallIcon(R.drawable.ic_dear_mory_rounded)
+                    .setContentTitle(label)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                    .setLights(Color.RED, 3000, 3000)
+                    .setVibrate(longArrayOf(1000, 3000, 1000, 3000, 1000))
+                    .build()
+            }!!
+            notificationManager.notify(2, notification)
         }
 
         notificationManager.notify(1, notification)

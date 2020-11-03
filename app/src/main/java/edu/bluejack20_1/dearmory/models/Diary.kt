@@ -18,6 +18,7 @@ class Diary(): Serializable {
         const val SEND_DIARY_TYPE = "DiaryType"
         const val WRITE_DIARY = "Write"
         const val SELECT_DIARY = "Select"
+        const val DATE_DIARY = "DiaryDate"
     }
 
     init {

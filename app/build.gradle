@@ -28,6 +28,10 @@ android {
     }
 }
 
+repositories{
+    maven { url 'https://jitpack.io' }
+}
+
 dependencies {
 //    implementation fileTree(dir: 'libs', include: ['*.jar'])
 //    //noinspection GradleDependency
@@ -85,7 +89,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
     //Calendar
-    compile 'com.github.sundeepk:compact-calendar-view:3.0.0'
+    implementation 'com.github.sundeepk:compact-calendar-view:3.0.0'
 
     //ViewModel and LiveDate
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
@@ -96,9 +100,12 @@ dependencies {
     //picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    //line chart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+
     //other
     //noinspection GradleCompatible
-    compile "com.android.support:support-v4:28.0.0"
+    implementation "com.android.support:support-v4:28.0.0"
     //noinspection GradleCompatible
     implementation 'com.android.support:support-v4:20.0.0'
 }

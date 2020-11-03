@@ -87,11 +87,11 @@ class DiaryActivity : AppCompatActivity(), ExpenseIncomeAdapter.ExpenseIncomeLis
         initializeFloatingActionButton()
     }
 
-    private fun initializeDiary() {
+    private fun initializeDiary(date: String) {
         var success = false
         val factory = DiaryViewModelFactory(DiaryRepository.getInstance())
         diaryViewModel = ViewModelProviders.of(this, factory).get(DiaryViewModel::class.java)
-        diaryViewModel.getDiary(userId).observe(this, Observer { d ->
+        diaryViewModel.getDiary(userId, date).observe(this, Observer { d ->
             if (d.getId() != "false" && !success) {
                 diary = d
                 setBackgroundBasedOnMood()
@@ -161,21 +161,18 @@ class DiaryActivity : AppCompatActivity(), ExpenseIncomeAdapter.ExpenseIncomeLis
             diary.setMood(Diary.ANGRY_MOOD)
             setBackgroundBasedOnMood()
             diaryViewModel.saveDiary(userId, diary)
-            Toast.makeText(applicationContext, "Angry Mood", Toast.LENGTH_SHORT).show()
             dialog.dismiss()
         }
         happyMood.setOnClickListener {
             diary.setMood(Diary.HAPPY_MOOD)
             setBackgroundBasedOnMood()
             diaryViewModel.saveDiary(userId, diary)
-            Toast.makeText(applicationContext, "Happy Mood", Toast.LENGTH_SHORT).show()
             dialog.dismiss()
         }
         sadMood.setOnClickListener {
             diary.setMood(Diary.SAD_MOOD)
             setBackgroundBasedOnMood()
             diaryViewModel.saveDiary(userId, diary)
-            Toast.makeText(applicationContext, "Sad Mood", Toast.LENGTH_SHORT).show()
             dialog.dismiss()
         }
     }
@@ -244,7 +241,7 @@ class DiaryActivity : AppCompatActivity(), ExpenseIncomeAdapter.ExpenseIncomeLis
 //            } catch (e: IOException) {
 //                e.printStackTrace()
 //            }
-            Toast.makeText(applicationContext, "Uploading...", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(applicationContext, "Uploading...", Toast.LENGTH_SHORT).show()
             uploadImage()
         }
     }
@@ -304,7 +301,8 @@ class DiaryActivity : AppCompatActivity(), ExpenseIncomeAdapter.ExpenseIncomeLis
     private fun getExtraFromPreviousActivity() {
         var type = intent.getStringExtra(Diary.SEND_DIARY_TYPE).toString()
         if (type == Diary.WRITE_DIARY){
-            initializeDiary()
+            val date = intent.getStringExtra(Diary.DATE_DIARY) as String
+            initializeDiary(date)
         }else{
             val factory = DiaryViewModelFactory(DiaryRepository.getInstance())
             diaryViewModel = ViewModelProviders.of(this, factory).get(DiaryViewModel::class.java)

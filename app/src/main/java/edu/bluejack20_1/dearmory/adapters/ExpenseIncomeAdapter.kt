@@ -64,11 +64,12 @@ class ExpenseIncomeAdapter() :
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.itemView.tag = expenseIncomeModels.get(position)
-        holder.notes.text = expenseIncomeModels.get(position).getNotes()
-        holder.time.text = expenseIncomeModels.get(position).getTime()
+        holder.itemView.tag = expenseIncomeModels[position]
+        holder.notes.text = expenseIncomeModels[position].getNotes()
+        holder.time.text = expenseIncomeModels[position].getTime()
+        holder.amount.setTextSize(TypedValue.COMPLEX_UNIT_SP, (ThemeManager.TEXT_SIZE + 11).toFloat())
         if (expenseIncomeModels[position].getAmount().toInt() > 0) { //income
-            val amount = expenseIncomeModels.get(position).getAmount().toLong()
+            val amount = expenseIncomeModels[position].getAmount().toLong()
             holder.amount.text = "Rp ${shortenComa(amount)}"
             holder.amount.setTextColor(
                 ContextCompat.getColor(
@@ -83,7 +84,7 @@ class ExpenseIncomeAdapter() :
                 )
             )
         } else { //expense
-            val amount = (expenseIncomeModels.get(position).getAmount().toLong() * (-1))
+            val amount = (expenseIncomeModels[position].getAmount().toLong() * (-1))
             holder.amount.text = "Rp ${shortenComa(amount)}"
             holder.amount.setTextColor(
                 ContextCompat.getColor(

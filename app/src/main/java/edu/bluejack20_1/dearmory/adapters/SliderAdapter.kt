@@ -25,9 +25,9 @@ class SliderAdapter : PagerAdapter {
         R.drawable.calendar)
 
     var slide_headings = arrayOf(
-        "DIARY",
-        "MONEY MANAGER",
-        "REMINDER")
+        "Diary",
+        "Money Manager",
+        "Reminder")
 
     var slide_description = arrayOf(
         "Create your own diary, manually!! :)",

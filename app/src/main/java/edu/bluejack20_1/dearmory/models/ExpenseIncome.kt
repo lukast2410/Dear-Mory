@@ -14,6 +14,25 @@ class ExpenseIncome: Serializable {
         const val ADD_EXPENSE_INCOME = "add expense income"
         const val UPDATE_EXPENSE_INCOME = "update expense income"
         const val EXPENSE_INCOME_ID = "expenseIncomeId"
+
+        fun shortenComa(numb: Long): String {
+            var numbW = numb.toString();
+            var length = numb.toString().length;
+            var word = "";
+            for (i: Int in (length - 3) downTo 0 step 3) {
+                if (i <= 0)
+                    break
+                word = ".${numbW.substring(i, length)}${word}"
+                length -= 3
+            }
+            var mod = numb.toString().length % 3;
+            word = if (mod == 0) {
+                numbW.substring(0, 3) + word;
+            } else {
+                numbW.substring(0, mod) + word;
+            }
+            return word;
+        }
     }
 
     fun setId(id: String): ExpenseIncome{

@@ -2,24 +2,30 @@ package edu.bluejack20_1.dearmory.fragments
 
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+import android.provider.MediaStore
 import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.fragment.app.Fragment
+import androidx.cardview.widget.CardView
 import com.bumptech.glide.Glide
+
+import edu.bluejack20_1.dearmory.R
+import edu.bluejack20_1.dearmory.activities.SignInActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import edu.bluejack20_1.dearmory.R
-import edu.bluejack20_1.dearmory.activities.SignInActivity
+import com.google.firebase.database.ktx.getValue
+import edu.bluejack20_1.dearmory.activities.SettingActivity
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.update_profile_pop_up.*
 
@@ -78,24 +84,28 @@ class ProfileFragment : Fragment() {
         }
 
         profile_name.setOnClickListener {
-            Log.d("Updated", "name clicked")
+//            Log.d("Updated", "name clicked")
             showUsernameUpdatePopUp()
         }
 
         sign_out_button.setOnClickListener {
-            Log.d("IN", "Log out clicked")
+//            Log.d("IN", "Log out clicked")
             if(user != null){
-                Log.d("IN", "name is ${user!!.displayName}")
+//                Log.d("IN", "name is ${user!!.displayName}")
                 FirebaseAuth.getInstance().signOut()
             }
             user = FirebaseAuth.getInstance().currentUser
             if(user == null) {
-                Log.d("IN", "name is. ${user?.displayName}")
+//                Log.d("IN", "name is. ${user?.displayName}")
             }
 
             val intent = Intent(context, SignInActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
+        }
+
+        ib_go_setting.setOnClickListener {
+            startActivity(Intent(context, SettingActivity::class.java))
         }
     }
 
@@ -117,11 +127,10 @@ class ProfileFragment : Fragment() {
 
     private fun showUsernameUpdatePopUp(){
         dialog.setContentView(R.layout.update_profile_pop_up)
-        val btn = dialog.findViewById<TextView>(R.id.close_update_username_button)
-        btn.setOnClickListener {
-            dialog.dismiss()
-        }
-        val saveBtn = dialog.findViewById(R.id.save_username_logo) as ImageView
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val userField = dialog.findViewById<EditText>(R.id.username_field)
+        userField.isSingleLine = true
+        val saveBtn = dialog.findViewById(R.id.save_username_logo) as CardView
         saveBtn.setOnClickListener {
             updateUsername()
         }
@@ -147,7 +156,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun updateUsername(){
-        val name = dialog.findViewById<EditText>(R.id.username_field).text
+        val name = dialog.findViewById<EditText>(R.id.username_field).text.trim()
         val account = GoogleSignIn.getLastSignedInAccount(activity)
         if(account != null && name != null){
             if(name.isNotBlank()){
@@ -159,11 +168,11 @@ class ProfileFragment : Fragment() {
                 databaseReference.updateChildren(hashMap as Map<String, Any>).addOnCompleteListener {
                     dialog.dismiss()
                 }
-                Log.d("UPDATE USERNAME", "acc not null and name not null ")
+//                Log.d("UPDATE USERNAME", "acc not null and name not null ")
             }
-            Log.d("UPDATE USERNAME", "acc not null but name is blank")
+//            Log.d("UPDATE USERNAME", "acc not null but name is blank")
         }else{
-            Log.d("UPDATE USERNAME", "acc null or name null")
+//            Log.d("UPDATE USERNAME", "acc null or name null")
         }
     }
 
@@ -178,9 +187,9 @@ class ProfileFragment : Fragment() {
             databaseReference.updateChildren(hashMap as Map<String, Any>).addOnCompleteListener {
                 dialog.dismiss()
             }
-            Log.d("UPDATE PP", "acc not null and pp not null ")
+//            Log.d("UPDATE PP", "acc not null and pp not null ")
         }else{
-            Log.d("UPDATE PP", "acc null or pp null")
+//            Log.d("UPDATE PP", "acc null or pp null")
         }
     }
 

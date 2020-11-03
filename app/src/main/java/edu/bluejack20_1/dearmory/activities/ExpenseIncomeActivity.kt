@@ -170,7 +170,6 @@ class ExpenseIncomeActivity : AppCompatActivity() {
     }
 
     private fun initializeTypePopUp() {
-        expenseIncomeType = EXPENSE_TYPE
         dialog = Dialog(this)
         dialog.setContentView(R.layout.expense_income_type_dialog)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -221,6 +220,7 @@ class ExpenseIncomeActivity : AppCompatActivity() {
             expenseIncome = intent.getSerializableExtra(ExpenseIncome.EXPENSE_INCOME) as ExpenseIncome
             setExpenseIncomeData()
         }else{
+            expenseIncomeType = EXPENSE_TYPE
             expenseIncome = ExpenseIncome()
             expenseIncome.setTime(timeNow)
             tv_time_picker.text = timeNow
@@ -249,8 +249,12 @@ class ExpenseIncomeActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.toolbar_delete_menu){
-            confirmDialog.show()
+        when(item.itemId){
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+            R.id.toolbar_delete_menu -> confirmDialog.show()
         }
         return super.onOptionsItemSelected(item)
     }

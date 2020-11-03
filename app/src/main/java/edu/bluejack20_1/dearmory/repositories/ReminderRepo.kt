@@ -1,4 +1,4 @@
-package edu.bluejack20_1.dearmory.repository
+package edu.bluejack20_1.dearmory.repositories
 
 import android.annotation.SuppressLint
 import android.app.AlarmManager
@@ -10,7 +10,6 @@ import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
 import android.os.PersistableBundle
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
@@ -18,8 +17,6 @@ import com.github.sundeepk.compactcalendarview.CompactCalendarView
 import com.github.sundeepk.compactcalendarview.domain.Event
 import com.google.firebase.database.*
 import edu.bluejack20_1.dearmory.models.Reminder
-import edu.bluejack20_1.dearmory.models.User
-import edu.bluejack20_1.dearmory.notifications.NotificationChannelApp
 import edu.bluejack20_1.dearmory.receivers.AlertReceiver
 import java.util.*
 import kotlin.collections.ArrayList
@@ -36,7 +33,7 @@ class ReminderRepo: AppCompatActivity() {
     companion object{
         var instance: ReminderRepo? = null
         @JvmName("Asd")
-        fun getInstance(): ReminderRepo{
+        fun getInstance(): ReminderRepo {
             if(instance == null){
                 instance = ReminderRepo()
             }
@@ -44,18 +41,18 @@ class ReminderRepo: AppCompatActivity() {
         }
     }
 
-    fun getReminders(date: Date): MutableLiveData<ArrayList<Reminder>>{
+    fun getReminders(date: Date, userId: String): MutableLiveData<ArrayList<Reminder>>{
 //        if(reminders.size == 0){
-            loadReminder(date)
+            loadReminder(date, userId)
 //        }
 
         reminder.value = reminders
         return reminder
     }
 
-    private fun loadReminder(date: Date) {
+    private fun loadReminder(date: Date, userId: String) {
         val ref: DatabaseReference = FirebaseDatabase.getInstance().reference.child("Reminder")
-        val query: Query = ref.child(User.getInstance().getId().toString())
+        val query: Query = ref.child(userId)
         query.addValueEventListener(object: ValueEventListener{
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
@@ -87,10 +84,10 @@ class ReminderRepo: AppCompatActivity() {
         })
     }
 
-    fun getAllEvent(compactCalendar: CompactCalendarView): ArrayList<Calendar>{
+    fun getAllEvent(compactCalendar: CompactCalendarView, userId: String): ArrayList<Calendar>{
         val events: ArrayList<Calendar> = ArrayList()
         val ref: DatabaseReference = FirebaseDatabase.getInstance().reference.child("Reminder")
-        val query: Query = ref.child(User.getInstance().getId().toString())
+        val query: Query = ref.child(userId)
         query.addValueEventListener(object: ValueEventListener{
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
