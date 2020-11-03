@@ -23,6 +23,7 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -35,11 +36,15 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import edu.bluejack20_1.dearmory.R
 import edu.bluejack20_1.dearmory.ThemeManager
+import edu.bluejack20_1.dearmory.activities.DiaryActivity
+import edu.bluejack20_1.dearmory.activities.ReminderActivity
 import edu.bluejack20_1.dearmory.adapters.ReminderAdapter
+import edu.bluejack20_1.dearmory.models.Diary
 import edu.bluejack20_1.dearmory.models.Reminder
 import edu.bluejack20_1.dearmory.modelsViews.ReminderViewModel
 import edu.bluejack20_1.dearmory.receivers.AlertReceiver
 import kotlinx.android.synthetic.main.activity_expense_income.*
+import kotlinx.android.synthetic.main.activity_reminder.*
 import kotlinx.android.synthetic.main.day_of_week_picker.*
 import kotlinx.android.synthetic.main.fragment_calendar.*
 import java.time.LocalDateTime
@@ -47,8 +52,16 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
+import android.support.v4.app.INotificationSideChannel
+import androidx.core.app.NotificationCompat
+import edu.bluejack20_1.dearmory.notifications.NotificationChannelApp
+import androidx.core.content.FileProvider
+import androidx.core.content.getSystemService
+import java.lang.StringBuilder
 
 class CalendarFragment : Fragment(){
+
+    private lateinit var notifManager : NotificationManagerCompat
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var reminderAdapter: ReminderAdapter
@@ -88,6 +101,8 @@ class CalendarFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        notifManager = context?.let { NotificationManagerCompat.from(it) }!!
+
         dialog = context?.let { Dialog(it) }!!
 
         reminder_recycler_view.setHasFixedSize(true)
@@ -101,44 +116,49 @@ class CalendarFragment : Fragment(){
         })
         reminderAdapter.setOnItemClickListener(object : ReminderAdapter.OnItemClickListener{
             override fun onItemClick(position: Int) {
-                reminderViewModel.getReminders().value!![position].updateDate(position.toString())
+                reminderViewModel.getReminders().value!![position]
                 reminderAdapter.notifyItemChanged(position)
+                startSelectedReminderIntent(position)
             }
 
         })
         setUpCalendar()
 
         fab_add_reminder.setOnClickListener {
-            calendar = Calendar.getInstance()
-
-            val hour = calendar.get(Calendar.HOUR_OF_DAY)
-            val minute = calendar.get(Calendar.MINUTE)
-            val year = calendar.get(Calendar.YEAR)
-            var month = calendar.get(Calendar.MONTH)
-            val day = calendar.get(Calendar.DAY_OF_MONTH)
-
-            val datePickerDialog = context?.let { it1 -> DatePickerDialog(it1, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                DatePickerDialog.OnDateSetListener { datePicker, i, i2, i3 ->
-                    month = i2 + 1
-                    val date = "$i3/$month/$i"
-                    openTimePicker(hour, minute)
-                    choosenDate = date
-                    ty = i
-                    tmonth = month
-                    td = i3
-                }
-                ,year,month,day) }
-            if (datePickerDialog != null) {
-                datePickerDialog.datePicker.minDate = (calendar.time.time - (calendar.time.time % (24*60*60*1000)))
-                datePickerDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                datePickerDialog.show()
-            }
+            val intent = Intent(context, ReminderActivity::class.java)
+            intent.putExtra("isCreate", 1)
+            startActivity(intent)
+//            setNotificationChannel1("123")
+//            calendar = Calendar.getInstance()
+//
+//            val hour = calendar.get(Calendar.HOUR_OF_DAY)
+//            val minute = calendar.get(Calendar.MINUTE)
+//            val year = calendar.get(Calendar.YEAR)
+//            var month = calendar.get(Calendar.MONTH)
+//            val day = calendar.get(Calendar.DAY_OF_MONTH)
+//
+//            val datePickerDialog = context?.let { it1 -> DatePickerDialog(it1, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+//                DatePickerDialog.OnDateSetListener { datePicker, i, i2, i3 ->
+//                    month = i2 + 1
+//                    val date = "$i3/$month/$i"
+//                    openTimePicker(hour, minute)
+//                    choosenDate = date
+//                    ty = i
+//                    tmonth = month
+//                    td = i3
+//                }
+//                ,year,month,day) }
+//            if (datePickerDialog != null) {
+//                datePickerDialog.datePicker.minDate = (calendar.time.time - (calendar.time.time % (24*60*60*1000)))
+//                datePickerDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//                datePickerDialog.show()
+//            }
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun openTimePicker(hour: Int, minute: Int){
-        val timePickerDialog = TimePickerDialog(context,TimePickerDialog.OnTimeSetListener(){ timePicker: TimePicker, i: Int, i1: Int ->
+        val timePickerDialog = TimePickerDialog(context,android.R.style.Theme_DeviceDefault_Dialog,TimePickerDialog.OnTimeSetListener(){ timePicker: TimePicker, i: Int, i1: Int ->
             timeToNotify = "$i:$i1"
 //            add_reminder_button.text = "$i:$i1"
             choosenTime = "$i:$i1"
@@ -204,6 +224,7 @@ class CalendarFragment : Fragment(){
                 val id = databaseReference.push().key.toString()
                 hashMap["id"] = id
                 databaseReference.child(id).setValue(hashMap as Map<String, Any>).addOnCompleteListener {
+                    setNotificationChannel1(choosenTime)
                     dialog.dismiss()
                 }
             }
@@ -238,6 +259,9 @@ class CalendarFragment : Fragment(){
         compactCalendar.shouldDrawIndicatorsBelowSelectedDays(true)
         compactCalendar.setFirstDayOfWeek(Calendar.SUNDAY)
 
+        val calendar: Calendar = Calendar.getInstance()
+        month_indicator.text = dateFormatMonth.format(calendar.time)
+
         setCalendarEvent()
 
         compactCalendar.setListener(object : CompactCalendarView.CompactCalendarViewListener {
@@ -261,8 +285,9 @@ class CalendarFragment : Fragment(){
                 })
                 reminderAdapter.setOnItemClickListener(object : ReminderAdapter.OnItemClickListener{
                     override fun onItemClick(position: Int) {
-                        reminderViewModel.getReminders().value!![position].updateDate(position.toString())
+                        reminderViewModel.getReminders().value!![position]
                         reminderAdapter.notifyItemChanged(position)
+                        startSelectedReminderIntent(position)
                     }
                 })
             }
@@ -278,40 +303,40 @@ class CalendarFragment : Fragment(){
     fun showDatePickerDialog(holder: ReminderAdapter.ViewHolder, position: Int, reminderList: ArrayList<Reminder>){
         calendar = Calendar.getInstance()
 
-        val n = holder.date.text.split("/").map { it.toInt() }
-        val year = n[2]
-        var month = n[1] - 1
-        val day = n[0]
-        val id = reminderList[position].getId()
-        val account = GoogleSignIn.getLastSignedInAccount(context)
-        val datePickerDialog = context?.let { it1 -> DatePickerDialog(it1, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-            DatePickerDialog.OnDateSetListener { datePicker, i, i2, i3 ->
-                month = i2 + 1
-                val date = "$i3/$month/$i"
-                if(date.isNotBlank()){
-                    if (account != null) {
-                        databaseReference =
-                            account.id?.let { FirebaseDatabase.getInstance().getReference("Reminder").child(it).child(id) }!!
-                    }
-                    val hashMap: HashMap<String, String> = HashMap()
-                    hashMap["date"] = date
-                    databaseReference.updateChildren(hashMap as Map<String, Any>)
-                    val hashMap2: HashMap<String, String> = HashMap()
-                    hashMap2["repeat"] = "off"
-                    databaseReference.updateChildren(hashMap2 as Map<String, Any>)
-                }
-            }
-            ,year,month,day) }
-        datePickerDialog?.datePicker?.minDate = (calendar.time.time - (calendar.time.time % (24*60*60*1000)))
-        datePickerDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        datePickerDialog?.show()
+//        val n = holder.date.text.split("/").map { it.toInt() }
+//        val year = n[2]
+//        var month = n[1] - 1
+//        val day = n[0]
+//        val id = reminderList[position].getId()
+//        val account = GoogleSignIn.getLastSignedInAccount(context)
+//        val datePickerDialog = context?.let { it1 -> DatePickerDialog(it1, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+//            DatePickerDialog.OnDateSetListener { datePicker, i, i2, i3 ->
+//                month = i2 + 1
+//                val date = "$i3/$month/$i"
+//                if(date.isNotBlank()){
+//                    if (account != null) {
+//                        databaseReference =
+//                            account.id?.let { FirebaseDatabase.getInstance().getReference("Reminder").child(it).child(id) }!!
+//                    }
+//                    val hashMap: HashMap<String, String> = HashMap()
+//                    hashMap["date"] = date
+//                    databaseReference.updateChildren(hashMap as Map<String, Any>)
+//                    val hashMap2: HashMap<String, String> = HashMap()
+//                    hashMap2["repeat"] = "off"
+//                    databaseReference.updateChildren(hashMap2 as Map<String, Any>)
+//                }
+//            }
+//            ,year,month,day) }
+//        datePickerDialog?.datePicker?.minDate = (calendar.time.time - (calendar.time.time % (24*60*60*1000)))
+//        datePickerDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//        datePickerDialog?.show()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun showTimePickerDialog(holder: ReminderAdapter.ViewHolder, position: Int, reminderList: ArrayList<Reminder>){
-        val n = holder.time.text.split(":").map { it.toInt() }
-        val hour = n[0]
-        val minute = n[1]
+//        val n = holder.time.text.split(":").map { it.toInt() }
+//        val hour = n[0]
+//        val minute = n[1]
         val id = reminderList[position].getId()
         val account = GoogleSignIn.getLastSignedInAccount(context)
         var theme = R.style.DialogDarkTheme
@@ -336,21 +361,21 @@ class CalendarFragment : Fragment(){
 ////                expenseIncome.setTime("$finalHour:$finalMinute")
 //            }
 //        })
-        val timePickerDialog = TimePickerDialog(context,
-            TimePickerDialog.OnTimeSetListener(){ timePicker: TimePicker, i: Int, i1: Int ->
-                val time = "$i:$i1"
-                if(time.isNotBlank()){
-                    if (account != null) {
-                        databaseReference =
-                            account.id?.let { FirebaseDatabase.getInstance().getReference("Reminder").child(it).child(id) }!!
-                    }
-                    val hashMap: HashMap<String, String> = HashMap()
-                    hashMap["time"] = time
-                    databaseReference.updateChildren(hashMap as Map<String, Any>)
-                }
-            },hour,minute,false)
+//        val timePickerDialog = TimePickerDialog(context,
+//            TimePickerDialog.OnTimeSetListener(){ timePicker: TimePicker, i: Int, i1: Int ->
+//                val time = "$i:$i1"
+//                if(time.isNotBlank()){
+//                    if (account != null) {
+//                        databaseReference =
+//                            account.id?.let { FirebaseDatabase.getInstance().getReference("Reminder").child(it).child(id) }!!
+//                    }
+//                    val hashMap: HashMap<String, String> = HashMap()
+//                    hashMap["time"] = time
+//                    databaseReference.updateChildren(hashMap as Map<String, Any>)
+//                }
+//            },hour,minute,false)
 //        timePickerDialog.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        timePickerDialog.show()
+//        timePickerDialog.show()
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -519,8 +544,45 @@ class CalendarFragment : Fragment(){
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    fun setCalendarEvent(){
+    fun setCalendarEvent() {
         val events: ArrayList<java.util.Calendar> = reminderViewModel.getAllEvent(compactCalendar)
     }
 
+    fun startSelectedReminderIntent(position: Int){
+        var selectedReminder: Reminder = reminderViewModel.getReminders().value!![position]
+        var intent = Intent(context, ReminderActivity::class.java)
+        intent.putExtra(Reminder.REMINDER, selectedReminder)
+        startActivity(intent)
+    }
+
+    private fun setNotificationChannel1(time: String){
+//        context?.let { reminderViewModel.setAlarm(it, time) }
+
+        var notification : Notification =
+            context?.let {
+                NotificationCompat.Builder(it, NotificationChannelApp.channel_1_id)
+                    .setSmallIcon(R.drawable.journal)
+                    .setContentTitle("Title")
+                    .setContentText("Text here")
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                    .build()
+            }!!
+
+        notifManager.notify(1, notification)
+    }
+
+    private fun setNotificationChannel2(){
+        var notification : Notification =
+            context?.let {
+                NotificationCompat.Builder(it, NotificationChannelApp.channel_2_id)
+                    .setSmallIcon(R.drawable.journal)
+                    .setContentTitle("Title2")
+                    .setContentText("Text here")
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .build()
+            }!!
+
+        notifManager.notify(2, notification)
+    }
 }

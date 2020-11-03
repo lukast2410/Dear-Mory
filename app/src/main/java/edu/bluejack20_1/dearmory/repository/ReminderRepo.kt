@@ -1,24 +1,37 @@
 package edu.bluejack20_1.dearmory.repository
 
 import android.annotation.SuppressLint
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.icu.text.SimpleDateFormat
 import android.os.Build
+import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import com.github.sundeepk.compactcalendarview.CompactCalendarView
 import com.github.sundeepk.compactcalendarview.domain.Event
 import com.google.firebase.database.*
 import edu.bluejack20_1.dearmory.models.Reminder
 import edu.bluejack20_1.dearmory.models.User
+import edu.bluejack20_1.dearmory.notifications.NotificationChannelApp
+import edu.bluejack20_1.dearmory.receivers.AlertReceiver
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ReminderRepo {
+class ReminderRepo: AppCompatActivity() {
 
     var reminders: ArrayList<Reminder> = ArrayList()
     val reminder: MutableLiveData<ArrayList<Reminder>> = MutableLiveData()
+
+    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onCreate(savedInstanceState, persistentState)
+    }
 
     companion object{
         var instance: ReminderRepo? = null
@@ -101,5 +114,20 @@ class ReminderRepo {
 
         })
         return events
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun setAlarm(context: Context, time : String){
+        val calendar: android.icu.util.Calendar = android.icu.util.Calendar.getInstance()
+//        val n = time.split(":").map { it.toInt() }
+        calendar.set(android.icu.util.Calendar.HOUR_OF_DAY, 21)
+        calendar.set(android.icu.util.Calendar.MINUTE, 39)
+        calendar.set(android.icu.util.Calendar.SECOND, 0)
+
+        val intent: Intent = Intent(context, AlertReceiver::class.java)
+        val pendingIntent : PendingIntent = PendingIntent.getBroadcast(context, 100, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT)
+        val alarmManager : AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
     }
 }

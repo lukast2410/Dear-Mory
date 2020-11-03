@@ -8,9 +8,10 @@ import android.icu.util.Calendar
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import java.io.Serializable
 import kotlin.coroutines.coroutineContext
 
-class Reminder {
+class Reminder: Serializable {
     private lateinit var date: String
     private lateinit var id: String
     private lateinit var label: String
@@ -23,8 +24,8 @@ class Reminder {
 
     }
 
-    fun updateDate(date: String){
-
+    companion object{
+        const val REMINDER = "Reminder"
     }
 
     fun getDate(): String{

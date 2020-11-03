@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.bluejack20_1.dearmory.activities.ReminderActivity"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_reminder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent" />
+
+    </LinearLayout>
+
+    <TimePicker
+        android:id="@+id/reminder_time_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/reminder_label_hint"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="10dp"/>
+
+    <EditText
+        android:id="@+id/reminder_edit_label_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reminder_date_hint"
+            android:padding="10dp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end">
+
+            <TextView
+                android:id="@+id/reminder_edit_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reminder_label_hint"
+                android:layout_marginEnd="10dp"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/reminder_vibrate_hint" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end">
+
+            <Switch
+                android:id="@+id/vibrate_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/repeat_reminder_label" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end">
+            <Switch
+                android:id="@+id/repeat_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:clickable="true"
+        android:focusable="true">
+
+        <TextView
+            android:id="@+id/su_day"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_margin="3dp"
+            android:background="@drawable/ico_day_picker_non_active"
+            android:gravity="center"
+            android:text="@string/day_of_week_su"
+            android:textColor="@color/whiteSmoke" />
+
+        <TextView
+            android:id="@+id/mo_day"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_margin="3dp"
+            android:background="@drawable/ico_day_picker_non_active"
+            android:gravity="center"
+            android:text="@string/day_of_week_mo"
+            android:textColor="@color/whiteSmoke" />
+
+        <TextView
+            android:id="@+id/tu_day"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_margin="3dp"
+            android:background="@drawable/ico_day_picker_non_active"
+            android:gravity="center"
+            android:text="@string/day_of_week_tu"
+            android:textColor="@color/whiteSmoke" />
+
+        <TextView
+            android:id="@+id/we_day"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_margin="3dp"
+            android:background="@drawable/ico_day_picker_non_active"
+            android:gravity="center"
+            android:text="@string/day_of_week_we"
+            android:textColor="@color/whiteSmoke" />
+
+        <TextView
+            android:id="@+id/th_day"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_margin="3dp"
+            android:background="@drawable/ico_day_picker_non_active"
+            android:gravity="center"
+            android:text="@string/day_of_week_th"
+            android:textColor="@color/whiteSmoke" />
+
+        <TextView
+            android:id="@+id/fr_day"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_margin="3dp"
+            android:background="@drawable/ico_day_picker_non_active"
+            android:gravity="center"
+            android:text="@string/day_of_week_fr"
+            android:textColor="@color/whiteSmoke" />
+
+        <TextView
+            android:id="@+id/sa_day"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_margin="3dp"
+            android:background="@drawable/ico_day_picker_non_active"
+            android:gravity="center"
+            android:text="@string/day_of_week_sa"
+            android:textColor="@color/whiteSmoke" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/save_reminder_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/save"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_button"
+        android:elevation="20dp"
+        android:shadowColor="@color/black"
+        android:shadowRadius="20"
+        android:shadowDx="5"
+        android:shadowDy="5"
+        android:visibility="visible" />
+
+</LinearLayout>

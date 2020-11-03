@@ -2,6 +2,7 @@ package edu.bluejack20_1.dearmory.modelsViews
 
 import android.content.Context
 import android.icu.util.Calendar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.MutableLiveData
@@ -27,4 +28,10 @@ class ReminderViewModel: ViewModel() {
     fun getReminders(): MutableLiveData<ArrayList<Reminder>>{
         return reminders
     }
+
+    fun setAlarm(context: Context, time:String){
+        ReminderRepo.getInstance().setAlarm(context, time)
+    }
+
+
 }

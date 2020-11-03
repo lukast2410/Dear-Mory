@@ -8,9 +8,9 @@
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="240dp"
         android:layout_centerInParent="true"
-        app:srcCompat="@drawable/cash"/>
+        app:srcCompat="@drawable/ic_dear_mory_rounded"/>
 
     <TextView
         android:id="@+id/developers_label"
