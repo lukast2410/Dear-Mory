@@ -27,6 +27,7 @@ import edu.bluejack20_1.dearmory.adapters.ReminderAdapter
 import edu.bluejack20_1.dearmory.models.Diary
 import edu.bluejack20_1.dearmory.models.ExpenseIncome
 import edu.bluejack20_1.dearmory.models.Reminder
+import edu.bluejack20_1.dearmory.network.MyFirebaseMessagingService
 import edu.bluejack20_1.dearmory.receivers.AlertReceiver
 import kotlinx.android.synthetic.main.activity_expense_income.*
 import kotlinx.android.synthetic.main.activity_reminder.*
@@ -51,11 +52,13 @@ class ReminderActivity : AppCompatActivity() {
     private lateinit var repeatedDays: String
     private lateinit var n: MutableList<Int>
     private lateinit var isVibrate: String
+    private lateinit var tempID: String
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reminder)
+
         if(intent.getSerializableExtra("isCreate") == 1){
             initializeToolbar()
             createNewReminder()
@@ -132,6 +135,7 @@ class ReminderActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun updateReminder(){
+        tempID = reminder.getId()
         val account = GoogleSignIn.getLastSignedInAccount(this)
         if(account != null){
             databaseReference = FirebaseDatabase.getInstance().getReference("Reminder").child(account.id!!).child(reminder.getId())
@@ -370,6 +374,7 @@ class ReminderActivity : AppCompatActivity() {
                 hashMap["repeatDays"] = "1,2,3,4,5,6,7"
                 val id = databaseReference.push().key.toString()
                 hashMap["id"] = id
+                tempID = id
                 databaseReference.child(id).setValue(hashMap as Map<String, Any>).addOnCompleteListener {
                     setAlarm()
                     finish()
@@ -383,25 +388,30 @@ class ReminderActivity : AppCompatActivity() {
         val calendar: Calendar = Calendar.getInstance()
         val t = time.split(":").map { it.toInt() }
         val d = reminder_edit_date.text.toString().split("/").map { it.toInt() }
+        calendar.timeInMillis = System.currentTimeMillis()
         calendar.set(Calendar.YEAR, d[0])
         calendar.set(Calendar.MONTH, d[1])
         calendar.set(Calendar.DAY_OF_MONTH, d[2])
         calendar.set(Calendar.HOUR_OF_DAY, t[0])
         calendar.set(Calendar.MINUTE, t[1])
         calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
 
         val intent: Intent = Intent(applicationContext, AlertReceiver::class.java)
         intent.putExtra("label", reminder_edit_label_field.text.toString())
+        intent.putExtra("remID", tempID)
+
         if(isVibrate == "on"){
             intent.putExtra("vibrate", "on")
         }else if(isVibrate == "off"){
             intent.putExtra("vibrate", "off")
         }
 
-        val pendingIntent : PendingIntent = PendingIntent.getBroadcast(applicationContext, 100, intent,
+        val pendingIntent : PendingIntent = PendingIntent.getBroadcast(applicationContext, 0, intent,
             PendingIntent.FLAG_UPDATE_CURRENT)
         val alarmManager : AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
+//        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
         Log.d("asd", calendar.get(Calendar.YEAR).toString())
         Log.d("asd", calendar.get(Calendar.MONTH).toString())
         Log.d("asd", calendar.get(Calendar.DAY_OF_MONTH).toString())
