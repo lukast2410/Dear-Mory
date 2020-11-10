@@ -19,7 +19,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:padding="15dp"
-            android:src="@drawable/ic_radio_button"
+            android:src="@drawable/ic_top_bottom"
             app:tint="#12DC12" />
 
         <LinearLayout

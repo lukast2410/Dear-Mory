@@ -14,30 +14,32 @@ import edu.bluejack20_1.dearmory.R
 import edu.bluejack20_1.dearmory.activities.LogInActivity
 import edu.bluejack20_1.dearmory.notifications.NotificationChannelApp
 import edu.bluejack20_1.dearmory.services.AlarmService
+import java.util.*
 
 
 class AlertReceiver: BroadcastReceiver() {
 
     override fun onReceive(context: Context, p1: Intent) {
+        Log.d("asd complit","jalannn")
 
         if(Intent.ACTION_BOOT_COMPLETED == p1.action){
             startRescheduleAlarmsService(context)
-            Log.d("coot complit","1")
+            Log.d("asd complit","1")
         }else{
-            startAlarmService(context, p1)
-            Log.d("coot complit","2")
+//            startAlarmService(context, p1)
+            Log.d("asd complit","2")
         }
 
         val notificationManager: NotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 //
         val repeatingIntent: Intent = Intent(context, LogInActivity::class.java)
-        repeatingIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+//        repeatingIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
 //
         val pendingIntent: PendingIntent = PendingIntent.getActivity(
             context,
-            0,
+            Calendar.getInstance().timeInMillis.toInt(),
             repeatingIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT
+            0
         )
 //
 //        val builder: NotificationCompat.Builder = NotificationCompat.Builder(context)
@@ -67,7 +69,7 @@ class AlertReceiver: BroadcastReceiver() {
                     .setWhen(System.currentTimeMillis())
                     .build()
             }!!
-
+            notificationManager.notify(100, notification)
         }else{
             notification = context.let {
                 NotificationCompat.Builder(it, NotificationChannelApp.channel_1_id)
@@ -80,9 +82,9 @@ class AlertReceiver: BroadcastReceiver() {
                     .setWhen(System.currentTimeMillis())
                     .build()
             }!!
+            notificationManager.notify(100, notification)
         }
 
-//        notificationManager.notify(1, notification)
 
 //        val notificationHelper: NotificationHelper? = context?.let { NotificationHelper(it) }
 //        val nb : NotificationCompat.Builder? = notificationHelper?.getChannelNotification("1", "asd")

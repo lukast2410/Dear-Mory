@@ -4,7 +4,7 @@
     <string name="my_diaries">Buku Harianku</string>
     <string name="edit_mood">Edit Suasana Hati</string>
     <string name="add_images">Tambah Gambar</string>
-    <string name="add_expense_income">Tambah Pengeluaran / Pemasukan</string>
+    <string name="add_expense_income">Tambah Pengeluaran \n/ Pemasukan</string>
     <string name="edit_diary_hint">Bagaimana harimu?</string>
     <string name="hello_blank_fragment">Halo fragment kosong</string>
     <string name="save_diary_button">Simpan Buku Harian</string>

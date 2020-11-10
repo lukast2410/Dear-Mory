@@ -139,17 +139,20 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_repeat_days_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
             android:clickable="true"
-            android:focusable="true">
+            android:focusable="true"
+            android:layout_marginTop="20dp"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/su_day"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_margin="3dp"
                 android:background="@drawable/ico_day_picker_non_active"
@@ -159,8 +162,8 @@
 
             <TextView
                 android:id="@+id/mo_day"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_margin="3dp"
                 android:background="@drawable/ico_day_picker_non_active"
@@ -170,8 +173,8 @@
 
             <TextView
                 android:id="@+id/tu_day"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_margin="3dp"
                 android:background="@drawable/ico_day_picker_non_active"
@@ -181,8 +184,8 @@
 
             <TextView
                 android:id="@+id/we_day"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_margin="3dp"
                 android:background="@drawable/ico_day_picker_non_active"
@@ -192,8 +195,8 @@
 
             <TextView
                 android:id="@+id/th_day"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_margin="3dp"
                 android:background="@drawable/ico_day_picker_non_active"
@@ -203,8 +206,8 @@
 
             <TextView
                 android:id="@+id/fr_day"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_margin="3dp"
                 android:background="@drawable/ico_day_picker_non_active"
@@ -214,8 +217,8 @@
 
             <TextView
                 android:id="@+id/sa_day"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_margin="3dp"
                 android:background="@drawable/ico_day_picker_non_active"
@@ -225,32 +228,27 @@
 
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/button_background_theme"
+        android:layout_marginBottom="100dp">
+
+        <Button
+            android:id="@+id/save_reminder_button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/button_background_theme">
-
-                <Button
-                    android:id="@+id/save_reminder_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/save"
-                    android:paddingVertical="10dp"
-                    android:paddingHorizontal="100dp"
-                    android:textColor="?attr/editTextColor"
-                    android:textSize="16sp"
-                    android:elevation="10dp"
-                    android:background="@color/transparent"/>
-
-            </LinearLayout>
-
-        </RelativeLayout>
+            android:text="@string/save"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="100dp"
+            android:textColor="?attr/editTextColor"
+            android:textSize="16sp"
+            android:elevation="10dp"
+            android:background="@color/transparent"/>
 
     </LinearLayout>
 

@@ -14,7 +14,6 @@ class NotificationChannelApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
         createNotificationChannel()
     }
 
@@ -32,7 +31,7 @@ class NotificationChannelApp : Application() {
 
             var notifManager : NotificationManager = getSystemService(NotificationManager::class.java)
             notifManager.createNotificationChannel(channel1)
-            notifManager.createNotificationChannel(channel2)
+//            notifManager.createNotificationChannel(channel2)
         }
     }
 }

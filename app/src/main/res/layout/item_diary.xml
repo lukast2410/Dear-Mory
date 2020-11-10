@@ -66,13 +66,20 @@
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="5dp">
 
-                        <ImageView
-                            android:id="@+id/iv_diary_type_item"
+                        <RelativeLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_radio_button"
-                            app:tint="#FF0000"
-                            android:layout_marginRight="5dp"/>
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/iv_diary_type_item"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_top_bottom"
+                                app:tint="@color/expenseIconDarkTheme"
+                                android:layout_marginRight="5dp"
+                                android:layout_centerVertical="true"/>
+
+                        </RelativeLayout>
 
                         <TextView
                             android:id="@+id/tv_diary_amount_item"

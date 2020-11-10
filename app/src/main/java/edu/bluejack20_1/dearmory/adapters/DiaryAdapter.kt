@@ -154,15 +154,16 @@ class DiaryAdapter() : RecyclerView.Adapter<DiaryAdapter.ViewHolder>() {
     }
 
     private fun getExpenseIncomeColor(position: Int, total: Long): Int {
-        if (totalModels.size > position) {
+        if (totalModels.size >= position) {
             if (total < 0)
                 return R.color.defaultExpense
             else if (total > 0)
                 return R.color.defaultIncome
         }
-        if (ThemeManager.THEME_INDEX == ThemeManager.LIGHT_THEME_INDEX)
-            return R.color.black
-        return R.color.white
+        return if (ThemeManager.THEME_INDEX == ThemeManager.LIGHT_THEME_INDEX)
+            R.color.black
+        else
+            R.color.white
     }
 
     interface DiaryClickListener {

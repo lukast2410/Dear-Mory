@@ -20,7 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/LightTheme">
-        <activity android:name=".activities.ReminderActivity"></activity>
+        <activity android:name=".activities.ReminderActivity"
+            android:parentActivityName=".activities.AppActivity"/>
         <activity
             android:name=".activities.ExpenseIncomeActivity"
             android:parentActivityName=".activities.DiaryActivity"

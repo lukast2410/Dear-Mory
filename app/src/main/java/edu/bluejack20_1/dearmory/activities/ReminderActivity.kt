@@ -34,7 +34,9 @@ import kotlinx.android.synthetic.main.activity_reminder.*
 import kotlinx.android.synthetic.main.day_of_week_picker.*
 import kotlinx.android.synthetic.main.reminder_label_pop_up.*
 import org.w3c.dom.Text
-import java.util.HashMap
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.*
 
 class ReminderActivity : AppCompatActivity() {
 
@@ -58,7 +60,8 @@ class ReminderActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reminder)
-
+        reminder_time_picker.setIs24HourView(true)
+        initializeSwitchRepeat()
         if(intent.getSerializableExtra("isCreate") == 1){
             initializeToolbar()
             createNewReminder()
@@ -70,6 +73,27 @@ class ReminderActivity : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
+    private fun initializeSwitchRepeat() {
+        repeat_switch.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked)
+                ll_repeat_days_container.visibility = View.VISIBLE
+            else
+                ll_repeat_days_container.visibility = View.GONE
+        }
+
+        var hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+        var minute = Calendar.getInstance().get(Calendar.MINUTE)
+        var finalHour: String = hour.toString()
+        var finalMinute: String = minute.toString()
+
+        if(hour < 10)
+            finalHour = "0${hour}"
+        if(minute < 10)
+            finalMinute = "0${minute}"
+        time = "$finalHour:$finalMinute"
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun initReminder(){
         reminder = intent.getSerializableExtra(Reminder.REMINDER) as Reminder
         save_reminder_button.setOnClickListener {
@@ -78,8 +102,14 @@ class ReminderActivity : AppCompatActivity() {
         reminder_edit_date.setOnClickListener {
             setDate()
         }
-        reminder_time_picker.setOnTimeChangedListener { timePicker, i, i2 ->
-            time = "$i:$i2"
+        reminder_time_picker.setOnTimeChangedListener { timePicker, hour, minute ->
+            var finalHour: String = hour.toString()
+            var finalMinute: String = minute.toString()
+            if(hour < 10)
+                finalHour = "0${hour}"
+            if(minute < 10)
+                finalMinute = "0${minute}"
+            time = "$finalHour:$finalMinute"
         }
         initializeDeleteConfirmation()
         setDayWeek()
@@ -128,8 +158,10 @@ class ReminderActivity : AppCompatActivity() {
         repeatSwitch = findViewById<Switch>(R.id.repeat_switch)
         if(reminder.getRepeat() == "on"){
             repeatSwitch.isChecked = true
+            ll_repeat_days_container.visibility = View.VISIBLE
         }else if(reminder.getRepeat() == "off"){
             repeatSwitch.isChecked = false
+            ll_repeat_days_container.visibility = View.GONE
         }
     }
 
@@ -152,8 +184,10 @@ class ReminderActivity : AppCompatActivity() {
             }
             if(repeatSwitch.isChecked){
                 hashMap["repeat"] = "on"
+                ll_repeat_days_container.visibility = View.VISIBLE
             }else if(!repeatSwitch.isChecked){
                 hashMap["repeat"] = "off"
+                ll_repeat_days_container.visibility = View.GONE
             }
             var temp: String = ""
             for(i in n){
@@ -340,8 +374,14 @@ class ReminderActivity : AppCompatActivity() {
         reminder_edit_date.setOnClickListener {
             setDate()
         }
-        reminder_time_picker.setOnTimeChangedListener { timePicker, i, i2 ->
-            time = "$i:$i2"
+        reminder_time_picker.setOnTimeChangedListener { timePicker, hour, minute ->
+            var finalHour: String = hour.toString()
+            var finalMinute: String = minute.toString()
+            if(hour < 10)
+                finalHour = "0${hour}"
+            if(minute < 10)
+                finalMinute = "0${minute}"
+            time = "$finalHour:$finalMinute"
         }
         n = mutableListOf()
         setClickListener(n)
@@ -385,17 +425,20 @@ class ReminderActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun setAlarm(){
+//        offReminder(applicationContext)
         val calendar: Calendar = Calendar.getInstance()
         val t = time.split(":").map { it.toInt() }
         val d = reminder_edit_date.text.toString().split("/").map { it.toInt() }
-        calendar.timeInMillis = System.currentTimeMillis()
-        calendar.set(Calendar.YEAR, d[0])
-        calendar.set(Calendar.MONTH, d[1])
-        calendar.set(Calendar.DAY_OF_MONTH, d[2])
+        for (i: Int in 0..(d.size-1)){
+            Log.d("asd $i", d[i].toString())
+        }
+//        calendar.timeInMillis = System.currentTimeMillis()
+        calendar.set(Calendar.YEAR, d[2])
+        calendar.set(Calendar.MONTH, d[1]-1)
+        calendar.set(Calendar.DAY_OF_MONTH, d[0])
         calendar.set(Calendar.HOUR_OF_DAY, t[0])
         calendar.set(Calendar.MINUTE, t[1])
         calendar.set(Calendar.SECOND, 0)
-        calendar.set(Calendar.MILLISECOND, 0)
 
         val intent: Intent = Intent(applicationContext, AlertReceiver::class.java)
         intent.putExtra("label", reminder_edit_label_field.text.toString())
@@ -407,16 +450,29 @@ class ReminderActivity : AppCompatActivity() {
             intent.putExtra("vibrate", "off")
         }
 
-        val pendingIntent : PendingIntent = PendingIntent.getBroadcast(applicationContext, 0, intent,
-            PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent : PendingIntent = PendingIntent.getBroadcast(applicationContext, Calendar.getInstance().timeInMillis.toInt(), intent, 0)
         val alarmManager : AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
+//        if(repeat_switch.isChecked){
+//            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
+//        }
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
 //        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+        Log.d("asd", reminder_edit_date.text.toString())
         Log.d("asd", calendar.get(Calendar.YEAR).toString())
         Log.d("asd", calendar.get(Calendar.MONTH).toString())
         Log.d("asd", calendar.get(Calendar.DAY_OF_MONTH).toString())
         Log.d("asd", calendar.get(Calendar.HOUR_OF_DAY).toString())
         Log.d("asd", calendar.get(Calendar.MINUTE).toString())
         Log.d("asd", calendar.get(Calendar.SECOND).toString())
+        Log.d("asd", calendar.timeInMillis.toString())
+        var ms = Calendar.getInstance().timeInMillis
+        Log.d("asdms", ms.toString())
+    }
+
+    fun offReminder(ctx: Context){
+        var intent: Intent = Intent(ctx, AlertReceiver::class.java)
+        var pendingIntent = PendingIntent.getBroadcast(ctx, 1, intent, 0)
+        var alarmManager = ctx.getSystemService(ALARM_SERVICE) as AlarmManager
+        alarmManager.cancel(pendingIntent)
     }
 }
