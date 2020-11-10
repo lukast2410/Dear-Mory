@@ -6,13 +6,94 @@
     android:layout_height="match_parent"
     tools:context="edu.bluejack20_1.dearmory.activities.SignInActivity">
 
-    <Button
-        android:id="@+id/google_sign_in_button"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:background="@drawable/google"
-        android:layout_centerInParent="true"
-        />
+    <ImageView
+        android:id="@+id/iv_signIn_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="243dp"
+                android:layout_height="243dp"
+                android:elevation="@dimen/cardview_compat_inset_shadow"
+                app:cardElevation="@dimen/cardview_compat_inset_shadow"
+                app:cardBackgroundColor="@color/transparent"
+                app:cardCornerRadius="200dp"
+                android:layout_centerHorizontal="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="240dp"
+                        android:layout_height="240dp"
+                        app:srcCompat="@drawable/ic_dear_mory_rounded"
+                        android:layout_centerInParent="true" />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="50dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/google_sign_in_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                app:cardBackgroundColor="@color/black"
+                app:cardCornerRadius="15dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/google_logo"
+                        android:layout_marginVertical="5dp"
+                        android:layout_marginStart="10dp"/>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Login With Google"
+                            android:textStyle="bold"
+                            android:layout_centerVertical="true"
+                            android:paddingHorizontal="20dp"/>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
 
 <!--    <Button-->
 <!--        android:id="@+id/save_button"-->

@@ -104,15 +104,27 @@ class DiaryAdapter() : RecyclerView.Adapter<DiaryAdapter.ViewHolder>() {
             var finalTotal = total
             if (finalTotal < 0)
                 finalTotal *= (-1)
-            return "Rp. " + shortenComa(finalTotal)
+            return "Rp. " + ExpenseIncome.shortenComa(finalTotal)
         }
         return "Loading..."
     }
 
     private fun getDiaryText(text: String): String {
+        val maxLength = 96 - (2 * ThemeManager.TEXT_SIZE)
         var finalText: String = text
-        if (text.length > 50)
-            finalText = text.substring(0, 50) + "..."
+        val firstEnter = finalText.indexOfFirst { c -> c == '\n' }
+        if (firstEnter >= 0){
+            val minus = finalText.length - firstEnter
+            if(minus >= (maxLength/2))
+                finalText = finalText.substring(0, firstEnter+(maxLength/2))
+            val nextEnter = finalText.indexOf('\n', firstEnter+1)
+            if(nextEnter >= 0)
+                finalText = finalText.substring(0, nextEnter)
+        }
+        if (finalText.length > maxLength)
+            finalText = finalText.substring(0, maxLength)
+        if (finalText != text)
+            finalText = "$finalText..."
         return finalText
     }
 
@@ -151,25 +163,6 @@ class DiaryAdapter() : RecyclerView.Adapter<DiaryAdapter.ViewHolder>() {
         if (ThemeManager.THEME_INDEX == ThemeManager.LIGHT_THEME_INDEX)
             return R.color.black
         return R.color.white
-    }
-
-    private fun shortenComa(numb: Long): String {
-        var numbW = numb.toString();
-        var length = numb.toString().length;
-        var word = "";
-        for (i: Int in (length - 3) downTo 0 step 3) {
-            if (i <= 0)
-                break
-            word = ".${numbW.substring(i, length)}${word}"
-            length -= 3
-        }
-        var mod = numb.toString().length % 3;
-        word = if (mod == 0) {
-            numbW.substring(0, 3) + word;
-        } else {
-            numbW.substring(0, mod) + word;
-        }
-        return word;
     }
 
     interface DiaryClickListener {

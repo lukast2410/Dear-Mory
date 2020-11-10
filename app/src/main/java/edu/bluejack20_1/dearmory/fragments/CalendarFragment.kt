@@ -5,17 +5,12 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
-import android.os.VibrationEffect
-import android.os.Vibrator
 import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
-import android.text.format.Time
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,38 +25,28 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.sundeepk.compactcalendarview.CompactCalendarView
-import com.github.sundeepk.compactcalendarview.domain.Event
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import edu.bluejack20_1.dearmory.R
 import edu.bluejack20_1.dearmory.ThemeManager
-import edu.bluejack20_1.dearmory.activities.DiaryActivity
 import edu.bluejack20_1.dearmory.activities.ReminderActivity
 import edu.bluejack20_1.dearmory.adapters.ReminderAdapter
-import edu.bluejack20_1.dearmory.models.Diary
 import edu.bluejack20_1.dearmory.models.Reminder
-import edu.bluejack20_1.dearmory.modelsViews.ReminderViewModel
+import edu.bluejack20_1.dearmory.viewmodels.ReminderViewModel
 import edu.bluejack20_1.dearmory.receivers.AlertReceiver
-import kotlinx.android.synthetic.main.activity_expense_income.*
 import kotlinx.android.synthetic.main.activity_reminder.*
 import kotlinx.android.synthetic.main.day_of_week_picker.*
 import kotlinx.android.synthetic.main.fragment_calendar.*
-import java.time.LocalDateTime
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
-import android.support.v4.app.INotificationSideChannel
 import androidx.core.app.NotificationCompat
 import edu.bluejack20_1.dearmory.notifications.NotificationChannelApp
-import androidx.core.content.FileProvider
-import androidx.core.content.getSystemService
-import java.lang.StringBuilder
 
 class CalendarFragment : Fragment(){
 
     private lateinit var notifManager : NotificationManagerCompat
+    private lateinit var userId: String
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var reminderAdapter: ReminderAdapter
@@ -101,6 +86,7 @@ class CalendarFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        userId = GoogleSignIn.getLastSignedInAccount(context)?.id.toString()
         notifManager = context?.let { NotificationManagerCompat.from(it) }!!
 
         dialog = context?.let { Dialog(it) }!!
@@ -108,7 +94,7 @@ class CalendarFragment : Fragment(){
         reminder_recycler_view.setHasFixedSize(true)
         reminder_recycler_view.layoutManager = LinearLayoutManager(context)
         reminderViewModel = ViewModelProviders.of(this).get(ReminderViewModel::class.java)
-        reminderViewModel.init(Date())
+        reminderViewModel.init(Date(), userId)
         reminderAdapter = ReminderAdapter(reminderViewModel.getReminders().value!!, requireContext(), this)
         reminderViewModel.getReminders().observe(viewLifecycleOwner, Observer<ArrayList<Reminder>> {
             reminderAdapter.notifyDataSetChanged()
@@ -120,7 +106,6 @@ class CalendarFragment : Fragment(){
                 reminderAdapter.notifyItemChanged(position)
                 startSelectedReminderIntent(position)
             }
-
         })
         setUpCalendar()
 
@@ -258,6 +243,8 @@ class CalendarFragment : Fragment(){
         compactCalendar.setUseThreeLetterAbbreviation(true)
         compactCalendar.shouldDrawIndicatorsBelowSelectedDays(true)
         compactCalendar.setFirstDayOfWeek(Calendar.SUNDAY)
+        if(ThemeManager.THEME_INDEX == ThemeManager.LIGHT_THEME_INDEX)
+            compactCalendar.setCurrentSelectedDayTextColor(Color.WHITE)
 
         val calendar: Calendar = Calendar.getInstance()
         month_indicator.text = dateFormatMonth.format(calendar.time)
@@ -268,15 +255,16 @@ class CalendarFragment : Fragment(){
             override fun onDayClick(dateClicked: Date?) {
                 val context: Context = (activity as AppCompatActivity).applicationContext
                 if(dateClicked.toString().compareTo("Thu Oct 2020 00:00:00 AST 2016") == 0){
-                    Log.d("cal", "Todays")
+//                    Log.d("cal", "Todays")
                 }else{
-                    Log.d("cal", "not Todays")
+//                    Log.d("cal", "not Todays")
                 }
                 reminder_recycler_view.setHasFixedSize(true)
                 reminder_recycler_view.layoutManager = LinearLayoutManager(context)
-                reminderViewModel = ViewModelProviders.of(this@CalendarFragment).get(ReminderViewModel::class.java)
+                reminderViewModel = ViewModelProviders.of(this@CalendarFragment).get(
+                    ReminderViewModel::class.java)
                 if (dateClicked != null) {
-                    reminderViewModel.init(dateClicked)
+                    reminderViewModel.init(dateClicked, userId)
                 }
                 reminderAdapter = ReminderAdapter(reminderViewModel.getReminders().value!!, context, this@CalendarFragment)
                 reminderViewModel.getReminders().observe(viewLifecycleOwner, Observer<ArrayList<Reminder>> {
@@ -417,7 +405,7 @@ class CalendarFragment : Fragment(){
                 n.add(7)
             }
             for(i in n){
-                Log.d("bg", i.toString())
+//                Log.d("bg", i.toString())
             }
         }
         dialog.mo_day.setOnClickListener {
@@ -429,7 +417,7 @@ class CalendarFragment : Fragment(){
                 n.add(1)
             }
             for(i in n){
-                Log.d("bg", i.toString())
+//                Log.d("bg", i.toString())
             }
         }
         dialog.tu_day.setOnClickListener {
@@ -441,7 +429,7 @@ class CalendarFragment : Fragment(){
                 n.add(2)
             }
             for(i in n){
-                Log.d("bg", i.toString())
+//                Log.d("bg", i.toString())
             }
         }
         dialog.we_day.setOnClickListener {
@@ -453,7 +441,7 @@ class CalendarFragment : Fragment(){
                 n.add(3)
             }
             for(i in n){
-                Log.d("bg", i.toString())
+//                Log.d("bg", i.toString())
             }
         }
         dialog.th_day.setOnClickListener {
@@ -465,7 +453,7 @@ class CalendarFragment : Fragment(){
                 n.add(4)
             }
             for(i in n){
-                Log.d("bg", i.toString())
+//                Log.d("bg", i.toString())
             }
         }
         dialog.fr_day.setOnClickListener {
@@ -477,7 +465,7 @@ class CalendarFragment : Fragment(){
                 n.add(5)
             }
             for(i in n){
-                Log.d("bg", i.toString())
+//                Log.d("bg", i.toString())
             }
         }
         dialog.sa_day.setOnClickListener {
@@ -489,7 +477,7 @@ class CalendarFragment : Fragment(){
                 n.add(6)
             }
             for(i in n){
-                Log.d("bg", i.toString())
+//                Log.d("bg", i.toString())
             }
         }
 
@@ -545,7 +533,7 @@ class CalendarFragment : Fragment(){
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun setCalendarEvent() {
-        val events: ArrayList<java.util.Calendar> = reminderViewModel.getAllEvent(compactCalendar)
+        val events: ArrayList<java.util.Calendar> = reminderViewModel.getAllEvent(compactCalendar, userId)
     }
 
     fun startSelectedReminderIntent(position: Int){
@@ -565,6 +553,7 @@ class CalendarFragment : Fragment(){
                     .setContentTitle("Title")
                     .setContentText("Text here")
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setVibrate(longArrayOf(1000, 2000, 1000, 2000, 1000))
                     .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                     .build()
             }!!

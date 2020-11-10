@@ -18,10 +18,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="325dp"
-        android:text="DIARY"
+        android:text="@string/my_diaries"
         android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textSize="36sp" />
+        android:textSize="36sp"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/diaryDescription"
@@ -32,7 +32,8 @@
         android:paddingBottom="20dp"
         android:text="Lorem Ipsum blablablablalbalbalblablblablablablalbalbalbalblablablblalb"
         android:textAlignment="center"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textStyle="bold"/>
 
 
 </RelativeLayout>

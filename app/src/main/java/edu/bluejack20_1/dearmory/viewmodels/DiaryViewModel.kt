@@ -10,8 +10,8 @@ class DiaryViewModel(private val repository: DiaryRepository): ViewModel() {
     private lateinit var diaryModels: MutableLiveData<ArrayList<Diary>>
     private lateinit var totalModels: MutableLiveData<ArrayList<HashMap<String, ExpenseIncome>>>
 
-    fun init(userId: String){
-        diaryModels = repository.getDiaries(userId)
+    fun init(userId: String, date: String){
+        diaryModels = repository.getDiaries(userId, date)
         totalModels = repository.getTotals()
     }
 
@@ -23,8 +23,8 @@ class DiaryViewModel(private val repository: DiaryRepository): ViewModel() {
         return totalModels
     }
 
-    fun getDiary(userId: String): MutableLiveData<Diary>{
-        return repository.getDiary(userId)
+    fun getDiary(userId: String, date: String): MutableLiveData<Diary>{
+        return repository.getDiary(userId, date)
     }
 
     fun saveDiary(userId: String, diary: Diary){

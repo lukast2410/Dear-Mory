@@ -5,6 +5,7 @@ import android.content.Context
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Vibrator
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import edu.bluejack20_1.dearmory.R
+import edu.bluejack20_1.dearmory.ThemeManager
 import edu.bluejack20_1.dearmory.fragments.CalendarFragment
 import edu.bluejack20_1.dearmory.models.Reminder
 import java.util.*
@@ -88,6 +90,7 @@ class ReminderAdapter : RecyclerView.Adapter<ReminderAdapter.ViewHolder> {
         holder.itemView.tag = reminderList[position]
         holder.time.text = reminderList[position].getTime()
         holder.label.text = reminderList[position].getLabel()
+        holder.label.setTextSize(TypedValue.COMPLEX_UNIT_SP, (ThemeManager.TEXT_SIZE + 2).toFloat())
         holder.repeatedDays.text = repeatedDayFormat(reminderList[position].getRepeatDays())
 //        holder.date.text = formatDate(reminderList[position].getDate())
         if(reminderList[position].getRepeat() == "on"){
@@ -98,9 +101,9 @@ class ReminderAdapter : RecyclerView.Adapter<ReminderAdapter.ViewHolder> {
             holder.repeatedDays.visibility = View.INVISIBLE
         }
         if(reminderList[position].getVibrate() == "on"){
-            holder.vibration.setImageResource(R.drawable.notifications_on)
+            holder.vibration.setBackgroundResource(R.drawable.notifications_on)
         }else if(reminderList[position].getVibrate() == "off"){
-            holder.vibration.setImageResource(R.drawable.notifications_off)
+            holder.vibration.setBackgroundResource(R.drawable.notifications_off)
         }
 
 //        holder.date.setOnClickListener {
@@ -115,9 +118,6 @@ class ReminderAdapter : RecyclerView.Adapter<ReminderAdapter.ViewHolder> {
 //        holder.repeatCheckBox.setOnClickListener {
 //            updateRepeat(holder, position)
 //        }
-        holder.label.setOnClickListener {
-            updateLabel(holder, position, reminderList)
-        }
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -141,7 +141,7 @@ class ReminderAdapter : RecyclerView.Adapter<ReminderAdapter.ViewHolder> {
         if(reminderList[position].getVibrate() == "on"){
             val hashMap: HashMap<String, String> = HashMap()
             hashMap["vibrate"] = "off"
-            vibrator.vibrate(100)
+            vibrator.vibrate(300)
             databaseReference.updateChildren(hashMap as Map<String, Any>)
 //                .addOnCompleteListener {
 //                vibrator.vibrate(100)
@@ -150,7 +150,7 @@ class ReminderAdapter : RecyclerView.Adapter<ReminderAdapter.ViewHolder> {
             val hashMap: HashMap<String, String> = HashMap()
             hashMap["vibrate"] = "on"
             databaseReference.updateChildren(hashMap as Map<String, Any>)
-            vibrator.vibrate(200)
+            vibrator.vibrate(700)
 //                .addOnCompleteListener {
 //                vibrator.vibrate(200)
 //            }

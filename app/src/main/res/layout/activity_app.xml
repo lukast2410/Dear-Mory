@@ -12,17 +12,6 @@
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"/>
 
-    <com.etebarian.meowbottomnavigation.MeowBottomNavigation
-        android:id="@+id/bottom_nav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:mbn_backgroundBottomColor="?attr/navBotBackgroundColor"
-        app:mbn_circleColor="?attr/backgroundForIcon"
-        app:mbn_defaultIconColor="?attr/colorIconForNav"
-        app:mbn_selectedIconColor="?attr/colorIconWithBackground"
-        app:mbn_shadowColor="#ffffff"/>
-
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp_main"
         android:layout_width="wrap_content"
@@ -34,6 +23,17 @@
         android:layout_marginBottom="55dp">
 
     </androidx.viewpager.widget.ViewPager>
+
+    <com.etebarian.meowbottomnavigation.MeowBottomNavigation
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:mbn_backgroundBottomColor="?attr/navBotBackgroundColor"
+        app:mbn_circleColor="?attr/backgroundForIcon"
+        app:mbn_defaultIconColor="?attr/colorIconForNav"
+        app:mbn_selectedIconColor="?attr/colorIconWithBackground"
+        app:mbn_shadowColor="#ffffff"/>
 
     <!--    <TextView-->
     <!--        android:layout_width="match_parent"-->
