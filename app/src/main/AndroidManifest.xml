@@ -40,6 +40,8 @@
             android:parentActivityName=".activities.AppActivity" />
         <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.SignInActivity" />
+        <activity android:name=".activities.SettingActivity"
+            android:parentActivityName=".activities.AppActivity"/>
 
         <receiver android:name=".receivers.AlertReceiver"></receiver>
 

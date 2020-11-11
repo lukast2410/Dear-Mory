@@ -457,16 +457,16 @@ class ReminderActivity : AppCompatActivity() {
 //        }
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
 //        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
-        Log.d("asd", reminder_edit_date.text.toString())
-        Log.d("asd", calendar.get(Calendar.YEAR).toString())
-        Log.d("asd", calendar.get(Calendar.MONTH).toString())
-        Log.d("asd", calendar.get(Calendar.DAY_OF_MONTH).toString())
-        Log.d("asd", calendar.get(Calendar.HOUR_OF_DAY).toString())
-        Log.d("asd", calendar.get(Calendar.MINUTE).toString())
-        Log.d("asd", calendar.get(Calendar.SECOND).toString())
-        Log.d("asd", calendar.timeInMillis.toString())
-        var ms = Calendar.getInstance().timeInMillis
-        Log.d("asdms", ms.toString())
+//        Log.d("asd", reminder_edit_date.text.toString())
+//        Log.d("asd", calendar.get(Calendar.YEAR).toString())
+//        Log.d("asd", calendar.get(Calendar.MONTH).toString())
+//        Log.d("asd", calendar.get(Calendar.DAY_OF_MONTH).toString())
+//        Log.d("asd", calendar.get(Calendar.HOUR_OF_DAY).toString())
+//        Log.d("asd", calendar.get(Calendar.MINUTE).toString())
+//        Log.d("asd", calendar.get(Calendar.SECOND).toString())
+//        Log.d("asd", calendar.timeInMillis.toString())
+//        var ms = Calendar.getInstance().timeInMillis
+//        Log.d("asdms", ms.toString())
     }
 
     fun offReminder(ctx: Context){
