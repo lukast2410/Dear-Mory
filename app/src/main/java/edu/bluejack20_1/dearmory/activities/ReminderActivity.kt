@@ -452,9 +452,9 @@ class ReminderActivity : AppCompatActivity() {
 
         val pendingIntent : PendingIntent = PendingIntent.getBroadcast(applicationContext, Calendar.getInstance().timeInMillis.toInt(), intent, 0)
         val alarmManager : AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-//        if(repeat_switch.isChecked){
-//            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
-//        }
+        if(repeat_switch.isChecked){
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
+        }
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
 //        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
 //        Log.d("asd", reminder_edit_date.text.toString())

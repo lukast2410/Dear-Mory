@@ -33,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/delete"
+                android:textColor="?attr/customTextColor"
                 android:background="@color/transparent"/>
 
             <LinearLayout
@@ -46,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/close"
+                android:textColor="?attr/customTextColor"
                 android:background="@color/transparent"/>
 
         </LinearLayout>
@@ -115,6 +117,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/yes"
+                    android:textColor="?attr/customTextColor"
                     android:background="@color/transparent"/>
 
                 <LinearLayout
@@ -128,6 +131,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/no"
+                    android:textColor="?attr/customTextColor"
                     android:background="@color/transparent"/>
 
             </LinearLayout>

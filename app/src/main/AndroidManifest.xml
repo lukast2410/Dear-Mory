@@ -19,29 +19,36 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/LightTheme">
+        android:theme="@style/DarkTheme">
         <activity android:name=".activities.ReminderActivity"
-            android:parentActivityName=".activities.AppActivity"/>
+            android:parentActivityName=".activities.AppActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.ExpenseIncomeActivity"
             android:parentActivityName=".activities.DiaryActivity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activities.LogInActivity" />
-        <activity android:name=".activities.SplashActivity">
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.LogInActivity"/>
+        <activity android:name=".activities.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.AppActivity" />
+        <activity android:name=".activities.AppActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.DiaryActivity"
-            android:parentActivityName=".activities.AppActivity" />
-        <activity android:name=".activities.MainActivity" />
-        <activity android:name=".activities.SignInActivity" />
+            android:parentActivityName=".activities.AppActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.SignInActivity"/>
         <activity android:name=".activities.SettingActivity"
-            android:parentActivityName=".activities.AppActivity"/>
+            android:parentActivityName=".activities.AppActivity"
+            android:screenOrientation="portrait"/>
 
         <receiver android:name=".receivers.AlertReceiver"></receiver>
 

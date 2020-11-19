@@ -70,8 +70,6 @@ class ReminderAdapter : RecyclerView.Adapter<ReminderAdapter.ViewHolder> {
                 }
             }
         }
-
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
