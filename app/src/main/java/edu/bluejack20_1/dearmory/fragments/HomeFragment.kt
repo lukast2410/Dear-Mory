@@ -91,14 +91,14 @@ class HomeFragment : Fragment(), DiaryAdapter.DiaryClickListener{
             this
         )
         diaryViewModel.getDiaries().observe(viewLifecycleOwner, Observer<ArrayList<Diary>> {
-            diariesAdapter.notifyDataSetChanged()
             rv_diaries_container.adapter = diariesAdapter
+            diariesAdapter.notifyDataSetChanged()
         })
         diaryViewModel.getTotals().observe(
             viewLifecycleOwner,
             Observer<ArrayList<HashMap<String, ExpenseIncome>>> {
-                diariesAdapter.notifyDataSetChanged()
                 rv_diaries_container.adapter = diariesAdapter
+                diariesAdapter.notifyDataSetChanged()
                 updateLineChartValues()
             })
     }
@@ -162,6 +162,7 @@ class HomeFragment : Fragment(), DiaryAdapter.DiaryClickListener{
         if(year != date.year || month < date.monthValue){
             cv_next_month_diary.visibility = View.VISIBLE
         }
+        diaryViewModel.removeEventListener()
         initializeDiaryRecyclerView()
     }
 
@@ -175,13 +176,16 @@ class HomeFragment : Fragment(), DiaryAdapter.DiaryClickListener{
         if(year == date.year && month == date.monthValue){
             cv_next_month_diary.visibility = View.GONE
         }
+        diaryViewModel.removeEventListener()
         initializeDiaryRecyclerView()
     }
 
     private fun thisMonth(){
         val date = LocalDate.now()
-        if(month != date.monthValue || year != date.year)
+        if(month != date.monthValue || year != date.year){
+            diaryViewModel.removeEventListener()
             initializeDate()
+        }
     }
 
     companion object {
@@ -244,8 +248,8 @@ class HomeFragment : Fragment(), DiaryAdapter.DiaryClickListener{
         totalDataSet.lineWidth = 3.5f
         totalDataSet.color = ContextCompat.getColor(context as Context, getLineChartColor())
         totalDataSet.setCircleColor(ContextCompat.getColor(context as Context, getLineChartColor()))
-        totalDataSet.circleRadius = (ThemeManager.TEXT_SIZE/3).toFloat()
-        totalDataSet.circleHoleRadius = (ThemeManager.TEXT_SIZE/6).toFloat()
+        totalDataSet.circleRadius = ((ThemeManager.TEXT_SIZE-2)/3).toFloat()
+        totalDataSet.circleHoleRadius = ((ThemeManager.TEXT_SIZE-2)/5.5).toFloat()
         totalDataSet.setCircleColorHole(ContextCompat.getColor(context as Context, getLineChartHoleColor()))
         totalDataSet.highlightLineWidth = 2F
         totalDataSet.highLightColor = ContextCompat.getColor(context as Context, getLineChartHighlightColor())
@@ -287,7 +291,8 @@ class HomeFragment : Fragment(), DiaryAdapter.DiaryClickListener{
 
         xAxis.valueFormatter = MyXAxisValueFormatter(xValues)
         xAxis.granularity = 1F
-        xAxis.textSize = ThemeManager.TEXT_SIZE.toFloat()
+        val xSize = (ThemeManager.TEXT_SIZE-((ThemeManager.TEXT_SIZE-(ThemeManager.TEXT_SIZE%5))/5))
+        xAxis.textSize = xSize.toFloat()
     }
 
     private fun updateLineChartValues(){
@@ -368,6 +373,11 @@ class HomeFragment : Fragment(), DiaryAdapter.DiaryClickListener{
             ThemeManager.LIGHT_THEME_INDEX -> R.drawable.ic_radio_button_black
             else -> R.drawable.ic_radio_button
         }
+    }
+
+    override fun onDestroy() {
+        diaryViewModel.removeEventListener()
+        super.onDestroy()
     }
 
     private class MyXAxisValueFormatter(private val values: ArrayList<String>): IAxisValueFormatter{

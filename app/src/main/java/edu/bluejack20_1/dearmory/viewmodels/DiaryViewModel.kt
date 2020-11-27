@@ -1,5 +1,6 @@
 package edu.bluejack20_1.dearmory.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import edu.bluejack20_1.dearmory.models.Diary
@@ -29,5 +30,9 @@ class DiaryViewModel(private val repository: DiaryRepository): ViewModel() {
 
     fun saveDiary(userId: String, diary: Diary){
         repository.saveDiary(userId, diary)
+    }
+
+    fun removeEventListener(){
+        repository.removeEventListener()
     }
 }

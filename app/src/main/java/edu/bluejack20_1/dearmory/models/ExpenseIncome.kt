@@ -1,5 +1,6 @@
 package edu.bluejack20_1.dearmory.models
 
+import android.util.Log
 import java.io.Serializable
 
 class ExpenseIncome: Serializable {
@@ -20,8 +21,12 @@ class ExpenseIncome: Serializable {
             var length = numb.toString().length;
             var word = "";
             for (i: Int in (length - 3) downTo 0 step 3) {
-                if (i <= 0)
+                if (i <= 0 )
                     break
+                if (i == 1 && numbW[0] == '-'){
+                    word = "${numbW.substring(i, length)}${word}"
+                    break
+                }
                 word = ".${numbW.substring(i, length)}${word}"
                 length -= 3
             }

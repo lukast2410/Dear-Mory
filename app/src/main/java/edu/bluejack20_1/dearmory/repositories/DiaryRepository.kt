@@ -14,6 +14,8 @@ class DiaryRepository private constructor() {
     private var diariesLiveData: MutableLiveData<ArrayList<Diary>> = MutableLiveData()
     private var totalModels: ArrayList<HashMap<String, ExpenseIncome>> = ArrayList()
     private var totalLiveData: MutableLiveData<ArrayList<HashMap<String, ExpenseIncome>>> = MutableLiveData()
+    private lateinit var diaryChild: ChildEventListener
+    private lateinit var totalsChild: ChildEventListener
 
     companion object {
         var instance: DiaryRepository? = null
@@ -46,69 +48,74 @@ class DiaryRepository private constructor() {
             diaryModels.clear()
         if (totalModels.size > 0)
             totalModels.clear()
-        refsDB.child(Diary.DIARY).child(userId).addChildEventListener(object : ChildEventListener {
+
+        diaryChild = refsDB.child(Diary.DIARY).child(userId).addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val getDate = snapshot.child("date").value.toString()
 
                 if(getDate.contains(date)){
-                    val key = snapshot.key as String
-                    diaryModels.add(
-                        Diary()
-                            .setId(snapshot.child("id").value.toString())
-                            .setDate(snapshot.child("date").value.toString())
-                            .setText(snapshot.child("text").value.toString())
-                            .setMood(snapshot.child("mood").value.toString())
-                    )
-                    diariesLiveData.postValue(diaryModels)
-
-                    val position = diaryModels.size
-                    if (totalModels.size < position)
-                        totalModels.add(HashMap())
-
                     val diaryDate = snapshot.child("date").value.toString()
-                    sortDiaryDesc()
-                    refsDB.child(ExpenseIncome.EXPENSE_INCOME).child(key).addChildEventListener(object :
-                        ChildEventListener {
-                        override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                            val totalKey = snapshot.key.toString()
-                            val idx = diaryModels.indexOfFirst { diary -> diary.getDate() == diaryDate }
+                    val diaryIndex = diaryModels.indexOfFirst { diary -> diary.getDate() == diaryDate }
+                    val key = snapshot.key as String
 
-                            totalModels[idx].put(
-                                totalKey,
-                                ExpenseIncome().setId(snapshot.child("id").value.toString())
-                                    .setNotes(snapshot.child("notes").value.toString())
-                                    .setTime(snapshot.child("time").value.toString())
-                                    .setAmount(snapshot.child("amount").value.toString().toLong())
-                            )
-                            totalLiveData.postValue(totalModels)
-                        }
+                    if(diaryIndex < 0){
+                        diaryModels.add(
+                            Diary()
+                                .setId(snapshot.child("id").value.toString())
+                                .setDate(snapshot.child("date").value.toString())
+                                .setText(snapshot.child("text").value.toString())
+                                .setMood(snapshot.child("mood").value.toString())
+                        )
+                        diariesLiveData.postValue(diaryModels)
 
-                        override fun onChildChanged(
-                            snapshot: DataSnapshot,
-                            previousChildName: String?
-                        ) {
-                            val totalKey = snapshot.key.toString()
-                            val idx = diaryModels.indexOfFirst { diary -> diary.getDate() == diaryDate }
+                        val position = diaryModels.size
+                        if (totalModels.size < position)
+                            totalModels.add(HashMap())
 
-                            totalModels[idx].get(totalKey)
-                                ?.setId(snapshot.child("id").value.toString())
-                                ?.setNotes(snapshot.child("notes").value.toString())
-                                ?.setTime(snapshot.child("time").value.toString())
-                                ?.setAmount(snapshot.child("amount").value.toString().toLong())
-                            totalLiveData.postValue(totalModels)
-                        }
+                        sortDiaryDesc()
+                        totalsChild = refsDB.child(ExpenseIncome.EXPENSE_INCOME).child(key).addChildEventListener(object :
+                            ChildEventListener {
+                            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                                val totalKey = snapshot.key.toString()
+                                val idx = diaryModels.indexOfFirst { diary -> diary.getDate() == diaryDate }
 
-                        override fun onChildRemoved(snapshot: DataSnapshot) {
-                            val totalKey = snapshot.key.toString()
-                            val idx = diaryModels.indexOfFirst { diary -> diary.getDate() == diaryDate }
+                                totalModels[idx].put(
+                                    totalKey,
+                                    ExpenseIncome().setId(snapshot.child("id").value.toString())
+                                        .setNotes(snapshot.child("notes").value.toString())
+                                        .setTime(snapshot.child("time").value.toString())
+                                        .setAmount(snapshot.child("amount").value.toString().toLong())
+                                )
+                                totalLiveData.postValue(totalModels)
+                            }
 
-                            totalModels[idx].remove(totalKey)
-                            totalLiveData.postValue(totalModels)
-                        }
+                            override fun onChildChanged(
+                                snapshot: DataSnapshot,
+                                previousChildName: String?
+                            ) {
+                                val totalKey = snapshot.key.toString()
+                                val idx = diaryModels.indexOfFirst { diary -> diary.getDate() == diaryDate }
 
-                        override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
-                        override fun onCancelled(error: DatabaseError) {}
-                    })
+                                totalModels[idx].get(totalKey)
+                                    ?.setId(snapshot.child("id").value.toString())
+                                    ?.setNotes(snapshot.child("notes").value.toString())
+                                    ?.setTime(snapshot.child("time").value.toString())
+                                    ?.setAmount(snapshot.child("amount").value.toString().toLong())
+                                totalLiveData.postValue(totalModels)
+                            }
+
+                            override fun onChildRemoved(snapshot: DataSnapshot) {
+                                val totalKey = snapshot.key.toString()
+                                val idx = diaryModels.indexOfFirst { diary -> diary.getDate() == diaryDate }
+
+                                totalModels[idx].remove(totalKey)
+                                totalLiveData.postValue(totalModels)
+                            }
+
+                            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+                            override fun onCancelled(error: DatabaseError) {}
+                        })
+                    }
                 }
             }
 
@@ -128,6 +135,11 @@ class DiaryRepository private constructor() {
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
             override fun onCancelled(error: DatabaseError) {}
         })
+    }
+
+    fun removeEventListener(){
+        refsDB.removeEventListener(diaryChild)
+        refsDB.removeEventListener(totalsChild)
     }
 
     fun getDiary(userId: String, date: String): MutableLiveData<Diary> {

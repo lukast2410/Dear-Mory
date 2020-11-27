@@ -411,7 +411,17 @@ class ReminderActivity : AppCompatActivity() {
                 }else if(!repeat_switch.isChecked){
                     hashMap["repeat"] = "off"
                 }
-                hashMap["repeatDays"] = "1,2,3,4,5,6,7"
+                var temp: String = ""
+                for(i in n){
+                    temp += "$i,"
+                }
+                if(temp.isNotBlank()){
+                    temp = temp.substring(0, temp.length-1)
+                }else if(temp.isBlank()){
+                    hashMap["repeat"] = "off"
+                    temp = "1,2,3,4,5,6,7"
+                }
+                hashMap["repeatDays"] = temp
                 val id = databaseReference.push().key.toString()
                 hashMap["id"] = id
                 tempID = id
@@ -429,9 +439,9 @@ class ReminderActivity : AppCompatActivity() {
         val calendar: Calendar = Calendar.getInstance()
         val t = time.split(":").map { it.toInt() }
         val d = reminder_edit_date.text.toString().split("/").map { it.toInt() }
-        for (i: Int in 0..(d.size-1)){
-            Log.d("asd $i", d[i].toString())
-        }
+//        for (i: Int in 0..(d.size-1)){
+//            Log.d("asd $i", d[i].toString())
+//        }
 //        calendar.timeInMillis = System.currentTimeMillis()
         calendar.set(Calendar.YEAR, d[2])
         calendar.set(Calendar.MONTH, d[1]-1)
