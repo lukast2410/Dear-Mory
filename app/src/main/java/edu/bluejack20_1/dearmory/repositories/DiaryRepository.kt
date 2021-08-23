@@ -14,6 +14,7 @@ class DiaryRepository private constructor() {
     private var diariesLiveData: MutableLiveData<ArrayList<Diary>> = MutableLiveData()
     private var totalModels: ArrayList<HashMap<String, ExpenseIncome>> = ArrayList()
     private var totalLiveData: MutableLiveData<ArrayList<HashMap<String, ExpenseIncome>>> = MutableLiveData()
+    private var childExists: Boolean = false
     private lateinit var diaryChild: ChildEventListener
     private lateinit var totalsChild: ChildEventListener
 
@@ -79,13 +80,11 @@ class DiaryRepository private constructor() {
                                 val totalKey = snapshot.key.toString()
                                 val idx = diaryModels.indexOfFirst { diary -> diary.getDate() == diaryDate }
 
-                                totalModels[idx].put(
-                                    totalKey,
-                                    ExpenseIncome().setId(snapshot.child("id").value.toString())
-                                        .setNotes(snapshot.child("notes").value.toString())
-                                        .setTime(snapshot.child("time").value.toString())
-                                        .setAmount(snapshot.child("amount").value.toString().toLong())
-                                )
+                                if(idx == -1) return
+                                totalModels[idx][totalKey] = ExpenseIncome().setId(snapshot.child("id").value.toString())
+                                    .setNotes(snapshot.child("notes").value.toString())
+                                    .setTime(snapshot.child("time").value.toString())
+                                    .setAmount(snapshot.child("amount").value.toString().toLong())
                                 totalLiveData.postValue(totalModels)
                             }
 
@@ -115,6 +114,7 @@ class DiaryRepository private constructor() {
                             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
                             override fun onCancelled(error: DatabaseError) {}
                         })
+                        childExists = true
                     }
                 }
             }
@@ -139,7 +139,7 @@ class DiaryRepository private constructor() {
 
     fun removeEventListener(){
         refsDB.removeEventListener(diaryChild)
-        refsDB.removeEventListener(totalsChild)
+        if(childExists) refsDB.removeEventListener(totalsChild)
     }
 
     fun getDiary(userId: String, date: String): MutableLiveData<Diary> {
